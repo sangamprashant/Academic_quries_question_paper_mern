@@ -1,0 +1,22 @@
+.not-found-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-found-text {
+  font-size: 32px;
+  text-align: center;
+}
+
+.not-found-container .go-to-home {
+  border-radius: 50px;
+  background-color: aqua;
+}
+.not-found-background {
+  background-color: rgb(236, 232, 232);
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
