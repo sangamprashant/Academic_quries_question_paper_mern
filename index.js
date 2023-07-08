@@ -33,7 +33,8 @@ mongoose.connection.on("connected", () => {
 mongoose.connection.on("error", () => {
   console.log("Failed to connect to mongo");
 });
-
+//serving the pdf files
+app.use("/uploads",express.static("uploads"))
 // Serve the frontend
 app.use(express.static(path.join(__dirname, "frontend/build")));
 app.get("*", (req, res) => {

@@ -15,7 +15,7 @@ function Footer() {
                   <br />
                   United States <br />
                   <br />
-                  <strong>Phone:</strong> +1 5589 55488 55
+                  <strong>Phone:</strong> +91 99845429509
                   <br />
                   <strong>Email:</strong> info@example.com
                   <br />

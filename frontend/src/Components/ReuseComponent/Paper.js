@@ -1,354 +1,209 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../css/Paper.css";
+import { Link } from "react-router-dom";
+
+
 function Paper() {
+  const [pdfFiles, setPdfFiles] = useState([]);
+
+  useEffect(() => {
+    // Fetch PDF file data from the server
+    fetch("/api/question-papers")
+      .then((response) => response.json())
+      .then((data) => {
+        setPdfFiles(data);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch PDF files:", error);
+      });
+  }, []);
+
   return (
     <div style={{ marginTop: "70px" }}>
-      <section id="portfolio" class="portfolio">
-        <div class="container">
-          <div class="section-title">
+      <section id="portfolio" className="portfolio">
+        <div className="container">
+          <div className="section-title">
             <h2>Paper</h2>
-            <p>
-              Sit sint consectetur velit quisquam cupiditate impedit suscipit
-            </p>
+            <p>Lorem ipsum dolor sit amet.</p>
           </div>
 
-          <div class="row">
-            <div class="col-lg-12">
+          {/* <div className="row">
+            <div className="col-lg-12">
               <ul id="portfolio-flters">
-                <li data-filter="*" class="filter-active">
+                <li data-filter="*" className="filter-active">
                   All
                 </li>
-                <li data-filter=".filter-app">App</li>
-                <li data-filter=".filter-card">Card</li>
-                <li data-filter=".filter-web">Web</li>
+                <li data-filter=".filter-app">Internal</li>
+                <li data-filter=".filter-card">External</li>
               </ul>
             </div>
-          </div>
+          </div> */}
 
-          <div class="row portfolio-container">
-            <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp">
-              <div class="portfolio-wrap">
+          <div className="row portfolio-container">
+            {/* {pdfFiles.map((pdf) => (
+              <div
+                className="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp"
+                key={pdf._id}
+              >
+                <div className="portfolio-wrap">
+                  <figure>
+                    <object
+                      data={`/${pdf.pdfPath}`}
+                      type="application/pdf"
+                      width="100%"
+                      height="600px"
+                    >
+                      <p>
+                        Your web browser doesn't have a PDF plugin. You can{" "}
+                        <a href={`/${pdf.pdfPath}`}>
+                          click here to download the PDF file.
+                        </a>
+                      </p>
+                    </object>
+                    <a
+                      href="assets/img/portfolio/portfolio-1.jpg"
+                      data-gallery="portfolioGallery"
+                      className="link-preview portfolio-lightbox"
+                      title="Preview"
+                    >
+                      <i className="fa fa-plus"></i>
+                    </a>
+                    <a
+                      href="portfolio-details.html"
+                      className="link-details"
+                      title="More Details"
+                    >
+                      <i className="fa fa-link"></i>
+                    </a>
+                  </figure>
+
+                  <div className="portfolio-info">
+                    <h4>
+                      <a href="portfolio-details.html">{pdf.subject}</a>
+                    </h4>
+                    <p>{pdf.type}</p>
+                  </div>
+                </div>
+              </div>
+            ))} */}
+            <Link className="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" to="/course/Bca">
+              <div className="portfolio-wrap">
                 <figure>
                   <img
-                    src="assets/img/portfolio/portfolio-1.jpg"
-                    class="img-fluid"
-                    alt=""
+                    src="https://cdn.dribbble.com/users/5935617/screenshots/17024202/media/70404269abf3abeb8382c9d138a1b441.jpg?compress=1&resize=400x300&vertical=top"
+                    type="application/pdf"
+                    width="100%"
                   />
+                  <p>
+                    Your web browser doesn't have a PDF plugin. You can{" "}
+                    <a href="/dsaf">click here to download the PDF file.</a>
+                  </p>
+
                   <a
                     href="assets/img/portfolio/portfolio-1.jpg"
                     data-gallery="portfolioGallery"
-                    class="link-preview portfolio-lightbox"
+                    className="link-preview portfolio-lightbox"
                     title="Preview"
                   >
-                    <i class="fa fa-plus"></i>
+                    <i className="fa fa-plus"></i>
                   </a>
                   <a
                     href="portfolio-details.html"
-                    class="link-details"
+                    className="link-details"
                     title="More Details"
                   >
-                    <i class="fa fa-link"></i>
+                    <i className="fa fa-link"></i>
                   </a>
                 </figure>
 
-                <div class="portfolio-info">
+                <div className="portfolio-info">
                   <h4>
-                    <a href="portfolio-details.html">App 1</a>
+                    <a href="portfolio-details.html">BCA</a>
                   </h4>
-                  <p>App</p>
+                  
                 </div>
               </div>
-            </div>
-
-            <div
-              class="col-lg-4 col-md-6 portfolio-item filter-web wow fadeInUp"
-              data-wow-delay="0.1s"
-            >
-              <div class="portfolio-wrap">
+            </Link>
+            <Link className="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" to="/course/Diploma">
+              <div className="portfolio-wrap">
                 <figure>
                   <img
-                    src="assets/img/portfolio/portfolio-2.jpg"
-                    class="img-fluid"
-                    alt=""
+                    src="https://cdn.dribbble.com/users/5935617/screenshots/17024202/media/70404269abf3abeb8382c9d138a1b441.jpg?compress=1&resize=400x300&vertical=top"
+                    type="application/pdf"
+                    width="100%"
                   />
+                  <p>
+                    Your web browser doesn't have a PDF plugin. You can{" "}
+                    <a href="/dsaf">click here to download the PDF file.</a>
+                  </p>
+
                   <a
-                    href="assets/img/portfolio/portfolio-2.jpg"
-                    class="link-preview portfolio-lightbox"
+                    href="assets/img/portfolio/portfolio-1.jpg"
                     data-gallery="portfolioGallery"
+                    className="link-preview portfolio-lightbox"
                     title="Preview"
                   >
-                    <i class="fa fa-plus"></i>
+                    <i className="fa fa-plus"></i>
                   </a>
                   <a
                     href="portfolio-details.html"
-                    class="link-details"
+                    className="link-details"
                     title="More Details"
                   >
-                    <i class="fa fa-link"></i>
+                    <i className="fa fa-link"></i>
                   </a>
                 </figure>
 
-                <div class="portfolio-info">
+                <div className="portfolio-info">
                   <h4>
-                    <a href="portfolio-details.html">Web 3</a>
+                    <a href="portfolio-details.html">Diploma</a>
                   </h4>
-                  <p>Web</p>
+                 
                 </div>
               </div>
-            </div>
-
-            <div
-              class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp"
-              data-wow-delay="0.2s"
-            >
-              <div class="portfolio-wrap">
+            </Link>
+            <Link className="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" to="/course/Btech">
+              <div className="portfolio-wrap">
                 <figure>
                   <img
-                    src="assets/img/portfolio/portfolio-3.jpg"
-                    class="img-fluid"
-                    alt=""
+                    src="https://cdn.dribbble.com/users/5935617/screenshots/17024202/media/70404269abf3abeb8382c9d138a1b441.jpg?compress=1&resize=400x300&vertical=top"
+                    type="application/pdf"
+                    width="100%"
                   />
+                  <p>
+                    Your web browser doesn't have a PDF plugin. You can{" "}
+                    <a href="/dsaf">click here to download the PDF file.</a>
+                  </p>
+
                   <a
-                    href="assets/img/portfolio/portfolio-3.jpg"
-                    class="link-preview portfolio-lightbox"
+                    href="assets/img/portfolio/portfolio-1.jpg"
                     data-gallery="portfolioGallery"
+                    className="link-preview portfolio-lightbox"
                     title="Preview"
                   >
-                    <i class="fa fa-plus"></i>
+                    <i className="fa fa-plus"></i>
                   </a>
                   <a
                     href="portfolio-details.html"
-                    class="link-details"
+                    className="link-details"
                     title="More Details"
                   >
-                    <i class="fa fa-link"></i>
+                    <i className="fa fa-link"></i>
                   </a>
                 </figure>
 
-                <div class="portfolio-info">
+                <div className="portfolio-info">
                   <h4>
-                    <a href="portfolio-details.html">App 2</a>
+                    <a href="portfolio-details.html">Betech</a>
                   </h4>
-                  <p>App</p>
+                  
                 </div>
               </div>
-            </div>
+            </Link>
+            
 
-            <div class="col-lg-4 col-md-6 portfolio-item filter-card wow fadeInUp">
-              <div class="portfolio-wrap">
-                <figure>
-                  <img
-                    src="assets/img/portfolio/portfolio-4.jpg"
-                    class="img-fluid"
-                    alt=""
-                  />
-                  <a
-                    href="assets/img/portfolio/portfolio-4.jpg"
-                    class="link-preview portfolio-lightbox"
-                    data-gallery="portfolioGallery"
-                    title="Preview"
-                  >
-                    <i class="fa fa-plus"></i>
-                  </a>
-                  <a
-                    href="portfolio-details.html"
-                    class="link-details"
-                    title="More Details"
-                  >
-                    <i class="fa fa-link"></i>
-                  </a>
-                </figure>
 
-                <div class="portfolio-info">
-                  <h4>
-                    <a href="portfolio-details.html">Card 2</a>
-                  </h4>
-                  <p>Card</p>
-                </div>
-              </div>
-            </div>
 
-            <div
-              class="col-lg-4 col-md-6 portfolio-item filter-web wow fadeInUp"
-              data-wow-delay="0.1s"
-            >
-              <div class="portfolio-wrap">
-                <figure>
-                  <img
-                    src="assets/img/portfolio/portfolio-5.jpg"
-                    class="img-fluid"
-                    alt=""
-                  />
-                  <a
-                    href="assets/img/portfolio/portfolio-5.jpg"
-                    class="link-preview portfolio-lightbox"
-                    data-gallery="portfolioGallery"
-                    title="Preview"
-                  >
-                    <i class="fa fa-plus"></i>
-                  </a>
-                  <a
-                    href="portfolio-details.html"
-                    class="link-details"
-                    title="More Details"
-                  >
-                    <i class="fa fa-link"></i>
-                  </a>
-                </figure>
-
-                <div class="portfolio-info">
-                  <h4>
-                    <a href="portfolio-details.html">Web 2</a>
-                  </h4>
-                  <p>Web</p>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp"
-              data-wow-delay="0.2s"
-            >
-              <div class="portfolio-wrap">
-                <figure>
-                  <img
-                    src="assets/img/portfolio/portfolio-6.jpg"
-                    class="img-fluid"
-                    alt=""
-                  />
-                  <a
-                    href="assets/img/portfolio/portfolio-6.jpg"
-                    class="link-preview portfolio-lightbox"
-                    data-gallery="portfolioGallery"
-                    title="Preview"
-                  >
-                    <i class="fa fa-plus"></i>
-                  </a>
-                  <a
-                    href="portfolio-details.html"
-                    class="link-details"
-                    title="More Details"
-                  >
-                    <i class="fa fa-link"></i>
-                  </a>
-                </figure>
-
-                <div class="portfolio-info">
-                  <h4>
-                    <a href="portfolio-details.html">App 3</a>
-                  </h4>
-                  <p>App</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item filter-card wow fadeInUp">
-              <div class="portfolio-wrap">
-                <figure>
-                  <img
-                    src="assets/img/portfolio/portfolio-7.jpg"
-                    class="img-fluid"
-                    alt=""
-                  />
-                  <a
-                    href="assets/img/portfolio/portfolio-7.jpg"
-                    class="link-preview portfolio-lightbox"
-                    data-gallery="portfolioGallery"
-                    title="Preview"
-                  >
-                    <i class="fa fa-plus"></i>
-                  </a>
-                  <a
-                    href="portfolio-details.html"
-                    class="link-details"
-                    title="More Details"
-                  >
-                    <i class="fa fa-link"></i>
-                  </a>
-                </figure>
-
-                <div class="portfolio-info">
-                  <h4>
-                    <a href="portfolio-details.html">Card 1</a>
-                  </h4>
-                  <p>Card</p>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="col-lg-4 col-md-6 portfolio-item filter-card wow fadeInUp"
-              data-wow-delay="0.1s"
-            >
-              <div class="portfolio-wrap">
-                <figure>
-                  <img
-                    src="assets/img/portfolio/portfolio-8.jpg"
-                    class="img-fluid"
-                    alt=""
-                  />
-                  <a
-                    href="assets/img/portfolio/portfolio-8.jpg"
-                    class="link-preview portfolio-lightbox"
-                    data-gallery="portfolioGallery"
-                    title="Preview"
-                  >
-                    <i class="fa fa-plus"></i>
-                  </a>
-                  <a
-                    href="portfolio-details.html"
-                    class="link-details"
-                    title="More Details"
-                  >
-                    <i class="fa fa-link"></i>
-                  </a>
-                </figure>
-
-                <div class="portfolio-info">
-                  <h4>
-                    <a href="portfolio-details.html">Card 3</a>
-                  </h4>
-                  <p>Card</p>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="col-lg-4 col-md-6 portfolio-item filter-web wow fadeInUp"
-              data-wow-delay="0.2s"
-            >
-              <div class="portfolio-wrap">
-                <figure>
-                  <img
-                    src="assets/img/portfolio/portfolio-9.jpg"
-                    class="img-fluid"
-                    alt=""
-                  />
-                  <a
-                    href="assets/img/portfolio/portfolio-9.jpg"
-                    class="link-preview portfolio-lightbox"
-                    data-gallery="portfolioGallery"
-                    title="Preview"
-                  >
-                    <i class="fa fa-plus"></i>
-                  </a>
-                  <a
-                    href="portfolio-details.html"
-                    class="link-details"
-                    title="More Details"
-                  >
-                    <i class="fa fa-link"></i>
-                  </a>
-                </figure>
-
-                <div class="portfolio-info">
-                  <h4>
-                    <a href="portfolio-details.html">Web 1</a>
-                  </h4>
-                  <p>Web</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>

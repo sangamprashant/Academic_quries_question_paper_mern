@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import "../css/Contact.css";
+import Footer from "./Footer";
 function Contact({ setNavActive }) {
   useEffect(() => {
     setNavActive = "Contact";
@@ -108,7 +109,7 @@ function Contact({ setNavActive }) {
                   </div>
                 </div>
                 <div class="text-center">
-                  <button type="submit">Send Message</button>
+                  <button type="button">Send Message</button>
                 </div>
               </form>
             </div>

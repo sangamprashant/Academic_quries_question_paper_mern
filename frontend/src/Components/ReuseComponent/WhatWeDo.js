@@ -1,8 +1,9 @@
 import React from "react";
 import "../css/WhatWeDo.css";
+import Footer from "./Footer";
 function WhatWeDo() {
   return (
-    <div>
+    <div style={{marginTop:'70px'}}>
       <section id="what-we-do" class="what-we-do">
         <div class="container">
           <div class="section-title">
@@ -14,10 +15,10 @@ function WhatWeDo() {
             <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
               <div class="icon-box">
                 <div class="icon">
-                  <i class="fab fa-dribbble"></i>
+                  <i class="fa fa-clock"></i>
                 </div>
                 <h4>
-                  <a href="">Lorem Ipsum</a>
+                  <a href="">24/7 Avilable</a>
                 </h4>
                 <p>
                   Voluptatum deleniti atque corrupti quos dolores et quas
@@ -32,7 +33,7 @@ function WhatWeDo() {
                   <i class="fa fa-file"></i>
                 </div>
                 <h4>
-                  <a href="">Sed ut perspiciatis</a>
+                  <a href="">Question Paper</a>
                 </h4>
                 <p>
                   Duis aute irure dolor in reprehenderit in voluptate velit esse
@@ -44,10 +45,10 @@ function WhatWeDo() {
             <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
               <div class="icon-box">
                 <div class="icon">
-                  <i class="fa fa-tachometer"></i>
+                  <i class="fa fa-upload"></i>
                 </div>
                 <h4>
-                  <a href="">Magni Dolores</a>
+                  <a href="">Your Contributions</a>
                 </h4>
                 <p>
                   Excepteur sint occaecat cupidatat non proident, sunt in culpa

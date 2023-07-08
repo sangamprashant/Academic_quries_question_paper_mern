@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/AboutUs.css";
 import pic from "../img/logo aq.png";
+import Footer from "./Footer";
 function AboutUs() {
   return (
     <div style={{ marginTop: "70px" }}>

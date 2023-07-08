@@ -8,6 +8,7 @@ const questionPaperSchema = new mongoose.Schema({
   },
   subject: { type: String, required: true },
   year: { type: Number, required: true },
+  course:{type:String,required:true},
   pdfPath: { type: String, required: true },
 });
 

@@ -6,13 +6,15 @@ import WhatWeDo from "./ReuseComponent/WhatWeDo";
 import AboutUs from "./ReuseComponent/AboutUs";
 import Paper from "./ReuseComponent/Paper";
 import Count from "./ReuseComponent/Count";
+import Footer from "./ReuseComponent/Footer";
+import Team from "./Team";
 function Home() {
   return (
     <div>
       <div>
         <Hero />
       </div>
-      <div>
+      <div className="MarginTopNegative">
         <WhatWeDo />
       </div>
       <div className="MarginTopNegative">
@@ -20,6 +22,9 @@ function Home() {
       </div>
       <div className="MarginTopNegative">
         <AboutUs />
+      </div>
+      <div className="MarginTopNegative">
+        <Team />
       </div>
       <div>
         <Count />
