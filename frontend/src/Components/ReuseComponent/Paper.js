@@ -8,7 +8,7 @@ function Paper() {
 
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("/api/question-papers")
+    fetch("http://localhost:5000/api/get/course")
       .then((response) => response.json())
       .then((data) => {
         setPdfFiles(data);
@@ -40,170 +40,25 @@ function Paper() {
           </div> */}
 
           <div className="row portfolio-container">
-            {/* {pdfFiles.map((pdf) => (
-              <div
-                className="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp"
-                key={pdf._id}
-              >
-                <div className="portfolio-wrap">
-                  <figure>
-                    <object
-                      data={`/${pdf.pdfPath}`}
-                      type="application/pdf"
-                      width="100%"
-                      height="600px"
-                    >
-                      <p>
-                        Your web browser doesn't have a PDF plugin. You can{" "}
-                        <a href={`/${pdf.pdfPath}`}>
-                          click here to download the PDF file.
-                        </a>
-                      </p>
-                    </object>
-                    <a
-                      href="assets/img/portfolio/portfolio-1.jpg"
-                      data-gallery="portfolioGallery"
-                      className="link-preview portfolio-lightbox"
-                      title="Preview"
-                    >
-                      <i className="fa fa-plus"></i>
-                    </a>
-                    <a
-                      href="portfolio-details.html"
-                      className="link-details"
-                      title="More Details"
-                    >
-                      <i className="fa fa-link"></i>
-                    </a>
-                  </figure>
-
-                  <div className="portfolio-info">
-                    <h4>
-                      <a href="portfolio-details.html">{pdf.subject}</a>
-                    </h4>
-                    <p>{pdf.type}</p>
-                  </div>
-                </div>
-              </div>
-            ))} */}
-            <Link className="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" to="/course/Bca">
+            {pdfFiles.map((Papers) => (
+              <Link className="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" to={`/course/${Papers.coursePath}`}>
               <div className="portfolio-wrap">
                 <figure>
                   <img
-                    src="https://cdn.dribbble.com/users/5935617/screenshots/17024202/media/70404269abf3abeb8382c9d138a1b441.jpg?compress=1&resize=400x300&vertical=top"
+                    src={`http://localhost:5000/${Papers.courseImage}`}
                     type="application/pdf"
                     width="100%"
+                    height="200px"
                   />
-                  <p>
-                    Your web browser doesn't have a PDF plugin. You can{" "}
-                    <a href="/dsaf">click here to download the PDF file.</a>
-                  </p>
-
-                  <a
-                    href="assets/img/portfolio/portfolio-1.jpg"
-                    data-gallery="portfolioGallery"
-                    className="link-preview portfolio-lightbox"
-                    title="Preview"
-                  >
-                    <i className="fa fa-plus"></i>
-                  </a>
-                  <a
-                    href="portfolio-details.html"
-                    className="link-details"
-                    title="More Details"
-                  >
-                    <i className="fa fa-link"></i>
-                  </a>
                 </figure>
-
                 <div className="portfolio-info">
                   <h4>
-                    <a href="portfolio-details.html">BCA</a>
+                    <a href="portfolio-details.html">{Papers.courseName}</a>
                   </h4>
-                  
                 </div>
               </div>
             </Link>
-            <Link className="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" to="/course/Diploma">
-              <div className="portfolio-wrap">
-                <figure>
-                  <img
-                    src="https://cdn.dribbble.com/users/5935617/screenshots/17024202/media/70404269abf3abeb8382c9d138a1b441.jpg?compress=1&resize=400x300&vertical=top"
-                    type="application/pdf"
-                    width="100%"
-                  />
-                  <p>
-                    Your web browser doesn't have a PDF plugin. You can{" "}
-                    <a href="/dsaf">click here to download the PDF file.</a>
-                  </p>
-
-                  <a
-                    href="assets/img/portfolio/portfolio-1.jpg"
-                    data-gallery="portfolioGallery"
-                    className="link-preview portfolio-lightbox"
-                    title="Preview"
-                  >
-                    <i className="fa fa-plus"></i>
-                  </a>
-                  <a
-                    href="portfolio-details.html"
-                    className="link-details"
-                    title="More Details"
-                  >
-                    <i className="fa fa-link"></i>
-                  </a>
-                </figure>
-
-                <div className="portfolio-info">
-                  <h4>
-                    <a href="portfolio-details.html">Diploma</a>
-                  </h4>
-                 
-                </div>
-              </div>
-            </Link>
-            <Link className="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" to="/course/Btech">
-              <div className="portfolio-wrap">
-                <figure>
-                  <img
-                    src="https://cdn.dribbble.com/users/5935617/screenshots/17024202/media/70404269abf3abeb8382c9d138a1b441.jpg?compress=1&resize=400x300&vertical=top"
-                    type="application/pdf"
-                    width="100%"
-                  />
-                  <p>
-                    Your web browser doesn't have a PDF plugin. You can{" "}
-                    <a href="/dsaf">click here to download the PDF file.</a>
-                  </p>
-
-                  <a
-                    href="assets/img/portfolio/portfolio-1.jpg"
-                    data-gallery="portfolioGallery"
-                    className="link-preview portfolio-lightbox"
-                    title="Preview"
-                  >
-                    <i className="fa fa-plus"></i>
-                  </a>
-                  <a
-                    href="portfolio-details.html"
-                    className="link-details"
-                    title="More Details"
-                  >
-                    <i className="fa fa-link"></i>
-                  </a>
-                </figure>
-
-                <div className="portfolio-info">
-                  <h4>
-                    <a href="portfolio-details.html">Betech</a>
-                  </h4>
-                  
-                </div>
-              </div>
-            </Link>
-            
-
-
-
+            ))}
           </div>
         </div>
       </section>

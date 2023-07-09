@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import AdminNav from "../ReuseComponent/AdminNav";
 
-function UserUploadPaper() {
+function UploadPaper() {
+  const [pdfFiles, setPdfFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const [type, setType] = useState("");
-  const [subject, setSubject] = useState("");
-  const [year, setYear] = useState("");
-  const [course, setCourse] = useState("");
-  const [name, setName] = useState("");
+  const [inputName, setInputName] = useState("");
+  const [inputPath, setInputPath] = useState("");
   const token = localStorage.getItem("jwt");
   const navigate = useNavigate();
   // Toast functions
@@ -21,6 +21,18 @@ function UserUploadPaper() {
       navigate("/");
     }
   });
+
+  useEffect(() => {
+    // Fetch PDF file data from the server
+    fetch("http://localhost:5000/api/get/course")
+      .then((response) => response.json())
+      .then((data) => {
+        setPdfFiles(data);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch PDF files:", error);
+      });
+  }, []);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -37,25 +49,15 @@ function UserUploadPaper() {
   };
 
   const handleUpload = () => {
-    if (!selectedFile || !type || !subject || !year || !course || !name) {
+    if (!selectedFile || !inputName || !inputPath) {
       notifyA("Please fill all the fields.");
       return;
     }
-    if (year.length !== 4 || isNaN(year)) {
-      notifyA("Please enter a valid year.");
-      return;
-    }
-
     const formData = new FormData();
     formData.append("pdf", selectedFile);
-    formData.append("type", type);
-    formData.append("subject", subject);
-    formData.append("year", year);
-    formData.append("course", course);
-    formData.append("name", name);
-    formData.append("valid", false);
-
-    fetch("http://localhost:5000/api/upload", {
+    formData.append("inputName", inputName);
+    formData.append("inputPath", inputPath);
+    fetch("http://localhost:5000/api/add/course", {
       method: "POST",
       body: formData,
     })
@@ -65,11 +67,8 @@ function UserUploadPaper() {
           notifyB(data.message);
           setSelectedFile(null);
           setPreviewUrl(null);
-          setType("");
-          setSubject("");
-          setYear("");
-          setCourse("");
-          setName("");
+          setInputName("");
+          setInputPath("");
         } else {
           notifyA(data.error);
         }
@@ -78,80 +77,46 @@ function UserUploadPaper() {
         console.error("Failed to upload question paper:", error);
       });
   };
-
   return (
     <div style={{ marginTop: "70px" }}>
+      <AdminNav />
       <section id="contact" class="contact section-bg">
         <div class="container">
           <div class="section-title">
-            <h2>User Upload paper</h2>
-            <p>Your contribution is valuable to us :)</p>
-            <p>Format should be in PDF!</p>
+            <h2>Add Course</h2>
+            <p>Format should be in IMG/PNG!</p>
           </div>
 
           <div class="row mt-5 justify-content-center">
             <div class="col-lg-10">
               <form role="form" class="php-email-form">
-                <div class="form-group mt-3">
-                  <input
-                    class="form-control"
-                    placeholder="Enter your name.."
-                    value={name}
-                    onChange={(e) => {
-                      setName(e.target.value);
-                    }}
-                  />
-                </div>
                 <div class="row">
                   <div class="col-md-6 form-group">
                     <input
-                      value={subject}
+                      value={inputName}
                       type="text"
-                      name="Subject"
                       class="form-control"
-                      id="Subject"
-                      placeholder=" Enter subject name"
+                      placeholder="Course Name"
                       required
                       onChange={(e) => {
-                        setSubject(e.target.value);
+                        setInputName(e.target.value);
                       }}
                     />
                   </div>
                   <div class="col-md-6 form-group mt-3 mt-md-0">
                     <input
-                      type="number"
+                      type="text"
                       class="form-control"
-                      name="year"
-                      id="year"
                       placeholder="Paper Conducted in"
                       required
-                      value={year}
+                      value={inputPath}
                       onChange={(e) => {
-                        setYear(e.target.value);
+                        setInputPath(e.target.value);
                       }}
                     />
                   </div>
                 </div>
-                <div class="form-group mt-3">
-                  <input
-                    class="form-control"
-                    placeholder="Type: internal/external"
-                    value={type}
-                    onChange={(e) => {
-                      setType(e.target.value);
-                    }}
-                  />
-                </div>
-                <div class="form-group mt-3">
-                  <input
-                    class="form-control"
-                    placeholder="Enter the course of paper"
-                    value={course}
-                    onChange={(e) => {
-                      setCourse(e.target.value);
-                    }}
-                  />
-                </div>
+
                 <div class="form-group mt-3">
                   <input
                     type="file"
@@ -186,6 +151,61 @@ function UserUploadPaper() {
                 </div>
               </form>
             </div>
+            <hr />
+            <div class="sales-boxes">
+              <div class="recent-sales box">
+                <div class="title">List of course</div>
+                <div class="sales-details">
+                  <ul class="details" style={{ marginRight: "20px" }}>
+                    <li class="topic">Course Path</li>
+                    {pdfFiles.length !== 0
+                      ? pdfFiles.map((Papers) => {
+                          return (
+                            <>
+                              <hr />
+                              <img
+                                src={`http://localhost:5000/${Papers.courseImage}`}
+                                style={{ height: "40px" }}
+                              />
+                            </>
+                          );
+                        })
+                      : ""}
+                  </ul>
+                  <ul class="details" style={{ marginRight: "20px" }}>
+                    <li class="topic">Course Name</li>
+                    {pdfFiles.length !== 0
+                      ? pdfFiles.map((Papers) => {
+                          return (
+                            <>
+                              <hr />
+                              <li key={Papers._id}>
+                                {" "}
+                                <a> {Papers.courseName}</a>
+                              </li>
+                            </>
+                          );
+                        })
+                      : ""}
+                  </ul>
+                  <ul class="details" style={{ marginRight: "20px" }}>
+                    <li class="topic">Course Path</li>
+                    {pdfFiles.length !== 0
+                      ? pdfFiles.map((Papers) => {
+                          return (
+                            <>
+                              <hr />
+                              <li key={Papers._id}>
+                                <a>{Papers.coursePath}</a>
+                              </li>
+                            </>
+                          );
+                        })
+                      : ""}
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -193,4 +213,4 @@ function UserUploadPaper() {
   );
 }
 
-export default UserUploadPaper;
+export default UploadPaper;

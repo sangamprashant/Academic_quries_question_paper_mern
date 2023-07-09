@@ -25,3 +25,12 @@ a {
   border-radius: 50px;
   font-size: larger;
 }
+.type-upload-button button{
+  background: #3498db;
+  border: 0;
+  padding: 10px 24px;
+  color: #fff;
+  transition: 0.4s;
+  border-radius: 4px;
+  margin-top: 20px;
+}

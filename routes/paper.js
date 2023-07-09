@@ -69,5 +69,18 @@ router.get("/api/course/:type", (req, res) => {
       res.status(500).json({ message: "Server Error" });
     });
 });
+// Get question paper by ID
+router.get('/api/get/paper/:id', async (req, res) => {
+  try {
+    const questionPaper = await QuestionPaper.findById(req.params.id);
+    if (!questionPaper) {
+      return res.status(404).json({ error: 'Question paper not found' });
+    }
+    res.json(questionPaper);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch question paper' });
+  }
+});
+
 
 module.exports = router;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import AdminNav from "./ReuseComponent/AdminNav";
 
 function Responses() {
   const token = localStorage.getItem("jwt");
@@ -28,6 +29,7 @@ function Responses() {
 
   return (
     <div style={{ marginTop: "70px" }}>
+    <AdminNav/>
       <section id="portfolio" className="portfolio">
         <div className="container">
           <div className="section-title">
@@ -71,7 +73,7 @@ function Responses() {
                             alt="Card image cap"
                             style={{ height: "500px" }}
                           />
-                          <div class="card-body">
+                          <Link class="card-body" to={`/admin/modify/${paper._id}`}>
                             <h5 class="card-title">Subject: {paper.subject}</h5>
                             <p class="card-text">Course: {paper.course}</p>
                             <p class="card-text">Year: {paper.year}</p>
@@ -80,7 +82,7 @@ function Responses() {
                             <a href="#" class="btn btn-primary">
                               Go somewhere
                             </a>
-                          </div>
+                          </Link>
                         </div>
                       )}
                     </>

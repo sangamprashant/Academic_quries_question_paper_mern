@@ -25,8 +25,12 @@ app.use(express.json());
 
 require("./models/paper");
 require("./models/Admin");
+require("./models/type");
+require("./models/course");
 app.use(require("./routes/paper"));
 app.use(require("./routes/admin"));
+app.use(require("./routes/type"));
+app.use(require("./routes/course"));
 
 mongoose.connect(process.env.MONGO_URL);
 mongoose.connection.on("connected", () => {
@@ -37,6 +41,7 @@ mongoose.connection.on("error", () => {
 });
 //serving the pdf files
 app.use("/uploads",express.static("uploads"))
+app.use("/courseimg",express.static("courseimg"))
 // Serve the frontend
 app.use(express.static(path.join(__dirname, "frontend/build")));
 app.get("*", (req, res) => {

@@ -19,6 +19,10 @@ import Responses from "./Components/Responses";
 import NotLoggedIn from "./Components/ReuseComponent/NotLoggedIn";
 import UserUploadPaper from "./Components/ReuseComponent/UserUploadPaper";
 import Admin from "./Components/Admin";
+import AddType from "./Components/ReuseComponent/AddType";
+import AddCourse from "./Components/ReuseComponent/AddCourse";
+import GetPaperToAdmin from "./Components/ReuseComponent/GetPaperToAdmin";
+import GetPaperToUser from "./Components/ReuseComponent/GetPaperToUesr";
 
 function App() {
   const [navActive, setNavActive] = useState("Home");
@@ -35,14 +39,18 @@ function App() {
           <Route path="/contact" element={<Contact  />} />
           <Route path="/paper" element={<Paper/>}/>
           <Route path="/about" element={<AboutUs/>}/>
-          <Route path="/upload" element={<UploadPaper/>}/>
           <Route path="/services" element={<WhatWeDo/>}/>
           <Route path="/testimonials" element={<Team/>}/>
           <Route path="/responses" element={<Responses/>}/>
           <Route path="/signin/warning" element={<NotLoggedIn/>}/>
           <Route path="/user/upload/paper" element={<UserUploadPaper/>}/>
           <Route path="/course/:branch" element={<Course />}/>
+          <Route path="/paper/:paperId" element={<GetPaperToUser />}/>
           <Route path="/admin" element={<Admin />}/>
+          <Route path="/admin/add/type" element={<AddType />}/>
+          <Route path="/admin/modify/:paperId" element={<GetPaperToAdmin />}/>
+          <Route path="/admin/add/course" element={<AddCourse />}/>
+          <Route path="/admin/upload" element={<UploadPaper/>}/>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Footer/>

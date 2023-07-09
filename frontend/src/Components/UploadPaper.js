@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./css/Contact.css";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import AdminNav from "./ReuseComponent/AdminNav";
 
 function UploadPaper() {
+  const [courses, setCourses] = useState([]);
+  const [types, setTypes] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [type, setType] = useState("");
@@ -21,6 +24,32 @@ function UploadPaper() {
       navigate("/");
     }
   });
+
+  //fetch courses
+  useEffect(() => {
+    // Fetch PDF file data from the server
+    fetch("http://localhost:5000/api/get/course")
+      .then((response) => response.json())
+      .then((data) => {
+        setCourses(data);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch PDF files:", error);
+      });
+  }, []);
+
+  //fetch types
+  useEffect(() => {
+    // Fetch PDF file data from the server
+    fetch("http://localhost:5000/api/get/types")
+      .then((response) => response.json())
+      .then((data) => {
+        setTypes(data);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch PDF files:", error);
+      });
+  }, []);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -73,6 +102,7 @@ function UploadPaper() {
 
   return (
     <div style={{ marginTop: "70px" }}>
+    <AdminNav/>
       <section id="contact" class="contact section-bg">
         <div class="container">
           <div class="section-title">
@@ -122,8 +152,13 @@ function UploadPaper() {
                     }}
                   >
                     <option value=""> Select Paper Type..</option>
-                    <option value="internal">Internal</option>
-                    <option value="external">External</option>
+                    {types.length !== 0
+                      ? types.map((type) => {
+                          return (
+                            <option value={type.valuePath}>{type.valueName}</option>
+                          );
+                        })
+                      : ""}                    
                   </select>
                 </div>
                 <div class="form-group mt-3">
@@ -135,9 +170,15 @@ function UploadPaper() {
                     }}
                   >
                     <option value=""> Select Course Type..</option>
-                    <option value="Bca">BCA</option>
-                    <option value="Diploma">Diploma</option>
-                    <option value="Btech">B.tech</option>
+                    {courses.length !== 0
+                      ? courses.map((course) => {
+                          return (
+                            <option value={course.coursePath}>{course.courseName}</option>
+                          );
+                        })
+                      : ""}
+                    
+                    
                   </select>
                 </div>
                 <div class="form-group mt-3">
