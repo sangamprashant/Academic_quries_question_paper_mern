@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const router = express.Router();
-const QuestionPaper =mongoose.model("ACADEMICQUERIESQUESTIONPAPER");
+const QuestionPaper = mongoose.model("ACADEMICQUERIESQUESTIONPAPER");
 
 // Set up file upload storage
 const storage = multer.diskStorage({
@@ -20,28 +20,28 @@ const upload = multer({ storage });
 // Handle file upload endpoint
 router.post("/api/upload", upload.single("pdf"), (req, res) => {
   const { filename, path } = req.file;
-
+  const { type, subject, year, course, valid, name } = req.body;
   // Create a new QuestionPaper document
   const questionPaper = new QuestionPaper({
-    type: req.body.type,
-    subject: req.body.subject,
-    year: req.body.year,
-    course:req.body.course,
+    type: type,
+    subject: subject,
+    year: year,
+    course: course,
     pdfPath: path,
+    valid: valid || false, // Set valid to false if not provided
+    name: valid ? name : null, // Set name to null if valid is false
   });
 
   // Save the document to MongoDB
   questionPaper
     .save()
     .then(() => {
-      res.status(200).send("Question paper uploaded successfully");
+      res.status(200).json({ message: "Question paper uploaded successfully." });
     })
     .catch((error) => {
-      console.error("Failed to save question paper:", error);
-      res.status(500).send("Failed to upload question paper");
+      res.status(500).json({ error: error });
     });
 });
-
 
 //get all papers
 router.get("/api/question-papers", (req, res) => {
@@ -55,12 +55,12 @@ router.get("/api/question-papers", (req, res) => {
     });
 });
 
-
+//to display valid paper
 router.get("/api/course/:type", (req, res) => {
   const type = req.params.type;
 
-  // Get items by course = type
-  QuestionPaper.find({ course: type })
+  // Get items by course = type and valid = true
+  QuestionPaper.find({ course: type, valid: true })
     .then((items) => {
       res.json(items);
     })
@@ -69,7 +69,5 @@ router.get("/api/course/:type", (req, res) => {
       res.status(500).json({ message: "Server Error" });
     });
 });
-
-
 
 module.exports = router;

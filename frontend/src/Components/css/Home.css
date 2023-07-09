@@ -10,3 +10,18 @@ a {
   padding-left: 20px;
   padding-right: 20px;
 }
+.NotLoggin{
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40Vh;
+  padding-bottom: 30vh;
+  background-color: rgb(252, 239, 239);
+  position: relative;
+}
+.NotLoggin button{
+  background-color: blue;
+  color: aliceblue;
+  border-radius: 50px;
+  font-size: larger;
+}

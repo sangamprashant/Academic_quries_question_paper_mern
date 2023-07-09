@@ -1,5 +1,6 @@
 import React from "react";
 import "../css/Footer.css";
+import { Link } from "react-router-dom";
 function Footer() {
   return (
     <div>
@@ -78,8 +79,8 @@ function Footer() {
           <div class="me-md-auto text-center text-md-start">
             <div class="copyright">
               &copy; Copyright{" "}
-              <strong>
-                <span>Academic quries</span>
+              <strong >
+                <span> <Link to="/signin" style={{color:"black"}}>Academic quries</Link>  </span>
               </strong>
               . All Rights Reserved
             </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/WhatWeDo.css";
 import Footer from "./Footer";
+import { Link } from "react-router-dom";
 function WhatWeDo() {
   return (
     <div style={{marginTop:'70px'}}>
@@ -42,20 +43,20 @@ function WhatWeDo() {
               </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
+            <Link class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" to="/user/upload/paper">
               <div class="icon-box">
                 <div class="icon">
                   <i class="fa fa-upload"></i>
                 </div>
                 <h4>
-                  <a href="">Your Contributions</a>
+                  <a >Your Contributions</a>
                 </h4>
-                <p>
+                <p style={{color:'black'}}>
                   Excepteur sint occaecat cupidatat non proident, sunt in culpa
                   qui officia
                 </p>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>

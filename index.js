@@ -24,7 +24,9 @@ app.use(cors());
 app.use(express.json());
 
 require("./models/paper");
+require("./models/Admin");
 app.use(require("./routes/paper"));
+app.use(require("./routes/admin"));
 
 mongoose.connect(process.env.MONGO_URL);
 mongoose.connection.on("connected", () => {

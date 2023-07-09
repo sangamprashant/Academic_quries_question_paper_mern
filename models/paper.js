@@ -6,10 +6,29 @@ const questionPaperSchema = new mongoose.Schema({
     required: true,
     enum: ["internal", "external"],
   },
-  subject: { type: String, required: true },
-  year: { type: Number, required: true },
-  course:{type:String,required:true},
-  pdfPath: { type: String, required: true },
+  subject: {
+    type: String,
+    required: true,
+  },
+  year: {
+    type: Number,
+    required: true,
+  },
+  course: {
+    type: String,
+    required: true,
+  },
+  pdfPath: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+    default: null,
+  },
+  valid: {
+    type: Boolean,
+  },
 });
 
 const QuestionPaper = mongoose.model(

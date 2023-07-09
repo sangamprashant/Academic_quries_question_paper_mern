@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import "./css/Contact.css";
+
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-function UploadPaper() {
+function UserUploadPaper() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [type, setType] = useState("");
   const [subject, setSubject] = useState("");
   const [year, setYear] = useState("");
   const [course, setCourse] = useState("");
+  const [name, setName] = useState("");
   const token = localStorage.getItem("jwt");
   const navigate = useNavigate();
   // Toast functions
@@ -37,17 +38,24 @@ function UploadPaper() {
   };
 
   const handleUpload = () => {
-    if (!selectedFile || !type || !subject || !year || !course) {
+    if (!selectedFile || !type || !subject || !year || !course || !name) {
       notifyA("Please fill all the fields.");
       return;
     }
+    if (year.length !== 4 || isNaN(year)) {
+      notifyA("Please enter a valid year.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("pdf", selectedFile);
     formData.append("type", type);
     formData.append("subject", subject);
     formData.append("year", year);
     formData.append("course", course);
-    formData.append("valid", true);
+    formData.append("name", name);
+    formData.append("valid", false);
+
     fetch("http://localhost:5000/api/upload", {
       method: "POST",
       body: formData,
@@ -62,6 +70,7 @@ function UploadPaper() {
           setSubject("");
           setYear("");
           setCourse("");
+          setName("");
         } else {
           notifyA(data.error);
         }
@@ -76,13 +85,24 @@ function UploadPaper() {
       <section id="contact" class="contact section-bg">
         <div class="container">
           <div class="section-title">
-            <h2>Upload paper</h2>
+            <h2>User Upload paper</h2>
+            <p>Your contribution is valuable to us :)</p>
             <p>Format should be in PDF!</p>
           </div>
 
           <div class="row mt-5 justify-content-center">
             <div class="col-lg-10">
               <form role="form" class="php-email-form">
+                <div class="form-group mt-3">
+                  <input
+                    class="form-control"
+                    placeholder="Enter your name.."
+                    value={name}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                    }}
+                  />
+                </div>
                 <div class="row">
                   <div class="col-md-6 form-group">
                     <input
@@ -91,7 +111,7 @@ function UploadPaper() {
                       name="Subject"
                       class="form-control"
                       id="Subject"
-                      placeholder="Subject Name"
+                      placeholder=" Enter subject name"
                       required
                       onChange={(e) => {
                         setSubject(e.target.value);
@@ -127,18 +147,13 @@ function UploadPaper() {
                   </select>
                 </div>
                 <div class="form-group mt-3">
-                  <select
+                  <input
                     class="form-control"
                     value={course}
                     onChange={(e) => {
                       setCourse(e.target.value);
                     }}
-                  >
-                    <option value=""> Select Course Type..</option>
-                    <option value="Bca">BCA</option>
-                    <option value="Diploma">Diploma</option>
-                    <option value="Btech">B.tech</option>
-                  </select>
+                  />
                 </div>
                 <div class="form-group mt-3">
                   <input
@@ -181,4 +196,4 @@ function UploadPaper() {
   );
 }
 
-export default UploadPaper;
+export default UserUploadPaper;

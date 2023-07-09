@@ -3,8 +3,25 @@ import "./css/Navbar.css";
 import logo from "./img/logo aq.png";
 import { Link } from "react-router-dom";
 
-export default function Navbar({ navActive }) {
+export default function Navbar({ login }) {
+  const loggeduser = JSON.parse(localStorage.getItem("user"));
+
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  const AdminPart = () => {
+    const token = localStorage.getItem("jwt");
+    if (login || token) {
+      return [
+        <>
+          <li>
+            <Link className={`nav-link scrollto`} to="/admin">
+              Admin
+            </Link>
+          </li>
+        </>,
+      ];
+    }
+  };
 
   const handleMobileNavToggle = () => {
     setMobileNavOpen(!mobileNavOpen);
@@ -21,7 +38,6 @@ export default function Navbar({ navActive }) {
       });
     }
   };
-  console.log(navActive);
   return (
     <div>
       <header
@@ -51,12 +67,7 @@ export default function Navbar({ navActive }) {
             <ul>
               {/* Menu items */}
               <li>
-                <Link
-                  className={`nav-link scrollto ${
-                    navActive === "About" ? "active" : ""
-                  }`}
-                  to="/about"
-                >
+                <Link className={`nav-linksignin`} to="/about">
                   About
                 </Link>
               </li>
@@ -66,22 +77,12 @@ export default function Navbar({ navActive }) {
                 </Link>
               </li>
               <li>
-                <Link
-                  className={`nav-link scrollto ${
-                    navActive === "Paper" ? "active" : ""
-                  }`}
-                  to="/paper"
-                >
+                <Link className={`nav-linksignin`} to="/paper">
                   Papers
                 </Link>
               </li>
               <li>
-                <Link
-                  className={`nav-link scrollto ${
-                    navActive === "Contact" ? "active" : ""
-                  }`}
-                  to="/contact"
-                >
+                <Link className={`nav-linksignin`} to="/contact">
                   Contact
                 </Link>
               </li>
@@ -90,26 +91,7 @@ export default function Navbar({ navActive }) {
                   Testimonials
                 </Link>
               </li>
-              <li>
-                <Link
-                  className={`nav-link scrollto ${
-                    navActive === "Contact" ? "active" : ""
-                  }`}
-                  to="/upload"
-                >
-                  Upload
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className={`nav-link scrollto ${
-                    navActive === "Contact" ? "active" : ""
-                  }`}
-                  to="/responses"
-                >
-                  Responses
-                </Link>
-              </li>
+              {AdminPart()}
             </ul>
             <i
               style={{ color: "black" }}

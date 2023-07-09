@@ -1,6 +1,7 @@
 import React from 'react'
 import "./css/Team.css"
-import Footer from "./ReuseComponent/Footer";
+import Prashant from "./img/prashant.png"
+
 function Team() {
   return (
     <div style={{marginTop:"60px"}}>
@@ -17,7 +18,7 @@ function Team() {
 
           <div class="col-lg-4 col-md-6 d-flex align-items-center " >
             <div class="member">
-              <img src="assets/img/team/team-2.jpg" alt=""/>
+              <img src={Prashant} alt=""/>
               <h4>Avantika Shrivastava</h4>
               <span>Product Manager</span>
               <p>
@@ -34,7 +35,7 @@ function Team() {
 
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
             <div class="member">
-              <img src="assets/img/team/team-3.jpg" alt=""/>
+              <img src={Prashant} alt=""/>
               <h4>Prashant Srivastav</h4>
               <span>CTO</span>
               <p>
