@@ -7,7 +7,7 @@ function Course() {
   const [pdfFiles, setPdfFiles] = useState([]);
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch(`http://localhost:5000/api/course/${branch}`)
+    fetch(`/api/course/${branch}`)
       .then((response) => response.json())
       .then((data) => {
         setPdfFiles(data);
@@ -38,7 +38,7 @@ function Course() {
                             <>
                               <hr />
                               <li key={Papers._id} >
-                                <a href={`http://localhost:5000/${Papers.pdfPath}`}>{Papers.subject}</a>
+                                <a href={`/${Papers.pdfPath}`}>{Papers.subject}</a>
                               </li>
                             </>
                           );

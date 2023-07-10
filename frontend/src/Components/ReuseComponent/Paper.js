@@ -8,7 +8,7 @@ function Paper() {
 
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/get/course")
+    fetch("/api/get/course")
       .then((response) => response.json())
       .then((data) => {
         setPdfFiles(data);
@@ -45,7 +45,7 @@ function Paper() {
               <div className="portfolio-wrap">
                 <figure>
                   <img
-                    src={`http://localhost:5000/${Papers.courseImage}`}
+                    src={`/${Papers.courseImage}`}
                     type="application/pdf"
                     width="100%"
                     height="200px"
