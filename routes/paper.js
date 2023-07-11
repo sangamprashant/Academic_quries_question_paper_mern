@@ -1,26 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const multer = require("multer");
 const router = express.Router();
+const nodemailer = require("nodemailer");
 const QuestionPaper = mongoose.model("ACADEMICQUERIESQUESTIONPAPER");
 
-// Set up file upload storage
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-
-// Create a multer instance for file upload
-const upload = multer({ storage });
-
 // Handle file upload endpoint
-router.post("/api/upload", upload.single("pdf"), (req, res) => {
-  const { filename, path } = req.file;
-  const { type, subject, year, course, valid, name } = req.body;
+router.post("/api/upload", (req, res) => {
+  const { type, subject, year, course, valid, name, path, email } = req.body;
   // Create a new QuestionPaper document
   const questionPaper = new QuestionPaper({
     type: type,
@@ -29,17 +15,47 @@ router.post("/api/upload", upload.single("pdf"), (req, res) => {
     course: course,
     pdfPath: path,
     valid: valid || false, // Set valid to false if not provided
-    name: valid ? name : null, // Set name to null if valid is false
+    name: valid ? null : name, // Set name to null if valid is false
+    email: valid ? null : email, // Set name to null if valid is false
   });
 
   // Save the document to MongoDB
   questionPaper
     .save()
     .then(() => {
-      res.status(200).json({ message: "Question paper uploaded successfully." });
+      if (!valid) {
+        // Send email to the user
+        const transporter = nodemailer.createTransport({
+          service: "Gmail",
+          auth: {
+            user: process.env.EMAIL, // Replace with your own email address
+            pass: process.env.EMAIL_PASSWORD, // Replace with your own email password
+          },
+        });
+
+        const mailOptions = {
+          from: `"Academic Queries" <${process.env.EMAIL}>`, // Replace with your own name and email address
+          to: email,
+          subject: "Question Paper Uploaded Successfully",
+          text: `Dear ${name},\n\nThank you for uploading the question paper. It has been received and will be reviewed shortly.\n\nBest regards,\nAcademic Queries`,
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.error("Failed to send email:", error);
+          } else {
+            console.log("Email sent: %s", info.messageId);
+          }
+        });
+      }
+
+      res
+        .status(200)
+        .json({ message: "Question paper uploaded successfully." });
     })
     .catch((error) => {
       res.status(500).json({ error: error });
+      console.log(error);
     });
 });
 
@@ -70,17 +86,113 @@ router.get("/api/course/:type", (req, res) => {
     });
 });
 // Get question paper by ID
-router.get('/api/get/paper/:id', async (req, res) => {
+router.get("/api/get/paper/:id", async (req, res) => {
   try {
     const questionPaper = await QuestionPaper.findById(req.params.id);
     if (!questionPaper) {
-      return res.status(404).json({ error: 'Question paper not found' });
+      return res.status(404).json({ error: "Question paper not found" });
     }
     res.json(questionPaper);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch question paper' });
+    res.status(500).json({ error: "Failed to fetch question paper" });
   }
 });
+// Delete question paper by ID
+router.delete("/api/delete/paper/:id", async (req, res) => {
+  try {
+    const questionPaper = await QuestionPaper.findByIdAndDelete(req.params.id);
+    if (!questionPaper) {
+      return res.status(404).json({ error: "Question paper not found" });
+    }
+    
+    // Send email notification to the user if the question paper is rejected
+    if (!questionPaper.valid) {
+      const transporter = nodemailer.createTransport({
+        service: "Gmail",
+        auth: {
+          user: process.env.EMAIL, // Replace with your own email address
+          pass: process.env.EMAIL_PASSWORD, // Replace with your own email password
+        },
+      });
 
+      const mailOptions = {
+        from: `"Academic Queries" <${process.env.EMAIL}>`, // Replace with your own name and email address
+        to: questionPaper.email, // Assuming the question paper has an email property, change it to the actual property name
+        subject: "Question Paper Rejected",
+        text: `Dear ${questionPaper.name},
+        
+        We're sorry to inform you that your question paper submission has been rejected. 
+        Please review the submission guidelines and make sure to meet all the requirements before resubmitting. 
+        Thank you for your understanding and support.`
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error("Failed to send email:", error);
+        } else {
+          console.log("Email sent: %s", info.messageId);
+        }
+      });
+    }
+
+    res.json({ message: "Question paper deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete question paper" });
+  }
+});
+// Update question paper
+router.put("/api/update/paper/:id", async (req, res) => {
+  const { valid, type, subject, course, year } = req.body;
+  const id = req.params.id;
+
+  try {
+    const questionPaper = await QuestionPaper.findByIdAndUpdate(
+      id,
+      {
+        valid: valid,
+        type: type,
+        subject: subject,
+        course: course,
+        year: year,
+      },
+      { new: true }
+    );
+
+    if (!questionPaper) {
+      return res.status(404).json({ error: "Question paper not found" });
+    }
+
+    // Generate an access link
+    const accessLink = `${process.env.DOMAIN}/varified/paper/${questionPaper._id}`;
+
+    // Send email notification to the user
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.EMAIL, // Replace with your own email address
+        pass: process.env.EMAIL_PASSWORD, // Replace with your own email password
+      },
+    });
+
+    const mailOptions = {
+      from: `"Academic Queries" <${process.env.EMAIL}>`, // Replace with your own name and email address
+      to: questionPaper.email, // Assuming the question paper has an email property, change it to the actual property name
+      subject: "Question Paper Accepted",
+      text: `Your question paper has been accepted and is now available for review. Access the paper here: ${accessLink}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Failed to send email:", error);
+      } else {
+        console.log("Email sent: %s", info.messageId);
+      }
+    });
+
+    res.json({ message: "Question paper updated successfully", questionPaper });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update question paper" });
+  }
+});
 
 module.exports = router;

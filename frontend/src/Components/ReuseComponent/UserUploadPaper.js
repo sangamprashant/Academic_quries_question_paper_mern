@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { storage } from "../../firebase";
+import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 
 function UserUploadPaper() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -10,17 +13,10 @@ function UserUploadPaper() {
   const [year, setYear] = useState("");
   const [course, setCourse] = useState("");
   const [name, setName] = useState("");
-  const token = localStorage.getItem("jwt");
-  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
   // Toast functions
   const notifyA = (msg) => toast.error(msg);
   const notifyB = (msg) => toast.success(msg);
-
-  useEffect(() => {
-    if (!token) {
-      navigate("/");
-    }
-  });
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -36,28 +32,58 @@ function UserUploadPaper() {
     }
   };
 
-  const handleUpload = () => {
-    if (!selectedFile || !type || !subject || !year || !course || !name) {
+  const uploadFile = () => {
+    if (
+      !selectedFile ||
+      !type ||
+      !subject ||
+      !year ||
+      !course ||
+      !name ||
+      !email
+    ) {
       notifyA("Please fill all the fields.");
       return;
     }
-    if (year.length !== 4 || isNaN(year)) {
-      notifyA("Please enter a valid year.");
+    const fileRef = ref(storage, `Pdf/${selectedFile.name + uuidv4()}`);
+    uploadBytes(fileRef, selectedFile).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        // Send the download URL to your server for storage in MongoDB
+        handleUpload(url);
+      });
+    });
+  };
+
+  const handleUpload = (url) => {
+    if (
+      !name ||
+      !selectedFile ||
+      !type ||
+      !subject ||
+      !year ||
+      !course ||
+      !url ||
+      !email
+    ) {
+      notifyA("Please fill all the fields.");
       return;
     }
-
-    const formData = new FormData();
-    formData.append("pdf", selectedFile);
-    formData.append("type", type);
-    formData.append("subject", subject);
-    formData.append("year", year);
-    formData.append("course", course);
-    formData.append("name", name);
-    formData.append("valid", false);
-
-    fetch("http://localhost:5000/api/upload", {
+    const requestBody = {
+      path: url,
+      type: type,
+      subject: subject,
+      year: year,
+      course: course,
+      name: name,
+      email: email,
+      valid: false,
+    };
+    fetch(" http://localhost:5000/api/upload", {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -70,6 +96,7 @@ function UserUploadPaper() {
           setYear("");
           setCourse("");
           setName("");
+          setEmail("");
         } else {
           notifyA(data.error);
         }
@@ -92,15 +119,35 @@ function UserUploadPaper() {
           <div class="row mt-5 justify-content-center">
             <div class="col-lg-10">
               <form role="form" class="php-email-form">
-                <div class="form-group mt-3">
-                  <input
-                    class="form-control"
-                    placeholder="Enter your name.."
-                    value={name}
-                    onChange={(e) => {
-                      setName(e.target.value);
-                    }}
-                  />
+                <div class="row">
+                  <div class="col-md-6 form-group">
+                    <input
+                      type="text"
+                      name="Subject"
+                      class="form-control"
+                      id="Subject"
+                      placeholder=" Enter your name"
+                      required
+                      value={name}
+                      onChange={(e) => {
+                        setName(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <div class="col-md-6 form-group mt-3 mt-md-0">
+                    <input
+                      type="email"
+                      class="form-control"
+                      name="email"
+                      id="email"
+                      placeholder="Enter your email"
+                      required
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                    />
+                  </div>
                 </div>
                 <div class="row">
                   <div class="col-md-6 form-group">
@@ -120,7 +167,7 @@ function UserUploadPaper() {
                   <div class="col-md-6 form-group mt-3 mt-md-0">
                     <input
                       type="number"
-                      class="form-control"
+                      className="form-control"
                       name="year"
                       id="year"
                       placeholder="Paper Conducted in"
@@ -178,7 +225,7 @@ function UserUploadPaper() {
                   <button
                     type="button"
                     onClick={() => {
-                      handleUpload();
+                      uploadFile();
                     }}
                   >
                     Upload file

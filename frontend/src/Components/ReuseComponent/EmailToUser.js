@@ -1,32 +1,45 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import "../css/Contact.css";
+import AdminNav from "./AdminNav";
 
-function Contact() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("");
+function EmailToUser() {
+  const { emailId } = useParams(); // Get the email ID from URL parameters
+  const [emailContent, setEmailContent] = useState();
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
+  useEffect(() => {
+    // Fetch the email content based on the email ID
+    const fetchEmailContent = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/get/contact/${emailId}`);
+        const data = await response.json();
+        setEmailContent(data);
+      } catch (error) {
+        console.error("Failed to fetch email content:", error);
+      }
+    };
+
+    fetchEmailContent();
+  }, [emailId]);
 
   const handleSendEmail = () => {
-    if (!name || !email || !subject || !message) {
-      setErrorMessage("Please fill in all the fields.");
+    if (!message) {
+      setErrorMessage("Please enter a response message.");
       return;
     }
 
     setLoading(true);
 
     const requestBody = {
-      name: name,
-      to: email,
-      subject: subject,
-      input: message,
+      response: message,
+      subject: `Response to - ${emailContent?.subject}`,
     };
 
-    fetch("http://localhost:5000/api/public/sendemail", {
+    fetch(`http://localhost:5000/api/reply/${emailId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,73 +49,29 @@ function Contact() {
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
-        if (data.message) {
-          setSuccessMessage("Your message has been sent. Thank you!");
-          setName("");
-          setEmail("");
-          setSubject("");
+        if (data._id) {
+          setSuccessMessage("Your response has been sent successfully.");
           setMessage("");
           setErrorMessage("");
         } else {
-          setErrorMessage("Failed to send the message. Please try again later.");
+          setErrorMessage("Failed to send the response. Please try again later.");
         }
       })
       .catch((error) => {
         setLoading(false);
-        setErrorMessage("Failed to send the message. Please try again later.");
-        console.error("Failed to send the message:", error);
+        setErrorMessage("Failed to send the response. Please try again later.");
+        console.error("Failed to send the response:", error);
       });
   };
 
   return (
     <div style={{ marginTop: "70px" }}>
+    <AdminNav/>
       <section id="contact" className="contact section-bg">
         <div className="container">
           <div className="section-title">
-            <h2>Contact</h2>
-            <p>We're Happy to Hear from You!</p>
-            <p>
-              Thank you for reaching out. We appreciate your interest and will
-              get back to you soon.
-            </p>
-          </div>
-
-          <div className="row mt-5 justify-content-center">
-            <div className="col-lg-10">
-              <div className="info-wrap">
-                <div className="row">
-                  <div className="col-lg-4 info">
-                    <i className="fa fa-map-marker"></i>
-                    <h4>Location:</h4>
-                    <p>
-                      A108 Adam Street
-                      <br />
-                      New York, NY 535022
-                    </p>
-                  </div>
-
-                  <div className="col-lg-4 info mt-4 mt-lg-0">
-                    <i className="fa fa-envelope"></i>
-                    <h4>Email:</h4>
-                    <p>
-                      info@example.com
-                      <br />
-                      contact@example.com
-                    </p>
-                  </div>
-
-                  <div className="col-lg-4 info mt-4 mt-lg-0">
-                    <i className="fa fa-phone"></i>
-                    <h4>Call:</h4>
-                    <p>
-                      +1 5589 55488 51
-                      <br />
-                      +1 5589 22475 14
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <h2>Message response</h2>
+            <p>{emailContent?.message}</p>
           </div>
 
           <div className="row mt-5 justify-content-center">
@@ -117,8 +86,8 @@ function Contact() {
                       id="name"
                       placeholder="Your Name"
                       required
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      value={emailContent?.name}
+                      disabled
                     />
                   </div>
                   <div className="col-md-6 form-group mt-3 mt-md-0">
@@ -129,8 +98,8 @@ function Contact() {
                       id="email"
                       placeholder="Your Email"
                       required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={emailContent?.email}
+                      disabled
                     />
                   </div>
                 </div>
@@ -142,8 +111,8 @@ function Contact() {
                     id="subject"
                     placeholder="Subject"
                     required
-                    value={subject}
-                    onChange={(e) => setSubject(e.target.value)}
+                    value={`Response to - ${emailContent?.subject}`}
+                    disabled
                   />
                 </div>
                 <div className="form-group mt-3">
@@ -159,12 +128,8 @@ function Contact() {
                 </div>
                 <div className="my-3">
                   {loading && <div className="loading">Loading</div>}
-                  {errorMessage && (
-                    <div className="error-message">{errorMessage}</div>
-                  )}
-                  {successMessage && (
-                    <div className="sent-message">{successMessage}</div>
-                  )}
+                  {errorMessage && <div className="error-message">{errorMessage}</div>}
+                  {successMessage && <div className="sent-message">{successMessage}</div>}
                 </div>
                 <div className="text-center">
                   <button type="button" onClick={handleSendEmail}>
@@ -180,4 +145,4 @@ function Contact() {
   );
 }
 
-export default Contact;
+export default EmailToUser;

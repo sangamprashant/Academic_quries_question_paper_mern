@@ -3,6 +3,9 @@ import "./css/Contact.css";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AdminNav from "./ReuseComponent/AdminNav";
+import { storage } from "../firebase";
+import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 
 function UploadPaper() {
   const [courses, setCourses] = useState([]);
@@ -23,12 +26,12 @@ function UploadPaper() {
     if (!token) {
       navigate("/");
     }
-  });
+  }, [navigate, token]);
 
   //fetch courses
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("/api/get/course")
+    fetch("http://localhost:5000/api/get/course")
       .then((response) => response.json())
       .then((data) => {
         setCourses(data);
@@ -41,7 +44,7 @@ function UploadPaper() {
   //fetch types
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("/api/get/types")
+    fetch("http://localhost:5000/api/get/types")
       .then((response) => response.json())
       .then((data) => {
         setTypes(data);
@@ -65,21 +68,39 @@ function UploadPaper() {
     }
   };
 
-  const handleUpload = () => {
+  const uploadFile = () => {
     if (!selectedFile || !type || !subject || !year || !course) {
       notifyA("Please fill all the fields.");
       return;
     }
-    const formData = new FormData();
-    formData.append("pdf", selectedFile);
-    formData.append("type", type);
-    formData.append("subject", subject);
-    formData.append("year", year);
-    formData.append("course", course);
-    formData.append("valid", true);
+    const fileRef = ref(storage, `Pdf/${selectedFile.name + uuidv4()}`);
+    uploadBytes(fileRef, selectedFile).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        // Send the download URL to your server for storage in MongoDB
+        handleUpload(url);
+      });
+    });
+  };
+
+  const handleUpload = (url) => {
+    if (!selectedFile || !type || !subject || !year || !course || !url) {
+      notifyA("Please fill all the fields.");
+      return;
+    }
+    const requestBody = {
+      path: url,
+      type: type,
+      subject: subject,
+      year: year,
+      course: course,
+      valid: true,
+    };
     fetch("/api/upload", {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -207,7 +228,7 @@ function UploadPaper() {
                   <button
                     type="button"
                     onClick={() => {
-                      handleUpload();
+                      uploadFile();
                     }}
                   >
                     Upload file

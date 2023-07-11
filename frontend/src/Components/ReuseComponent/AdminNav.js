@@ -15,7 +15,7 @@ function AdminNav() {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/signin");
+    navigate("/");
     setUserLogin(false);
   };
 

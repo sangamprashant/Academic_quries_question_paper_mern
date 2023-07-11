@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AdminNav from "../ReuseComponent/AdminNav";
+import { storage } from "../../firebase";
+import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 
 function UploadPaper() {
   const [pdfFiles, setPdfFiles] = useState([]);
@@ -47,19 +50,36 @@ function UploadPaper() {
       setPreviewUrl(null);
     }
   };
-
-  const handleUpload = () => {
+  const uploadFile = () => {
     if (!selectedFile || !inputName || !inputPath) {
       notifyA("Please fill all the fields.");
       return;
     }
-    const formData = new FormData();
-    formData.append("pdf", selectedFile);
-    formData.append("inputName", inputName);
-    formData.append("inputPath", inputPath);
+    const fileRef = ref(storage, `image/${selectedFile.name + uuidv4()}`);
+    uploadBytes(fileRef, selectedFile).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        // Send the download URL to your server for storage in MongoDB
+        handleUpload(url);
+      });
+    });
+  };
+  const handleUpload = (url) => {
+    if (!selectedFile || !inputName || !inputPath) {
+      notifyA("Please fill all the fields.");
+      return;
+    }
+    console.log(url);
+    const requestBody = {
+      courseImage: url,
+      coursePath: inputPath,
+      courseName: inputName,
+    };
     fetch("http://localhost:5000/api/add/course", {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -107,7 +127,7 @@ function UploadPaper() {
                     <input
                       type="text"
                       class="form-control"
-                      placeholder="Paper Conducted in"
+                      placeholder="Paper Path"
                       required
                       value={inputPath}
                       onChange={(e) => {
@@ -143,7 +163,7 @@ function UploadPaper() {
                   <button
                     type="button"
                     onClick={() => {
-                      handleUpload();
+                      uploadFile();
                     }}
                   >
                     Upload file
@@ -164,7 +184,7 @@ function UploadPaper() {
                             <>
                               <hr />
                               <img
-                                src={`http://localhost:5000/${Papers.courseImage}`}
+                                src={`${Papers.courseImage}`}
                                 style={{ height: "40px" }}
                               />
                             </>

@@ -4,7 +4,6 @@ const questionPaperSchema = new mongoose.Schema({
   type: {
     type: String,
     required: true,
-    enum: ["internal", "external"],
   },
   subject: {
     type: String,
@@ -23,6 +22,10 @@ const questionPaperSchema = new mongoose.Schema({
     required: true,
   },
   name: {
+    type: String,
+    default: null,
+  },
+  email: {
     type: String,
     default: null,
   },

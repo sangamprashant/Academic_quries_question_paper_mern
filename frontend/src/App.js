@@ -22,10 +22,11 @@ import Admin from "./Components/Admin";
 import AddType from "./Components/ReuseComponent/AddType";
 import AddCourse from "./Components/ReuseComponent/AddCourse";
 import GetPaperToAdmin from "./Components/ReuseComponent/GetPaperToAdmin";
-import GetPaperToUser from "./Components/ReuseComponent/GetPaperToUesr";
+import Test from "./Components/Test";
+import EmailToUser from "./Components/ReuseComponent/EmailToUser";
+import VerifiedEmailPaper from "./Components/ReuseComponent/VerifiedEmailPaper";
 
 function App() {
-  const [navActive, setNavActive] = useState("Home");
   const [userLogin, setUserLogin] = useState(false);
   return (
     <BrowserRouter>
@@ -34,24 +35,26 @@ function App() {
       >
         <Navbar login={userLogin} />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signin" element={<Signin/>}/>
-          <Route path="/contact" element={<Contact  />} />
-          <Route path="/paper" element={<Paper/>}/>
-          <Route path="/about" element={<AboutUs/>}/>
-          <Route path="/services" element={<WhatWeDo/>}/>
-          <Route path="/testimonials" element={<Team/>}/>
-          <Route path="/responses" element={<Responses/>}/>
-          <Route path="/signin/warning" element={<NotLoggedIn/>}/>
-          <Route path="/user/upload/paper" element={<UserUploadPaper/>}/>
-          <Route path="/course/:branch" element={<Course />}/>
-          <Route path="/paper/:paperId" element={<GetPaperToUser />}/>
-          <Route path="/admin" element={<Admin />}/>
-          <Route path="/admin/add/type" element={<AddType />}/>
-          <Route path="/admin/modify/:paperId" element={<GetPaperToAdmin />}/>
-          <Route path="/admin/add/course" element={<AddCourse />}/>
-          <Route path="/admin/upload" element={<UploadPaper/>}/>
-          <Route path="*" element={<PageNotFound />} />
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/signin" element={<Signin/>}/>
+          <Route exact path="/contact" element={<Contact  />} />
+          <Route exact path="/paper" element={<Paper/>}/>
+          <Route exact path="/about" element={<AboutUs/>}/>
+          <Route exact path="/services" element={<WhatWeDo/>}/>
+          <Route exact path="/testimonials" element={<Team/>}/>
+          <Route exact path="/responses" element={<Responses/>}/>
+          <Route exact path="/signin/warning" element={<NotLoggedIn/>}/>
+          <Route exact path="/user/upload/paper" element={<UserUploadPaper/>}/>
+          <Route exact path="/course/:branch" element={<Course />}/>
+          <Route exact path="/varified/paper/:paperId" element={<VerifiedEmailPaper />}/>
+          <Route exact path="/admin" element={<Admin />}/>
+          <Route exact path="/admin/add/type" element={<AddType />}/>
+          <Route exact path="/admin/modify/:paperId" element={<GetPaperToAdmin />}/>
+          <Route exact path="/admin/response/email/:emailId" element={<EmailToUser />}/>
+          <Route exact path="/admin/add/course" element={<AddCourse />}/>
+          <Route exact path="/admin/upload" element={<UploadPaper/>}/>
+          <Route exact path="/test" element={<Test/>}/>
+          <Route exact path="*" element={<PageNotFound />} />
         </Routes>
         <Footer/>
         <ToastContainer theme="dark" />
