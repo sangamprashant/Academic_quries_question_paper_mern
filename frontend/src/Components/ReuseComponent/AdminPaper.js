@@ -1,0 +1,180 @@
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import "../css/Course.css";
+import AdminNav from "./AdminNav";
+import { toast } from "react-toastify";
+
+function AdminPaper() {
+  const { branch, course } = useParams();
+  const [pdfFiles, setPdfFiles] = useState([]);
+  const [allData, setAllData] = useState([]);
+  const [searchInput, setSetInput] = useState();
+  const [searchYear, setSearchYear] = useState();
+  // Toast functions
+  const notifyA = (msg) => toast.error(msg);
+  const notifyB = (msg) => toast.success(msg);
+
+  useEffect(() => {
+    // Fetch PDF file data from the server
+    fetch(`/api/course/${branch}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setAllData(data);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch PDF files:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (searchYear && !searchInput) {
+      const filteredPdfFiles = allData.filter(
+        (file) => file.year === Number(searchYear)
+      );
+      setPdfFiles(filteredPdfFiles);
+    } else if (searchInput && !Number(searchYear)) {
+      const filteredPdfFiles = allData.filter((file) => {
+        const subject = file.subject.toLowerCase();
+        const searchTerm = searchInput.toLowerCase();
+        return subject.includes(searchTerm);
+      });
+      setPdfFiles(filteredPdfFiles);
+    } else {
+      setPdfFiles(allData);
+    }
+  }, [allData, searchYear, searchInput]);
+
+  const handelDelete = (id) => {
+    // Send a DELETE request to the server to delete the question paper
+    fetch(`/api/paper/delete/by/admin/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          notifyB(data.message);
+          // Remove the deleted paper from the pdfFiles state
+          setPdfFiles((prevFiles) =>
+            prevFiles.filter((file) => file._id !== id)
+          );
+        } else {
+          notifyA(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to delete question paper:", error);
+      });
+  };
+
+  return (
+    <div style={{ marginTop: "70px" }}>
+      <AdminNav />
+      <div style={{ marginTop: "70px" }}>
+        <section id="portfolio" className="portfolio">
+          <div className="container">
+            <div className="section-title">
+              <h2>Papers of {course} to Admin</h2>
+
+              <input
+                className="Paper_search"
+                placeholder="Search.."
+                onChange={(e) => {
+                  setSetInput(e.currentTarget.value);
+                }}
+              />
+            </div>
+
+            <div class="sales-boxes">
+              <div class="recent-sales box">
+                <div class="title">List of Papers</div>
+                <div class="sales-details">
+                  <ul class="details" style={{ marginRight: "20px" }}>
+                    <li class="topic">Subject Name</li>
+                    {pdfFiles.length !== 0
+                      ? pdfFiles.map((Papers) => {
+                          return (
+                            <>
+                              <hr />
+                              <li key={Papers._id}>
+                                <a
+                                  href={`/admin/modify/correction/${Papers._id}`}
+                                >
+                                  {Papers.subject}
+                                </a>
+                              </li>
+                            </>
+                          );
+                        })
+                      : ""}
+                  </ul>
+                  <ul class="details" style={{ marginRight: "20px" }}>
+                    <li class="topic">Year</li>
+                    {pdfFiles.length !== 0
+                      ? pdfFiles.map((Papers) => {
+                          return (
+                            <>
+                              <hr />
+                              <li key={Papers._id}>
+                                <a
+                                  href={`/admin/modify/correction/${Papers._id}`}
+                                >
+                                  {Papers.year}
+                                </a>
+                              </li>
+                            </>
+                          );
+                        })
+                      : ""}
+                  </ul>
+                  <ul class="details">
+                    <li class="topic">Type</li>
+                    {pdfFiles.length !== 0
+                      ? pdfFiles.map((Papers) => {
+                          return (
+                            <>
+                              <hr />
+                              <li key={Papers._id}>
+                                <a
+                                  href={`/admin/modify/correction/${Papers._id}`}
+                                >
+                                  {Papers.type}
+                                </a>
+                              </li>
+                            </>
+                          );
+                        })
+                      : ""}
+                  </ul>
+                  <ul class="details">
+                    <li class="topic">Action</li>
+                    {pdfFiles.length !== 0
+                      ? pdfFiles.map((Papers) => {
+                          return (
+                            <>
+                              <hr />
+                              <li key={Papers._id}>
+                                <a
+                                  style={{ color: "red" }}
+                                  onClick={() => {
+                                    handelDelete(Papers._id);
+                                  }}
+                                >
+                                  Delete
+                                </a>
+                              </li>
+                            </>
+                          );
+                        })
+                      : ""}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+export default AdminPaper;

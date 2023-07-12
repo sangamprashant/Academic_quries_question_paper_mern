@@ -99,7 +99,7 @@ router.get("/api/get/paper/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch question paper" });
   }
 });
-// Delete question paper by ID
+// Delete question paper by ID AND SEND EMAIL
 router.delete("/api/delete/paper/:id", async (req, res) => {
   try {
     const questionPaper = await QuestionPaper.findByIdAndDelete(req.params.id);
@@ -141,6 +141,19 @@ router.delete("/api/delete/paper/:id", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to delete question paper" });
   }
+});
+// DELETE a question paper by ID
+router.delete("/api/paper/delete/by/admin/:id", (req, res) => {
+  const paperId = req.params.id;
+
+  QuestionPaper.findByIdAndDelete(paperId)
+    .then(() => {
+      res.status(200).json({ message: "Question paper deleted successfully" });
+    })
+    .catch((error) => {
+      console.error("Failed to delete question paper:", error);
+      res.status(500).json({ error: "Failed to delete question paper" });
+    });
 });
 // Update question paper
 router.put("/api/update/paper/:id", async (req, res) => {
@@ -192,6 +205,31 @@ router.put("/api/update/paper/:id", async (req, res) => {
     });
 
     res.json({ message: "Question paper updated successfully", questionPaper });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update question paper" });
+  }
+});
+// Update question paper
+router.put("/api/edit/paper/:id", async (req, res) => {
+  const {  type, subject, course, year } = req.body;
+  const id = req.params.id;
+
+  try {
+    const questionPaper = await QuestionPaper.findByIdAndUpdate(
+      id,
+      {
+        type: type,
+        subject: subject,
+        course: course,
+        year: year,
+      },
+      { new: true }
+    );
+
+    if (!questionPaper) {
+      return res.status(404).json({ error: "Question paper not found" });
+    }
+    res.json({ message: "Question paper edited successfully", questionPaper });
   } catch (error) {
     res.status(500).json({ error: "Failed to update question paper" });
   }

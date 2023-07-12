@@ -27,6 +27,9 @@ import EmailToUser from "./Components/ReuseComponent/EmailToUser";
 import VerifiedEmailPaper from "./Components/ReuseComponent/VerifiedEmailPaper";
 import Term from "./Components/ReuseComponent/Term";
 import Policy from "./Components/ReuseComponent/Policy";
+import AdminCourse from "./Components/ReuseComponent/AdminCourse";
+import AdminPaper from "./Components/ReuseComponent/AdminPaper";
+import AdminEditPaper from "./Components/ReuseComponent/AdminEditPaper";
 
 function App() {
   const [userLogin, setUserLogin] = useState(false);
@@ -52,6 +55,9 @@ function App() {
           <Route exact path="/course/:branch/:course" element={<Course />}/>
           <Route exact path="/varified/paper/:paperId" element={<VerifiedEmailPaper />}/>
           <Route exact path="/admin" element={<Admin />}/>
+          <Route exact path="/admin/course" element={<AdminCourse />}/>
+          <Route exact path="/course/to/update/:branch/:course" element={<AdminPaper />}/>
+          <Route exact path="/admin/modify/correction/:paperId" element={<AdminEditPaper />}/>
           <Route exact path="/admin/add/type" element={<AddType />}/>
           <Route exact path="/admin/modify/:paperId" element={<GetPaperToAdmin />}/>
           <Route exact path="/admin/response/email/:emailId" element={<EmailToUser />}/>

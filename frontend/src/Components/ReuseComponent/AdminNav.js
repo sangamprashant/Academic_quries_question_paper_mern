@@ -28,14 +28,17 @@ function AdminNav() {
         <Link className="navbar-brand" to="/admin/upload" style={{ color: "white" }}>
           Add Paper
         </Link>
-        <Link className="navbar-brand" to="/responses" style={{ color: "white" }}>
-          Responses
-        </Link>
         <Link className="navbar-brand" to="/admin/add/type" style={{ color: "white" }}>
           Add Type
         </Link>
         <Link className="navbar-brand" to="/admin/add/course" style={{ color: "white" }}>
           Add Course
+        </Link>
+        <Link className="navbar-brand" to="/admin/course" style={{ color: "white" }}>
+          Update Paper
+        </Link>
+        <Link className="navbar-brand" to="/responses" style={{ color: "white" }}>
+          Responses
         </Link>
         <Link
           className="navbar-brand"
