@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./css/Navbar.css";
-import logo from "./img/logo aq.png";
+import logo from "./img/logo.png";
 import { Link } from "react-router-dom";
 
 export default function Navbar({ login }) {
@@ -54,7 +54,7 @@ export default function Navbar({ login }) {
               <img src={logo} alt="" class="img-fluid" />
             </Link>
             <h1>
-              <Link to="/"> Academic quries</Link>
+              <Link to="/"> ACADEMIC QUERIES</Link>
             </h1>
           </div>
 
@@ -78,7 +78,7 @@ export default function Navbar({ login }) {
               </li>
               <li>
                 <Link className={`nav-linksignin`} to="/paper">
-                  Papers
+                  Courses
                 </Link>
               </li>
               <li>
@@ -102,16 +102,16 @@ export default function Navbar({ login }) {
 
           <div class="header-social-links d-flex align-items-center">
             {/* Social media links */}
-            <a href="#" class="twitter">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" class="facebook">
-              <i class="fab fa-facebook"></i>
-            </a>
-            <a href="#" class="instagram">
+            <a
+              href="https://instagram.com/avantika_shrivastava"
+              class="instagram"
+            >
               <i class="fab fa-instagram"></i>
             </a>
-            <a href="#" class="linkedin">
+            <a
+              href="https://www.linkedin.com/in/avantika-shrivastava-b67037252"
+              class="linkedin"
+            >
               <i class="fab fa-linkedin"></i>
             </a>
           </div>

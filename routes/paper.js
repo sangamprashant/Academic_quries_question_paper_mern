@@ -62,6 +62,7 @@ router.post("/api/upload", (req, res) => {
 //get all papers
 router.get("/api/question-papers", (req, res) => {
   QuestionPaper.find()
+    .sort("-createdAt")
     .then((questionPapers) => {
       res.json(questionPapers);
     })
@@ -77,6 +78,7 @@ router.get("/api/course/:type", (req, res) => {
 
   // Get items by course = type and valid = true
   QuestionPaper.find({ course: type, valid: true })
+    .sort("-createdAt")
     .then((items) => {
       res.json(items);
     })
@@ -104,7 +106,7 @@ router.delete("/api/delete/paper/:id", async (req, res) => {
     if (!questionPaper) {
       return res.status(404).json({ error: "Question paper not found" });
     }
-    
+
     // Send email notification to the user if the question paper is rejected
     if (!questionPaper.valid) {
       const transporter = nodemailer.createTransport({
@@ -123,7 +125,7 @@ router.delete("/api/delete/paper/:id", async (req, res) => {
         
         We're sorry to inform you that your question paper submission has been rejected. 
         Please review the submission guidelines and make sure to meet all the requirements before resubmitting. 
-        Thank you for your understanding and support.`
+        Thank you for your understanding and support.`,
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
@@ -194,5 +196,24 @@ router.put("/api/update/paper/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to update question paper" });
   }
 });
-
+// Get all unique years
+router.get("/api/paper/years", async (req, res) => {
+  try {
+    const years = await QuestionPaper.distinct("year", { valid: true }).maxTimeMS(30000);
+    res.status(200).json(years);
+  } catch (error) {
+    console.error("Failed to fetch unique years:", error);
+    res.status(500).json({ error: "Failed to fetch unique years" });
+  }
+});
+// Route to fetch the count of valid question papers
+router.get("/api/count/valid-question-papers", async (req, res) => {
+  try {
+    const count = await QuestionPaper.countDocuments({ valid: true });
+    res.json({ count });
+  } catch (error) {
+    console.error("Failed to fetch count of valid question papers:", error);
+    res.status(500).json({ error: "Failed to fetch count of valid question papers" });
+  }
+});
 module.exports = router;

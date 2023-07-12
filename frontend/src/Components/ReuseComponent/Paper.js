@@ -8,7 +8,7 @@ function Paper() {
 
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/get/course")
+    fetch("/api/get/course")
       .then((response) => response.json())
       .then((data) => {
         setPdfFiles(data);
@@ -23,13 +23,12 @@ function Paper() {
       <section id="portfolio" className="portfolio">
         <div className="container">
           <div className="section-title">
-            <h2>Paper</h2>
-            <p>Lorem ipsum dolor sit amet.</p>
+            <h2>Courses</h2>
           </div>
 
           <div className="row portfolio-container">
             {pdfFiles.map((Papers) => (
-              <Link className="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" to={`/course/${Papers.coursePath}`}>
+              <Link className="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" to={`/course/${Papers.coursePath}/${Papers.courseName}`}>
               <div className="portfolio-wrap">
                 <figure>
                   <img

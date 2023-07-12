@@ -1,31 +1,80 @@
 import React, { useState, useEffect } from "react";
-import { li, Params, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "../css/Course.css";
 
 function Course() {
-  const { branch } = useParams();
+  const { branch ,course} = useParams();
   const [pdfFiles, setPdfFiles] = useState([]);
+  const [allData, setAllData] = useState([]);
+  const [searchInput, setSetInput] = useState();
+  const [searchYear, setSearchYear] = useState();
+  const [getYears, setGetYears] = useState([]);
+  const filteredPdfFiles = pdfFiles.filter(
+    (file) => file.year === Number(searchYear)
+  );
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch(`http://localhost:5000/api/course/${branch}`)
+    fetch(`/api/course/${branch}`)
       .then((response) => response.json())
       .then((data) => {
-        setPdfFiles(data);
+        setAllData(data);
       })
       .catch((error) => {
         console.error("Failed to fetch PDF files:", error);
       });
   }, []);
+  // useEffect(() => {
+  //   const fetchYears = async () => {
+  //     try {
+  //       const response = await fetch("/api/paper/years");
+  //       const data = await response.json();
+  //       setGetYears(data);
+  //     } catch (error) {
+  //       console.error("Failed to fetch unique years:", error);
+  //     }
+  //   };
+
+  //   fetchYears();
+  // }, [branch]);
+
+  useEffect(() => {
+    
+    if (searchYear &&!searchInput) {
+      const filteredPdfFiles = allData.filter(
+        (file) => file.year === Number(searchYear)
+      );
+      setPdfFiles(filteredPdfFiles);
+    }
+    else if (searchInput &&!Number(searchYear)) {
+      const filteredPdfFiles = allData.filter((file) => {
+        const subject = file.subject.toLowerCase();
+        const searchTerm = searchInput.toLowerCase();
+        return subject.includes(searchTerm);
+      });
+      setPdfFiles(filteredPdfFiles);
+    }else{
+      setPdfFiles(allData);
+    }
+    
+  }, [allData, searchYear, searchInput]);
+
   return (
     <div style={{ marginTop: "70px" }}>
       <div style={{ marginTop: "70px" }}>
         <section id="portfolio" className="portfolio">
           <div className="container">
             <div className="section-title">
-              <h2>Paper of {branch}</h2>
+              <h2>Papers of {course}</h2>
 
-              <input className="Paper_search" placeholder="Search.." />
+              <input
+                className="Paper_search"
+                placeholder="Search.."
+                onChange={(e) => {
+                  setSetInput(e.currentTarget.value);
+                }}
+              />
             </div>
+
             <div class="sales-boxes">
               <div class="recent-sales box">
                 <div class="title">List of Papers</div>

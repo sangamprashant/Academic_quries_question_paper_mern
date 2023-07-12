@@ -14,6 +14,7 @@ function UserUploadPaper() {
   const [course, setCourse] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [waiting,setWaiting] =useState(false)
   // Toast functions
   const notifyA = (msg) => toast.error(msg);
   const notifyB = (msg) => toast.success(msg);
@@ -45,6 +46,7 @@ function UserUploadPaper() {
       notifyA("Please fill all the fields.");
       return;
     }
+    setWaiting(true)
     const fileRef = ref(storage, `Pdf/${selectedFile.name + uuidv4()}`);
     uploadBytes(fileRef, selectedFile).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
@@ -78,7 +80,7 @@ function UserUploadPaper() {
       email: email,
       valid: false,
     };
-    fetch(" http://localhost:5000/api/upload", {
+    fetch(" /api/upload", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -97,6 +99,7 @@ function UserUploadPaper() {
           setCourse("");
           setName("");
           setEmail("");
+          setWaiting(false)
         } else {
           notifyA(data.error);
         }
@@ -111,9 +114,10 @@ function UserUploadPaper() {
       <section id="contact" class="contact section-bg">
         <div class="container">
           <div class="section-title">
-            <h2>User Upload paper</h2>
+            <h2>Upload Your Question Paper</h2>
             <p>Your contribution is valuable to us :)</p>
             <p>Format should be in PDF!</p>
+            <p className="smiley"></p>
           </div>
 
           <div class="row mt-5 justify-content-center">
@@ -229,8 +233,9 @@ function UserUploadPaper() {
                     }}
                   >
                     Upload file
-                  </button>
+                  </button>{waiting&&<p className="waiting"></p>}
                 </div>
+
               </form>
             </div>
           </div>

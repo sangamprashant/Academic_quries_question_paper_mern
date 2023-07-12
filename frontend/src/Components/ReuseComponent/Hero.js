@@ -9,10 +9,10 @@ function Hero() {
       >
         <div class="container text-center text-md-left" data-aos="fade-up">
           <h1>
-            Welcome to <span>Academic quries</span>
+            Welcome to <span >Academic Queries</span>
           </h1>
           <h2>
-            We are team of talented designers making websites with Bootstrap
+          EMPOWERING EDUACTION , ACADEMIC ASSISTENCE
           </h2>
         </div>
       </section>

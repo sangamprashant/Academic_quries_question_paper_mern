@@ -23,7 +23,7 @@ function AddType() {
 
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/get/types")
+    fetch("/api/get/types")
       .then((response) => response.json())
       .then((data) => {
         setPdfFiles(data);
@@ -31,7 +31,7 @@ function AddType() {
       .catch((error) => {
         console.error("Failed to fetch PDF files:", error);
       });
-  }, []);
+  });
 
   const handleUpload = () => {
     console.log(inputValuePath);
@@ -43,7 +43,7 @@ function AddType() {
       valuePath: inputValuePath,
       valueName: inputValueName,
     };
-    fetch("http://localhost:5000/api/add/types", {
+    fetch("/api/add/types", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

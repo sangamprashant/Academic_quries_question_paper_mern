@@ -14,37 +14,29 @@ function AboutUs() {
             <div class="col-lg-6 pt-4 pt-lg-0">
               <h3>About Us</h3>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Academic Queries is a platform that provides free surveys from
+                the past year to support the academic efforts of students and
+                faculty. The surveys are available for a variety of courses and
+                academic levels.
+                <br />
+                <br />
+                Operating our platform is easy and user-friendly. You can browse
+                different courses and select the specific survey you need. Once
+                selected, the document will be available for download in PDF
+                format for easy access on a variety of devices. We take the
+                quality and accuracy of our surveys very seriously and we
+                guarantee that the surveys are from trusted and reputable
+                educational institutions. We continually update our collection
+                to provide you with the most up-to-date surveys and ensure you
+                have access to the most relevant and up-to-date materials.
+                <br />
+                <br />
+                Join us on our educational journey and take advantage of
+                previous year's surveys. Improve your exam preparation, boost
+                your confidence and improve your academic performance with our
+                comprehensive collection of surveys.Be part of the community by
+                providing surveys about your course.
               </p>
-              <ul>
-                <li>
-                  <i class="fa fa-check-double"></i> Ullamco laboris nisi ut
-                  aliquip ex ea commodo consequat.
-                </li>
-                <li>
-                  <i class="fa fa-check-double"></i> Duis aute irure dolor in
-                  reprehenderit in voluptate velit.
-                </li>
-              </ul>
-              <div class="row icon-boxes">
-                <div class="col-md-6">
-                  <i class="fa fa-receipt"></i>
-                  <h4>Corporis voluptates sit</h4>
-                  <p>
-                    Consequuntur sunt aut quasi enim aliquam quae harum pariatur
-                    laboris nisi ut aliquip
-                  </p>
-                </div>
-                <div class="col-md-6 mt-4 mt-md-0">
-                  <i class="fa fa-cube"></i>
-                  <h4>Ullamco laboris nisi</h4>
-                  <p>
-                    Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </div>

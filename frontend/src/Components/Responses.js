@@ -24,7 +24,7 @@ function Responses() {
   useEffect(() => {
     if (isActive) {
       // Fetch PDF file data from the server
-      fetch("http://localhost:5000/api/question-papers", {
+      fetch("/api/question-papers", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -38,7 +38,7 @@ function Responses() {
         });
     } else {
       // Fetch messages from the server
-      fetch("http://localhost:5000/api/get/contact", {
+      fetch("/api/get/contact", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -55,7 +55,7 @@ function Responses() {
   }, [isActive]);
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/api/delete/paper/${id}`, {
+    fetch(`/api/delete/paper/${id}`, {
       method: "DELETE",
     })
       .then((response) => response.json())
@@ -63,7 +63,7 @@ function Responses() {
         if (data.message) {
           notifyB(data.message);
           // Refresh the question papers after deletion
-          fetch("http://localhost:5000/api/question-papers")
+          fetch("/api/question-papers")
             .then((response) => response.json())
             .then((data) => {
               setPdfFiles(data);

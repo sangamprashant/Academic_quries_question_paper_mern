@@ -1,6 +1,6 @@
 import React from "react";
 import "../css/Count.css";
-function Count() {
+function Count({count}) {
   return (
     <div>
       <section id="counts" class="counts">
@@ -10,7 +10,7 @@ function Count() {
               <div class="count-box">
                 <i class="fa fa-smile"></i>
                 <span
-                >85</span>
+                >938</span>
                 <p>Happy Clients</p>
               </div>
             </div>
@@ -18,8 +18,8 @@ function Count() {
             <div class="col-lg-3 col-6">
               <div class="count-box">
                 <i class="fa fa-file-text"></i>
-                <span>86</span>
-                <p>Projects</p>
+                <span>{count}</span>
+                <p>Papers</p>
               </div>
             </div>
 
@@ -37,7 +37,7 @@ function Count() {
                 <i class="fa fa-user"></i>
                 <span
                 >02</span>
-                <p>Hard Workers</p>
+                <p>Developers</p>
               </div>
             </div>
           </div>

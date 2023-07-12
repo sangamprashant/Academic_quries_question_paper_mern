@@ -26,7 +26,7 @@ function Contact() {
       input: message,
     };
 
-    fetch("http://localhost:5000/api/public/sendemail", {
+    fetch("/api/public/sendemail", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,35 +70,30 @@ function Contact() {
           <div className="row mt-5 justify-content-center">
             <div className="col-lg-10">
               <div className="info-wrap">
-                <div className="row">
-                  <div className="col-lg-4 info">
-                    <i className="fa fa-map-marker"></i>
-                    <h4>Location:</h4>
-                    <p>
-                      A108 Adam Street
-                      <br />
-                      New York, NY 535022
-                    </p>
-                  </div>
+                <div className="row d-flex justify-content-around">
+
 
                   <div className="col-lg-4 info mt-4 mt-lg-0">
                     <i className="fa fa-envelope"></i>
                     <h4>Email:</h4>
-                    <p>
-                      info@example.com
+                    <a href="mailto: queriesacademic@gmail.com">
+                    queriesacademic@gmail.com
                       <br />
-                      contact@example.com
-                    </p>
+                     
+                    </a>
                   </div>
 
                   <div className="col-lg-4 info mt-4 mt-lg-0">
                     <i className="fa fa-phone"></i>
                     <h4>Call:</h4>
+                
+                      
                     <p>
-                      +1 5589 55488 51
-                      <br />
-                      +1 5589 22475 14
+                    <a href="tel:+919984529509">+91 9984529509</a><br/>
+                      <a href="tel:+916387692565">+91 6387692565</a>
                     </p>
+                      
+                 
                   </div>
                 </div>
               </div>

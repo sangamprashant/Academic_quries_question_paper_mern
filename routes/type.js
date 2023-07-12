@@ -35,6 +35,7 @@ router.post("/api/add/types", async (req, res) => {
 // Get all types
 router.get("/api/get/types", (req, res) => {
   TypeQuestionPaper.find()
+    .sort("-createdAt")
     .then((types) => {
       res.status(200).json(types);
     })

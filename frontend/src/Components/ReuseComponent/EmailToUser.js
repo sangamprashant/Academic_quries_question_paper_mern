@@ -15,7 +15,7 @@ function EmailToUser() {
     // Fetch the email content based on the email ID
     const fetchEmailContent = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/get/contact/${emailId}`);
+        const response = await fetch(`/api/get/contact/${emailId}`);
         const data = await response.json();
         setEmailContent(data);
       } catch (error) {
@@ -39,7 +39,7 @@ function EmailToUser() {
       subject: `Response to - ${emailContent?.subject}`,
     };
 
-    fetch(`http://localhost:5000/api/reply/${emailId}`, {
+    fetch(`/api/reply/${emailId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

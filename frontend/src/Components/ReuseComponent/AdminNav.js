@@ -23,18 +23,18 @@ function AdminNav() {
     <div>
       <nav
         className="navbar navbar-expand-lg bg-dark justify-content-evenly fixed-top"
-        style={{ marginTop: "70px" }}
+        style={{ marginTop: "70px",color:"white" }}
       >
-        <Link className="navbar-brand" to="/admin/upload">
+        <Link className="navbar-brand" to="/admin/upload" style={{ color: "white" }}>
           Add Paper
         </Link>
-        <Link className="navbar-brand" to="/responses">
+        <Link className="navbar-brand" to="/responses" style={{ color: "white" }}>
           Responses
         </Link>
-        <Link className="navbar-brand" to="/admin/add/type">
+        <Link className="navbar-brand" to="/admin/add/type" style={{ color: "white" }}>
           Add Type
         </Link>
-        <Link className="navbar-brand" to="/admin/add/course">
+        <Link className="navbar-brand" to="/admin/add/course" style={{ color: "white" }}>
           Add Course
         </Link>
         <Link

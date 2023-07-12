@@ -27,7 +27,7 @@ function UploadPaper() {
 
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/get/course")
+    fetch("/api/get/course")
       .then((response) => response.json())
       .then((data) => {
         setPdfFiles(data);
@@ -35,7 +35,7 @@ function UploadPaper() {
       .catch((error) => {
         console.error("Failed to fetch PDF files:", error);
       });
-  }, []);
+  });
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -74,7 +74,7 @@ function UploadPaper() {
       coursePath: inputPath,
       courseName: inputName,
     };
-    fetch("http://localhost:5000/api/add/course", {
+    fetch("/api/add/course", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

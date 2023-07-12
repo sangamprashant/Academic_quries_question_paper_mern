@@ -31,7 +31,7 @@ function UploadPaper() {
   //fetch courses
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/get/course")
+    fetch("/api/get/course")
       .then((response) => response.json())
       .then((data) => {
         setCourses(data);
@@ -44,7 +44,7 @@ function UploadPaper() {
   //fetch types
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/get/types")
+    fetch("/api/get/types")
       .then((response) => response.json())
       .then((data) => {
         setTypes(data);

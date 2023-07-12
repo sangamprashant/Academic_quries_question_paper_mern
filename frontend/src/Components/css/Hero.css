@@ -4,7 +4,7 @@
 #hero {
   width: 100%;
   height: 60vh;
-  background: url("../img/logo\ aq.png") center center;
+  background: url("../img/logo.png") center center;
   background-size: contain;
   position: relative;
   margin-top: 70px;
@@ -14,7 +14,7 @@
 
 #hero:before {
   content: "";
-  background: rgba(56, 64, 70, 0.7);
+  background: rgba(0, 0, 0, 0.7);
   position: absolute;
   bottom: 0;
   top: 0;

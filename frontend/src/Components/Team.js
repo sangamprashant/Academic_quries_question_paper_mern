@@ -1,61 +1,62 @@
-import React from 'react'
-import "./css/Team.css"
-import Prashant from "./img/prashant.png"
+import React from "react";
+import "./css/Team.css";
+import Prashant from "./img/prashant.png";
+import Avantika from "./img/avantika.png";
 
 function Team() {
   return (
-    <div style={{marginTop:"60px"}}>
+    <div style={{ marginTop: "60px" }}>
       <section id="team" class="team">
-      <div class="container">
+        <div class="container">
+          <div class="section-title">
+            <h2>Team Developers</h2>
+          </div>
 
-        <div class="section-title">
-          <h2>Team</h2>
-          <p>Meet Our Hardworking Team</p>
-        </div>
+          <div class="row" style={{ justifyContent: "space-evenly" }}>
+            <div class="col-lg-4 col-md-6 d-flex align-items-center ">
+              <div class="member">
+                <img src={Avantika} alt="" />
+                <h4>Avantika Shrivastava</h4>
+                <span>Product Manager</span>
 
-        <div class="row" style={{justifyContent:"space-evenly"}}>
-          
+                <div class="social">
+                  <a
+                    href="https://instagram.com/avantika_shrivastava"
+                    class="instagram"
+                  >
+                    <i class="fab fa-instagram"></i>
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/avantika-shrivastava-b67037252"
+                    class="linkedin"
+                  >
+                    <i class="fab fa-linkedin"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
 
-          <div class="col-lg-4 col-md-6 d-flex align-items-center " >
-            <div class="member">
-              <img src={Prashant} alt=""/>
-              <h4>Avantika Shrivastava</h4>
-              <span>Product Manager</span>
-              <p>
-                Repellat fugiat adipisci nemo illum nesciunt voluptas repellendus. In architecto rerum rerum temporibus
-              </p>
-              <div class="social">
-                <a href=""><i class="bi bi-twitter"></i></a>
-                <a href=""><i class="bi bi-facebook"></i></a>
-                <a href=""><i class="bi bi-instagram"></i></a>
-                <a href=""><i class="bi bi-linkedin"></i></a>
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+              <div class="member">
+                <img src={Prashant} alt="" />
+                <h4>Prashant Srivastav</h4>
+                <span>Chief technology officer (CTO)</span>
+
+                <div class="social">
+                  <a href="https://instagram.com/sangam_prashant">
+                    <i class="bi bi-instagram"></i>
+                  </a>
+                  <a href="https://www.linkedin.com/in/prashant-srivastav-63b44b242">
+                    <i class="bi bi-linkedin"></i>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-            <div class="member">
-              <img src={Prashant} alt=""/>
-              <h4>Prashant Srivastav</h4>
-              <span>CTO</span>
-              <p>
-                Voluptas necessitatibus occaecati quia. Earum totam consequuntur qui porro et laborum toro des clara
-              </p>
-              <div class="social">
-                <a href=""><i class="bi bi-twitter"></i></a>
-                <a href=""><i class="bi bi-facebook"></i></a>
-                <a href=""><i class="bi bi-instagram"></i></a>
-                <a href=""><i class="bi bi-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-
         </div>
-
-      </div>
-    </section>
+      </section>
     </div>
-  )
+  );
 }
 
-export default Team
+export default Team;

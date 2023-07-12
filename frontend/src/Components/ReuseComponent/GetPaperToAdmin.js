@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import AdminNav from "../ReuseComponent/AdminNav";
 import { toast } from "react-toastify";
 
@@ -14,10 +14,17 @@ function GetPaperToAdmin() {
   const [year, setYear] = useState("");
   const [course, setCourse] = useState("");
   const [name, setName] = useState("");
+  const token = localStorage.getItem("jwt");
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!token) {
+      navigate("/");
+    }
+  }, [navigate, token]);
 
   useEffect(() => {
     // Fetch the question paper by ID
-    fetch(`http://localhost:5000/api/get/paper/${paperId}`)
+    fetch(`/api/get/paper/${paperId}`)
       .then((response) => response.json())
       .then((data) => {
         setPdfFile(data);
@@ -32,7 +39,7 @@ function GetPaperToAdmin() {
   //fetch courses
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/get/course")
+    fetch("/api/get/course")
       .then((response) => response.json())
       .then((data) => {
         setCourses(data);
@@ -44,7 +51,7 @@ function GetPaperToAdmin() {
   //fetch types
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/get/types")
+    fetch("/api/get/types")
       .then((response) => response.json())
       .then((data) => {
         setTypes(data);
@@ -72,7 +79,7 @@ function GetPaperToAdmin() {
       name: name,
       valid: true,
     };
-    fetch(` http://localhost:5000/api/update/paper/${paperId}`, {
+    fetch(` /api/update/paper/${paperId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -83,6 +90,7 @@ function GetPaperToAdmin() {
       .then((data) => {
         if (data.message) {
           notifyB(data.message);
+          navigate("/responses")
         } else {
           notifyA(data.error);
         }

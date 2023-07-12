@@ -37,6 +37,7 @@ router.post("/api/add/course", async (req, res) => {
 // Get all course question papers
 router.get("/api/get/course", (req, res) => {
     COURSE.find()
+    .sort("-createdAt")
     .then((types) => {
       res.status(200).json(types);
     })
