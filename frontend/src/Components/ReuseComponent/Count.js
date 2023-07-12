@@ -1,6 +1,19 @@
-import React from "react";
+import React, {useEffect,useState} from "react";
 import "../css/Count.css";
-function Count({count}) {
+function Count() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    // Fetch the count of valid question papers
+    fetch("/api/count/valid-question-papers")
+      .then((response) => response.json())
+      .then((data) => {
+        setCount(data.count);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch count of valid question papers:", error);
+      });
+  }, []);
   return (
     <div>
       <section id="counts" class="counts">
