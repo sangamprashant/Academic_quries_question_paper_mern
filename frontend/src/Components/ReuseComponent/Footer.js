@@ -11,7 +11,7 @@ function Footer() {
               <div class="col-lg-6 col-md-6 footer-contact">
                 <h3>ACADEMIC QUERIES</h3>
                 <p>
-                  <strong>Phone:</strong> +91 6387692565
+                  <strong>Phone:</strong> +91 6387692665
                   <br />
                   <strong>Email:</strong> queriesacademic@gmail.com
                   <br />
