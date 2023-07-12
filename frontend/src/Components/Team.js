@@ -1,7 +1,7 @@
 import React from "react";
 import "./css/Team.css";
 import Prashant from "./img/prashant.png";
-import Avantika from "./img/avantika.png";
+import Avantika from "./img/avantika.jpg";
 
 function Team() {
   return (
