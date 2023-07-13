@@ -90,7 +90,7 @@ function Signin() {
                     SignIn
                   </button>
                 </div>
-                <Link to="/forgotpassword" className="forgot_password">
+                <Link to="/forgot/password" className="forgot_password">
                   Forgot Password?
                 </Link>
               </form>
