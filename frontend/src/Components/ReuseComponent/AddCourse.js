@@ -177,22 +177,6 @@ function UploadPaper() {
                 <div class="title">List of course</div>
                 <div class="sales-details">
                   <ul class="details" style={{ marginRight: "20px" }}>
-                    <li class="topic">Course Path</li>
-                    {pdfFiles.length !== 0
-                      ? pdfFiles.map((Papers) => {
-                          return (
-                            <>
-                              <hr />
-                              <img
-                                src={`${Papers.courseImage}`}
-                                style={{ height: "40px" }}
-                              />
-                            </>
-                          );
-                        })
-                      : ""}
-                  </ul>
-                  <ul class="details" style={{ marginRight: "20px" }}>
                     <li class="topic">Course Name</li>
                     {pdfFiles.length !== 0
                       ? pdfFiles.map((Papers) => {
@@ -201,7 +185,15 @@ function UploadPaper() {
                               <hr />
                               <li key={Papers._id}>
                                 {" "}
-                                <a> {Papers.courseName}</a>
+                                <a
+                                  style={{
+                                    height: "30px",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
+                                  {" "}
+                                  {Papers.courseName}
+                                </a>
                               </li>
                             </>
                           );
@@ -216,7 +208,14 @@ function UploadPaper() {
                             <>
                               <hr />
                               <li key={Papers._id}>
-                                <a>{Papers.coursePath}</a>
+                                <a
+                                  style={{
+                                    height: "30px",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
+                                  {Papers.coursePath}
+                                </a>
                               </li>
                             </>
                           );

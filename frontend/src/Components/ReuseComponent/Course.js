@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import "../css/Course.css";
 
 function Course() {
-  const { branch ,course} = useParams();
+  const { branch, course } = useParams();
   const [pdfFiles, setPdfFiles] = useState([]);
   const [allData, setAllData] = useState([]);
   const [searchInput, setSetInput] = useState();
@@ -38,24 +38,21 @@ function Course() {
   // }, [branch]);
 
   useEffect(() => {
-    
-    if (searchYear &&!searchInput) {
+    if (searchYear && !searchInput) {
       const filteredPdfFiles = allData.filter(
         (file) => file.year === Number(searchYear)
       );
       setPdfFiles(filteredPdfFiles);
-    }
-    else if (searchInput &&!Number(searchYear)) {
+    } else if (searchInput && !Number(searchYear)) {
       const filteredPdfFiles = allData.filter((file) => {
         const subject = file.subject.toLowerCase();
         const searchTerm = searchInput.toLowerCase();
         return subject.includes(searchTerm);
       });
       setPdfFiles(filteredPdfFiles);
-    }else{
+    } else {
       setPdfFiles(allData);
     }
-    
   }, [allData, searchYear, searchInput]);
 
   return (
@@ -87,7 +84,13 @@ function Course() {
                             <>
                               <hr />
                               <li key={Papers._id}>
-                                <a href={`${Papers.pdfPath}`}>
+                                <a
+                                  href={`${Papers.pdfPath}`}
+                                  style={{
+                                    height: "30px",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
                                   {Papers.subject}
                                 </a>
                               </li>
@@ -104,7 +107,15 @@ function Course() {
                             <>
                               <hr />
                               <li key={Papers._id}>
-                                <a href={`${Papers.pdfPath}`}>{Papers.year}</a>
+                                <a
+                                  href={`${Papers.pdfPath}`}
+                                  style={{
+                                    height: "30px",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
+                                  {Papers.year}
+                                </a>
                               </li>
                             </>
                           );
@@ -119,7 +130,15 @@ function Course() {
                             <>
                               <hr />
                               <li key={Papers._id}>
-                                <a href={`${Papers.pdfPath}`}>{Papers.type}</a>
+                                <a
+                                  href={`${Papers.pdfPath}`}
+                                  style={{
+                                    height: "30px",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
+                                  {Papers.type}
+                                </a>
                               </li>
                             </>
                           );
@@ -134,7 +153,13 @@ function Course() {
                             <>
                               <hr />
                               <li key={Papers._id}>
-                                <a href={`${Papers.pdfPath}`}>
+                                <a
+                                  href={`${Papers.pdfPath}`}
+                                  style={{
+                                    height: "30px",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
                                   {Papers.name ? Papers.name : "Admin"}
                                 </a>
                               </li>

@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const UserQuestionPaper = require("../models/Admin");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 
 // Signup route
 router.post("/api/admin/backend/signup", (req, res) => {
@@ -93,5 +94,72 @@ router.post("/api/signin", (req, res) => {
       res.status(500).json({ error: "Server Error" });
     });
 });
+// Endpoint to check email
+router.post("/api/check/email", (req, res) => {
+  const { email } = req.body;
+  const otp = Math.floor(100000 + Math.random() * 900000); // Generate 6-digit OTP
 
+  // Create a transporter for sending emails
+  let transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: process.env.EMAIL, // Replace with your own email address
+      pass: process.env.EMAIL_PASSWORD, // Replace with your own email password
+    },
+  });
+
+  UserQuestionPaper.findOne({ email: email })
+    .then((user) => {
+      if (user) {
+        // User found, send the OTP via email
+        const mailOptions = {
+          from: process.env.EMAIL,
+          to: email,
+          subject: "Password Reset OTP",
+          text: `Dear user,\n\nYou have requested to reset your password for the site "${process.env.DOMAIN}".\n\nPlease use the following OTP to proceed with the password reset:\n\nOTP: ${otp}\n\nIf you did not initiate this request, please ignore this email.\n\nBest regards,\nThe Academic Queries Team`,
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.log(error);
+            return res.status(500).json({ error: "Failed to send OTP" });
+          } else {
+            return res.json({ message: "Otp send to your email.", otp: otp });
+          }
+        });
+      } else {
+        // User not found
+        return res.json({ error: "User not found" });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(500).json({ error: "Internal server error" });
+    });
+});
+// Reset password route
+router.put("/api/admin/backend/reset-password", (req, res) => {
+  const { email, newPassword } = req.body;
+
+  // Hash the new password
+  bcrypt.hash(newPassword, 12, (error, hashedPassword) => {
+    if (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Server Error" });
+    }
+
+    // Update the user's password
+    UserQuestionPaper.findOneAndUpdate({ email }, { password: hashedPassword })
+      .then((updatedUser) => {
+        if (!updatedUser) {
+          return res.status(400).json({ error: "User not found" });
+        }
+        res.json({ message: "Password reset successful" });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).json({ error: "Server Error" });
+      });
+  });
+});
 module.exports = router;

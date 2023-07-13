@@ -98,6 +98,10 @@ function AdminPaper() {
                               <li key={Papers._id}>
                                 <a
                                   href={`/admin/modify/correction/${Papers._id}`}
+                                  style={{
+                                    height: "30px",
+                                    whiteSpace: "nowrap",
+                                  }}
                                 >
                                   {Papers.subject}
                                 </a>
@@ -117,6 +121,10 @@ function AdminPaper() {
                               <li key={Papers._id}>
                                 <a
                                   href={`/admin/modify/correction/${Papers._id}`}
+                                  style={{
+                                    height: "30px",
+                                    whiteSpace: "nowrap",
+                                  }}
                                 >
                                   {Papers.year}
                                 </a>
@@ -136,6 +144,10 @@ function AdminPaper() {
                               <li key={Papers._id}>
                                 <a
                                   href={`/admin/modify/correction/${Papers._id}`}
+                                  style={{
+                                    height: "30px",
+                                    whiteSpace: "nowrap",
+                                  }}
                                 >
                                   {Papers.type}
                                 </a>
