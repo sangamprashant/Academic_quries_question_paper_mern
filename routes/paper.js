@@ -32,7 +32,7 @@ router.post("/api/upload", (req, res) => {
             pass: process.env.EMAIL_PASSWORD, // Replace with your own email password
           },
         });
-
+//to user
         const mailOptions = {
           from: `"Academic Queries" <${process.env.EMAIL}>`, // Replace with your own name and email address
           to: email,
@@ -47,6 +47,22 @@ router.post("/api/upload", (req, res) => {
             console.log("Email sent: %s", info.messageId);
           }
         });
+        //to admin
+        const mailOptionsAdmin = {
+          from: `"Academic Queries" <${process.env.EMAIL}>`, // Replace with your own name and email address
+          to: process.env.EMAIL,
+          subject: "Question Paper Uploaded By user",
+          text: `${name},\n\nUploaded a Question Paper.\n\nRequired action,\nAcademic Queries`,
+        };
+
+        transporter.sendMail(mailOptionsAdmin, (error, info) => {
+          if (error) {
+            console.error("Failed to send email:", error);
+          } else {
+            console.log("Email sent: %s", info.messageId);
+          }
+        });
+
       }
 
       res
