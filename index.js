@@ -6,13 +6,6 @@ const PORT = 5000;
 
 const http = require("http").createServer(app);
 
-const io = require("socket.io")(http, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
-});
-
 const mongoose = require("mongoose");
 
 const cors = require("cors");
