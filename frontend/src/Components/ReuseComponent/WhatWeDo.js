@@ -19,7 +19,7 @@ function WhatWeDo() {
                   <i class="fa fa-clock"></i>
                 </div>
                 <h4>
-                  <a href="">24/7 Avilable</a>
+                  <a href="">24/7 Available</a>
                 </h4>
                 <p>Around-the-clock availability for all your needs. With our 24/7 support, you can count on us day or night, ensuring prompt assistance and reliable service at any hour.</p>
               </div>
