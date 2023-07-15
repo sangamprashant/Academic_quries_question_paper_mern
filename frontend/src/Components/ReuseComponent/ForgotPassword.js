@@ -18,6 +18,7 @@ function ForgotPassword() {
   const [emailError, setEmailError] = useState(false);
   const [otpError, setOtpError] = useState(false);
   const [rePasswordError, setRePasswordError] = useState(false);
+  const [incorrectAttempts, setIncorrectAttempts] = useState(0);
 
   //get otp
   const getOtp = () => {
@@ -49,11 +50,18 @@ function ForgotPassword() {
   };
 
   const verifyOtp = () => {
+    if (incorrectAttempts >= 2) {
+      // Reload the page after three incorrect attempts
+      window.location.reload();
+      return;
+    }
+
     if (passwordFromDataBase === Number(inputOtp)) {
-      //when otp match
+      // When OTP matches
       setPasswordPart(true);
     } else {
       setOtpError(true);
+      setIncorrectAttempts(incorrectAttempts + 1);
     }
   };
 
@@ -113,7 +121,14 @@ function ForgotPassword() {
                         <p style={{ color: "red" }}>Enter your email..</p>
                       )}
                     </>
-                    {enterOtp && (
+                    {incorrectAttempts >= 2 && (
+                      <p style={{ color: "red" }}>
+                        You have reached the maximum number of attempts. Please
+                        reload the page.
+                      </p>
+                    )}
+
+                    {enterOtp && incorrectAttempts < 2 && (
                       <>
                         <div class="form-group mt-3">
                           <input
@@ -128,7 +143,7 @@ function ForgotPassword() {
                         </div>
                         {otpError && (
                           <p style={{ color: "red" }}>
-                            Wrong otp, Please check your email..
+                            Wrong OTP, Please check your email..
                           </p>
                         )}
                       </>
