@@ -222,6 +222,31 @@ function UploadPaper() {
                         })
                       : ""}
                   </ul>
+                  <ul class="details" style={{ marginRight: "20px" }}>
+                    <li class="topic">Action</li>
+                    {pdfFiles.length !== 0
+                      ? pdfFiles.map((Papers) => {
+                          return (
+                            <>
+                              <hr />
+                              <li key={Papers._id}>
+                                <a onClick={() => {
+                                    //handelDelete(Papers._id);
+                                  }}
+                                  style={{
+                                    height: "30px",
+                                    whiteSpace: "nowrap",
+                                    color:"red"
+                                  }}
+                                >
+                                  Delete
+                                </a>
+                              </li>
+                            </>
+                          );
+                        })
+                      : ""}
+                  </ul>
                 </div>
               </div>
             </div>
