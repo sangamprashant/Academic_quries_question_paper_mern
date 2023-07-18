@@ -186,7 +186,7 @@ function UserUploadPaper() {
                 <div class="form-group mt-3">
                   <input
                     class="form-control"
-                    placeholder="Type: internal/external"
+                    placeholder="Enter College/University Name"
                     value={type}
                     onChange={(e) => {
                       setType(e.target.value);
