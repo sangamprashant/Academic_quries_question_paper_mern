@@ -27,7 +27,7 @@ function UploadPaper() {
 
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/get/course")
+    fetch("/api/get/course")
       .then((response) => response.json())
       .then((data) => {
         setPdfFiles(data);
@@ -74,7 +74,7 @@ function UploadPaper() {
       coursePath: inputPath,
       courseName: inputName,
     };
-    fetch("http://localhost:5000/api/add/course", {
+    fetch("/api/add/course", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -99,7 +99,7 @@ function UploadPaper() {
   };
   const handelDelete = (id) => {
     // Send a DELETE request to the server to delete the question paper
-    fetch(`http://localhost:5000/api/course/delete/by/admin/${id}`, {
+    fetch(`/api/course/delete/by/admin/${id}`, {
       method: "DELETE",
     })
       .then((response) => response.json())

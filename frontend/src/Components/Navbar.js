@@ -87,6 +87,11 @@ export default function Navbar({ login }) {
                 </Link>
               </li>
               <li>
+                <Link className={`nav-linksignin`} to="/user/upload/paper">
+                  Contribute Paper
+                </Link>
+              </li>
+              <li>
                 <Link className="nav-link scrollto" to="/testimonials">
                   Testimonials
                 </Link>

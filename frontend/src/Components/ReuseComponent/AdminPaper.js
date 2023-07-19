@@ -16,7 +16,7 @@ function AdminPaper() {
 
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch(`http://localhost:5000/api/course/${branch}`)
+    fetch(`/api/course/${branch}`)
       .then((response) => response.json())
       .then((data) => {
         setAllData(data);
