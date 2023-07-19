@@ -14,7 +14,7 @@ function Course() {
   );
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch(`/api/course/${branch}`)
+    fetch(`http://localhost:5000/api/course/${branch}`)
       .then((response) => response.json())
       .then((data) => {
         setAllData(data);
@@ -123,7 +123,7 @@ function Course() {
                       : ""}
                   </ul>
                   <ul class="details">
-                    <li class="topic">Type</li>
+                    <li class="topic">College/University</li>
                     {pdfFiles.length !== 0
                       ? pdfFiles.map((Papers) => {
                           return (

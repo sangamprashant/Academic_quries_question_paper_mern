@@ -8,7 +8,7 @@ function Paper() {
 
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("/api/get/course")
+    fetch("http://localhost:5000/api/get/course")
       .then((response) => response.json())
       .then((data) => {
         setPdfFiles(data);

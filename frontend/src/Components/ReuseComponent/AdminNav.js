@@ -29,7 +29,7 @@ function AdminNav() {
           Add Paper
         </Link>
         <Link className="navbar-brand" to="/admin/add/type" style={{ color: "white" }}>
-          Add Type
+          Add College/University
         </Link>
         <Link className="navbar-brand" to="/admin/add/course" style={{ color: "white" }}>
           Add Course

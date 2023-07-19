@@ -23,7 +23,7 @@ function AddType() {
 
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("/api/get/types")
+    fetch("http://localhost:5000/api/get/types")
       .then((response) => response.json())
       .then((data) => {
         setPdfFiles(data);
@@ -31,7 +31,7 @@ function AddType() {
       .catch((error) => {
         console.error("Failed to fetch PDF files:", error);
       });
-  });
+  },[notifyB]);
 
   const handleUpload = () => {
     console.log(inputValuePath);
@@ -43,7 +43,7 @@ function AddType() {
       valuePath: inputValuePath,
       valueName: inputValueName,
     };
-    fetch("/api/add/types", {
+    fetch("http://localhost:5000/api/add/types", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,6 +64,27 @@ function AddType() {
         console.error("Failed to upload question paper:", error);
       });
   };
+  const handelDelete = (id) => {
+    // Send a DELETE request to the server to delete the question paper
+    fetch(`http://localhost:5000/api/type/delete/by/admin/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          notifyB(data.message);
+          // Remove the deleted paper from the pdfFiles state
+          setPdfFiles((prevFiles) =>
+            prevFiles.filter((file) => file._id !== id)
+          );
+        } else {
+          notifyA(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to delete question paper:", error);
+      });
+  };
 
   return (
     <div style={{ marginTop: "70px" }}>
@@ -71,7 +92,7 @@ function AddType() {
       <section id="portfolio" className="portfolio">
         <div className="container">
           <div className="section-title">
-            <h2>Add Type</h2>
+            <h2>Add College/University</h2>
           </div>
           <div class="row mt-5 justify-content-center">
             <div class="col-lg-10">
@@ -114,7 +135,7 @@ function AddType() {
                       handleUpload();
                     }}
                   >
-                    Upload Type
+                    Upload College/University
                   </button>
                 </div>
               </form>
@@ -123,10 +144,10 @@ function AddType() {
           <hr />
           <div class="sales-boxes">
             <div class="recent-sales box">
-              <div class="title">List of Types</div>
+              <div class="title">List of College/University</div>
               <div class="sales-details">
                 <ul class="details" style={{ marginRight: "20px" }}>
-                  <li class="topic">Type Name</li>
+                  <li class="topic">College/University Name</li>
                   {pdfFiles.length !== 0
                     ? pdfFiles.map((Papers) => {
                         return (
@@ -145,7 +166,7 @@ function AddType() {
                     : ""}
                 </ul>
                 <ul class="details" style={{ marginRight: "20px" }}>
-                  <li class="topic">Type Path</li>
+                  <li class="topic">College/University Path</li>
                   {pdfFiles.length !== 0
                     ? pdfFiles.map((Papers) => {
                         return (
@@ -169,9 +190,9 @@ function AddType() {
                           return (
                             <>
                               <hr />
-                              <li key={Papers._id}>
+                              <Link key={Papers._id}>
                                 <a onClick={() => {
-                                    //handelDelete(Papers._id);
+                                    handelDelete(Papers._id);
                                   }}
                                   style={{
                                     height: "30px",
@@ -181,7 +202,7 @@ function AddType() {
                                 >
                                   Delete
                                 </a>
-                              </li>
+                              </Link>
                             </>
                           );
                         })

@@ -44,5 +44,18 @@ router.get("/api/get/types", (req, res) => {
       res.status(500).json({ error: "Failed to fetch types" });
     });
 });
+// DELETE a question paper by ID
+router.delete("/api/type/delete/by/admin/:id", (req, res) => {
+  const paperId = req.params.id;
+
+  TypeQuestionPaper.findByIdAndDelete(paperId)
+    .then(() => {
+      res.status(200).json({ message: "College deleted successfully" });
+    })
+    .catch((error) => {
+      console.error("Failed to delete College:", error);
+      res.status(500).json({ error: "Failed to delete college" });
+    });
+});
 
 module.exports = router;

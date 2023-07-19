@@ -27,7 +27,7 @@ function UploadPaper() {
 
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("/api/get/course")
+    fetch("http://localhost:5000/api/get/course")
       .then((response) => response.json())
       .then((data) => {
         setPdfFiles(data);
@@ -35,7 +35,7 @@ function UploadPaper() {
       .catch((error) => {
         console.error("Failed to fetch PDF files:", error);
       });
-  });
+  },[notifyB]);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -74,7 +74,7 @@ function UploadPaper() {
       coursePath: inputPath,
       courseName: inputName,
     };
-    fetch("/api/add/course", {
+    fetch("http://localhost:5000/api/add/course", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -95,6 +95,27 @@ function UploadPaper() {
       })
       .catch((error) => {
         console.error("Failed to upload question paper:", error);
+      });
+  };
+  const handelDelete = (id) => {
+    // Send a DELETE request to the server to delete the question paper
+    fetch(`http://localhost:5000/api/course/delete/by/admin/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          notifyB(data.message);
+          // Remove the deleted paper from the pdfFiles state
+          setPdfFiles((prevFiles) =>
+            prevFiles.filter((file) => file._id !== id)
+          );
+        } else {
+          notifyA(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to delete question paper:", error);
       });
   };
   return (
@@ -229,9 +250,9 @@ function UploadPaper() {
                           return (
                             <>
                               <hr />
-                              <li key={Papers._id}>
+                              <Link key={Papers._id}>
                                 <a onClick={() => {
-                                    //handelDelete(Papers._id);
+                                    handelDelete(Papers._id);
                                   }}
                                   style={{
                                     height: "30px",
@@ -241,7 +262,7 @@ function UploadPaper() {
                                 >
                                   Delete
                                 </a>
-                              </li>
+                              </Link>
                             </>
                           );
                         })
