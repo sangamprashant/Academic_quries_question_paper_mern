@@ -94,7 +94,7 @@ router.get("/api/course/:type", (req, res) => {
 
   // Get items by course = type and valid = true
   QuestionPaper.find({ course: type, valid: true })
-    .sort("-createdAt")
+    .sort({ year: -1 })
     .then((items) => {
       res.json(items);
     })

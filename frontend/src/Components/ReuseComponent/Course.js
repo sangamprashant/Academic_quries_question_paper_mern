@@ -6,12 +6,12 @@ function Course() {
   const { branch, course } = useParams();
   const [pdfFiles, setPdfFiles] = useState([]);
   const [allData, setAllData] = useState([]);
-  const [searchInput, setSetInput] = useState();
-  const [searchYear, setSearchYear] = useState();
-  const [getYears, setGetYears] = useState([]);
-  const filteredPdfFiles = pdfFiles.filter(
-    (file) => file.year === Number(searchYear)
-  );
+  const [searchInput, setSearchInput] = useState("");
+  const [searchYear, setSearchYear] = useState("");
+  const [searchType, setSearchType] = useState("");
+  const [uniqueYears, setUniqueYears] = useState([]);
+  const [uniqueTypes, setUniqueTypes] = useState([]);
+
   useEffect(() => {
     // Fetch PDF file data from the server
     fetch(`/api/course/${branch}`)
@@ -22,38 +22,43 @@ function Course() {
       .catch((error) => {
         console.error("Failed to fetch PDF files:", error);
       });
-  }, []);
-  // useEffect(() => {
-  //   const fetchYears = async () => {
-  //     try {
-  //       const response = await fetch("/api/paper/years");
-  //       const data = await response.json();
-  //       setGetYears(data);
-  //     } catch (error) {
-  //       console.error("Failed to fetch unique years:", error);
-  //     }
-  //   };
-
-  //   fetchYears();
-  // }, [branch]);
+  }, [branch]);
 
   useEffect(() => {
-    if (searchYear && !searchInput) {
-      const filteredPdfFiles = allData.filter(
+    // Extract unique years from the PDF files
+    const years = [...new Set(allData.map((file) => file.year))];
+    setUniqueYears(years);
+
+    // Extract unique types from the PDF files
+    const types = [...new Set(allData.map((file) => file.type))];
+    setUniqueTypes(types);
+  }, [allData]);
+
+  useEffect(() => {
+    let filteredPdfFiles = allData;
+
+    if (searchYear) {
+      filteredPdfFiles = filteredPdfFiles.filter(
         (file) => file.year === Number(searchYear)
       );
-      setPdfFiles(filteredPdfFiles);
-    } else if (searchInput && !Number(searchYear)) {
-      const filteredPdfFiles = allData.filter((file) => {
+    }
+
+    if (searchType) {
+      filteredPdfFiles = filteredPdfFiles.filter((file) =>
+        file.type.toLowerCase().includes(searchType.toLowerCase())
+      );
+    }
+
+    if (searchInput) {
+      filteredPdfFiles = filteredPdfFiles.filter((file) => {
         const subject = file.subject.toLowerCase();
         const searchTerm = searchInput.toLowerCase();
         return subject.includes(searchTerm);
       });
-      setPdfFiles(filteredPdfFiles);
-    } else {
-      setPdfFiles(allData);
     }
-  }, [allData, searchYear, searchInput]);
+
+    setPdfFiles(filteredPdfFiles);
+  }, [allData, searchYear, searchType, searchInput]);
 
   return (
     <div style={{ marginTop: "70px" }}>
@@ -62,13 +67,31 @@ function Course() {
           <div className="container">
             <div className="section-title">
               <h2>Papers of {course}</h2>
-
               <input
                 className="Paper_search"
-                placeholder="Search.."
-                onChange={(e) => {
-                  setSetInput(e.currentTarget.value);
-                }}
+                placeholder="Name search.."
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+              />
+              <select
+              style={{marginLeft:"5px",marginRight:"5px",padding:"2px"}}
+                className="Paper_search"
+                value={searchYear}
+                onChange={(e) => setSearchYear(e.target.value)}
+              >
+                <option value="">All Years</option>
+                {/* Render the unique years */}
+                {uniqueYears.map((year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
+              <input
+                className="Paper_search"
+                placeholder="College search.."
+                value={searchType}
+                onChange={(e) => setSearchType(e.target.value)}
               />
             </div>
 
@@ -78,95 +101,83 @@ function Course() {
                 <div class="sales-details">
                   <ul class="details" style={{ marginRight: "20px" }}>
                     <li class="topic">Subject Name</li>
-                    {pdfFiles.length !== 0
-                      ? pdfFiles.map((Papers) => {
-                          return (
-                            <>
-                              <hr />
-                              <li key={Papers._id}>
-                                <a
-                                  href={`${Papers.pdfPath}`}
-                                  style={{
-                                    height: "30px",
-                                    whiteSpace: "nowrap",
-                                  }}
-                                >
-                                  {Papers.subject}
-                                </a>
-                              </li>
-                            </>
-                          );
-                        })
-                      : ""}
+                    {pdfFiles.length !== 0 ? (
+                      pdfFiles.map((Papers) => (
+                        <React.Fragment key={Papers._id}>
+                          <hr />
+                          <li>
+                            <a
+                              href={`${Papers.pdfPath}`}
+                              style={{ height: "30px", whiteSpace: "nowrap" }}
+                            >
+                              {Papers.subject}
+                            </a>
+                          </li>
+                        </React.Fragment>
+                      ))
+                    ) : (
+                      <li>No papers found</li>
+                    )}
                   </ul>
                   <ul class="details" style={{ marginRight: "20px" }}>
                     <li class="topic">Year</li>
-                    {pdfFiles.length !== 0
-                      ? pdfFiles.map((Papers) => {
-                          return (
-                            <>
-                              <hr />
-                              <li key={Papers._id}>
-                                <a
-                                  href={`${Papers.pdfPath}`}
-                                  style={{
-                                    height: "30px",
-                                    whiteSpace: "nowrap",
-                                  }}
-                                >
-                                  {Papers.year}
-                                </a>
-                              </li>
-                            </>
-                          );
-                        })
-                      : ""}
+                    {pdfFiles.length !== 0 ? (
+                      pdfFiles.map((Papers) => (
+                        <React.Fragment key={Papers._id}>
+                          <hr />
+                          <li>
+                            <a
+                              href={`${Papers.pdfPath}`}
+                              style={{ height: "30px", whiteSpace: "nowrap" }}
+                            >
+                              {Papers.year}
+                            </a>
+                          </li>
+                        </React.Fragment>
+                      ))
+                    ) : (
+                      <li>No papers found</li>
+                    )}
                   </ul>
                   <ul class="details">
                     <li class="topic">College/University</li>
-                    {pdfFiles.length !== 0
-                      ? pdfFiles.map((Papers) => {
-                          return (
-                            <>
-                              <hr />
-                              <li key={Papers._id}>
-                                <a
-                                  href={`${Papers.pdfPath}`}
-                                  style={{
-                                    height: "30px",
-                                    whiteSpace: "nowrap",
-                                  }}
-                                >
-                                  {Papers.type}
-                                </a>
-                              </li>
-                            </>
-                          );
-                        })
-                      : ""}
+                    {pdfFiles.length !== 0 ? (
+                      pdfFiles.map((Papers) => (
+                        <React.Fragment key={Papers._id}>
+                          <hr />
+                          <li>
+                            <a
+                              href={`${Papers.pdfPath}`}
+                              style={{ height: "30px", whiteSpace: "nowrap" }}
+                            >
+                              {Papers.type}
+                            </a>
+                          </li>
+                        </React.Fragment>
+                      ))
+                    ) : (
+                      <li>No papers found</li>
+                    )}
                   </ul>
                   <ul class="details">
                     <li class="topic">Contributor</li>
-                    {pdfFiles.length !== 0
-                      ? pdfFiles.map((Papers) => {
-                          return (
-                            <>
-                              <hr />
-                              <li key={Papers._id}>
-                                <a
-                                  href={`${Papers.pdfPath}`}
-                                  style={{
-                                    height: "30px",
-                                    whiteSpace: "nowrap",
-                                  }}
-                                >
-                                  {Papers.name ? Papers.name : "Admin"}
-                                </a>
-                              </li>
-                            </>
-                          );
-                        })
-                      : ""}
+                    {pdfFiles.length !== 0 ? (
+                      pdfFiles.map((Papers) => (
+                        <React.Fragment key={Papers._id}>
+                          <hr />
+                          <li>
+                            <a
+                              href={`${Papers.pdfPath}`}
+                              style={{ height: "30px", whiteSpace: "nowrap" }}
+                            >
+                              {Papers.name ? Papers.name : "Admin"}
+                            </a>
+                          </li>
+                        </React.Fragment>
+                      ))
+                    ) : (
+                      <li>No papers found</li>
+                    )}
                   </ul>
                 </div>
               </div>

@@ -36,14 +36,14 @@ router.post("/api/add/course", async (req, res) => {
 
 // Get all course question papers
 router.get("/api/get/course", (req, res) => {
-    COURSE.find()
-    .sort("-createdAt")
-    .then((types) => {
-      res.status(200).json(types);
+  COURSE.find()
+    .sort({ courseName: 1 })
+    .then((courses) => {
+      res.status(200).json(courses);
     })
     .catch((error) => {
-      console.error("Failed to fetch types:", error);
-      res.status(500).json({ error: "Failed to fetch types" });
+      console.error("Failed to fetch courses:", error);
+      res.status(500).json({ error: "Failed to fetch courses" });
     });
 });
 // DELETE a question paper by ID
