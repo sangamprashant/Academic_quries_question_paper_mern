@@ -3,8 +3,9 @@ const mongoose = require("mongoose");
 const router = express.Router();
 const nodemailer = require("nodemailer");
 const QuestionPaper = mongoose.model("ACADEMICQUERIESQUESTIONPAPER");
+const requireLogin = require("../middleware/requiredLogin");
 
-// Handle file upload endpoint
+// Handle file upload endpoint by user
 router.post("/api/upload", (req, res) => {
   const { type, subject, year, course, valid, name, path, email } = req.body;
   // Create a new QuestionPaper document
@@ -32,7 +33,7 @@ router.post("/api/upload", (req, res) => {
             pass: process.env.EMAIL_PASSWORD, // Replace with your own email password
           },
         });
-//to user
+        //to user
         const mailOptions = {
           from: `"Academic Queries" <${process.env.EMAIL}>`, // Replace with your own name and email address
           to: email,
@@ -62,7 +63,6 @@ router.post("/api/upload", (req, res) => {
             console.log("Email sent: %s", info.messageId);
           }
         });
-
       }
 
       res
@@ -74,7 +74,33 @@ router.post("/api/upload", (req, res) => {
       console.log(error);
     });
 });
-
+// Handle file upload endpoint by Admin
+router.post("/api/admin/upload", requireLogin, (req, res) => {
+  const { type, subject, year, course, path } = req.body;
+  // Create a new QuestionPaper document
+  const questionPaper = new QuestionPaper({
+    type: type,
+    subject: subject,
+    year: year,
+    course: course,
+    pdfPath: path,
+    valid: true, // Set valid to false if not provided
+    name: null, // Set name to null if valid is false
+    email: null, // Set name to null if valid is false
+  });
+  // Save the document to MongoDB
+  questionPaper
+    .save()
+    .then(() => {
+      res
+        .status(200)
+        .json({ message: "Question paper uploaded successfully." });
+    })
+    .catch((error) => {
+      res.status(500).json({ error: error });
+      console.log(error);
+    });
+});
 //get all papers
 router.get("/api/question-papers", (req, res) => {
   QuestionPaper.find()
@@ -116,7 +142,7 @@ router.get("/api/get/paper/:id", async (req, res) => {
   }
 });
 // Delete question paper by ID AND SEND EMAIL
-router.delete("/api/delete/paper/:id", async (req, res) => {
+router.delete("/api/delete/paper/:id", requireLogin, async (req, res) => {
   try {
     const questionPaper = await QuestionPaper.findByIdAndDelete(req.params.id);
     if (!questionPaper) {
@@ -159,7 +185,7 @@ router.delete("/api/delete/paper/:id", async (req, res) => {
   }
 });
 // DELETE a question paper by ID
-router.delete("/api/paper/delete/by/admin/:id", (req, res) => {
+router.delete("/api/paper/delete/by/admin/:id", requireLogin, (req, res) => {
   const paperId = req.params.id;
 
   QuestionPaper.findByIdAndDelete(paperId)
@@ -172,7 +198,7 @@ router.delete("/api/paper/delete/by/admin/:id", (req, res) => {
     });
 });
 // Update question paper
-router.put("/api/update/paper/:id", async (req, res) => {
+router.put("/api/update/paper/:id", requireLogin, async (req, res) => {
   const { valid, type, subject, course, year } = req.body;
   const id = req.params.id;
 
@@ -226,8 +252,8 @@ router.put("/api/update/paper/:id", async (req, res) => {
   }
 });
 // Update question paper
-router.put("/api/edit/paper/:id", async (req, res) => {
-  const {  type, subject, course, year } = req.body;
+router.put("/api/edit/paper/:id", requireLogin, async (req, res) => {
+  const { type, subject, course, year } = req.body;
   const id = req.params.id;
 
   try {
@@ -253,7 +279,9 @@ router.put("/api/edit/paper/:id", async (req, res) => {
 // Get all unique years
 router.get("/api/paper/years", async (req, res) => {
   try {
-    const years = await QuestionPaper.distinct("year", { valid: true }).maxTimeMS(30000);
+    const years = await QuestionPaper.distinct("year", {
+      valid: true,
+    }).maxTimeMS(30000);
     res.status(200).json(years);
   } catch (error) {
     console.error("Failed to fetch unique years:", error);
@@ -267,7 +295,9 @@ router.get("/api/count/valid-question-papers", async (req, res) => {
     res.json({ count });
   } catch (error) {
     console.error("Failed to fetch count of valid question papers:", error);
-    res.status(500).json({ error: "Failed to fetch count of valid question papers" });
+    res
+      .status(500)
+      .json({ error: "Failed to fetch count of valid question papers" });
   }
 });
 module.exports = router;

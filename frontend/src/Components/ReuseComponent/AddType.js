@@ -47,6 +47,7 @@ function AddType() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
       body: JSON.stringify(requestBody),
     })
@@ -68,6 +69,10 @@ function AddType() {
     // Send a DELETE request to the server to delete the question paper
     fetch(`/api/type/delete/by/admin/${id}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -78,7 +83,7 @@ function AddType() {
             prevFiles.filter((file) => file._id !== id)
           );
         } else {
-          notifyA(data.message);
+          notifyA(data.error);
         }
       })
       .catch((error) => {

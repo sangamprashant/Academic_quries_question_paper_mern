@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const TypeQuestionPaper = mongoose.model("ACADEMICQUERIESTYPEQUESTIONPAPER");
+const requireLogin = require("../middleware/requiredLogin");
 
 // Add a new type
-router.post("/api/add/types", async (req, res) => {
+router.post("/api/add/types", requireLogin, async (req, res) => {
   const { valuePath, valueName } = req.body;
 
   try {
@@ -45,7 +46,7 @@ router.get("/api/get/types", (req, res) => {
     });
 });
 // DELETE a question paper by ID
-router.delete("/api/type/delete/by/admin/:id", (req, res) => {
+router.delete("/api/type/delete/by/admin/:id", requireLogin, (req, res) => {
   const paperId = req.params.id;
 
   TypeQuestionPaper.findByIdAndDelete(paperId)

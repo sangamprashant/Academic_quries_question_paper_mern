@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "../css/Course.css";
 import AdminNav from "./AdminNav";
 import { toast } from "react-toastify";
@@ -48,6 +48,10 @@ function AdminPaper() {
     // Send a DELETE request to the server to delete the question paper
     fetch(`/api/paper/delete/by/admin/${id}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -58,7 +62,7 @@ function AdminPaper() {
             prevFiles.filter((file) => file._id !== id)
           );
         } else {
-          notifyA(data.message);
+          notifyA(data.error);
         }
       })
       .catch((error) => {
@@ -165,10 +169,14 @@ function AdminPaper() {
                             <>
                               <hr />
                               <li key={Papers._id}>
-                                <a
-                                  style={{ color: "red" }}
-                                  onClick={() => {
+                                <a onClick={() => {
                                     handelDelete(Papers._id);
+                                  }}
+                                  style={{
+                                    height: "30px",
+                                    whiteSpace: "nowrap",
+                                    color:"red",
+                                    cursor:"pointer"
                                   }}
                                 >
                                   Delete

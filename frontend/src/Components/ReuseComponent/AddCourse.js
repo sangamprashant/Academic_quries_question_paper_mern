@@ -68,7 +68,6 @@ function UploadPaper() {
       notifyA("Please fill all the fields.");
       return;
     }
-    console.log(url);
     const requestBody = {
       courseImage: url,
       coursePath: inputPath,
@@ -78,6 +77,7 @@ function UploadPaper() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
       body: JSON.stringify(requestBody),
     })
@@ -101,6 +101,10 @@ function UploadPaper() {
     // Send a DELETE request to the server to delete the question paper
     fetch(`/api/course/delete/by/admin/${id}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -111,7 +115,7 @@ function UploadPaper() {
             prevFiles.filter((file) => file._id !== id)
           );
         } else {
-          notifyA(data.message);
+          notifyA(data.error);
         }
       })
       .catch((error) => {

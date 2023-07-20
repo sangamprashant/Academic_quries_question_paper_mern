@@ -2,9 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 const COURSE = mongoose.model("ACADEMICQUERIESCOURSEQUESTIONPAPER");
+const requireLogin = require("../middleware/requiredLogin");
 
 // Handle file upload endpoint
-router.post("/api/add/course", async (req, res) => {
+router.post("/api/add/course", requireLogin, async (req, res) => {
   const { courseName, coursePath, courseImage } = req.body;
 
   try {
@@ -47,7 +48,7 @@ router.get("/api/get/course", (req, res) => {
     });
 });
 // DELETE a question paper by ID
-router.delete("/api/course/delete/by/admin/:id", (req, res) => {
+router.delete("/api/course/delete/by/admin/:id", requireLogin, (req, res) => {
   const paperId = req.params.id;
 
   COURSE.findByIdAndDelete(paperId)

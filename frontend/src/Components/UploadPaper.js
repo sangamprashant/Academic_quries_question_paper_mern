@@ -93,12 +93,12 @@ function UploadPaper() {
       subject: subject,
       year: year,
       course: course,
-      valid: true,
     };
-    fetch("/api/upload", {
+    fetch("/api/admin/upload", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
       body: JSON.stringify(requestBody),
     })

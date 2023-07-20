@@ -46,33 +46,27 @@ function Responses() {
         .then((response) => response.json())
         .then((data) => {
           setMessages(data);
-          console.log(data);
         })
         .catch((error) => {
           console.error("Failed to fetch messages:", error);
         });
     }
-  }, [isActive]);
+  }, [isActive,notifyB]);
 
   const handleDelete = (id) => {
     fetch(`/api/delete/paper/${id}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.message) {
           notifyB(data.message);
-          // Refresh the question papers after deletion
-          fetch("/api/question-papers")
-            .then((response) => response.json())
-            .then((data) => {
-              setPdfFiles(data);
-            })
-            .catch((error) => {
-              console.error("Failed to fetch PDF files:", error);
-            });
         } else {
-          notifyA(data.message);
+          notifyA(data.error);
         }
       })
       .catch((error) => {
