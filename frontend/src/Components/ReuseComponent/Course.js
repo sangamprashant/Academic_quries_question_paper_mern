@@ -98,7 +98,7 @@ function Course() {
             <div class="sales-boxes">
               <div class="recent-sales box">
                 <div class="title">List of Papers</div>
-                <div class="sales-details">
+                <div class="sales-details" style={{ paddingRight: "20px" }}>
                   <ul class="details" style={{ marginRight: "20px" }}>
                     <li class="topic">Subject Name</li>
                     {pdfFiles.length !== 0 ? (
