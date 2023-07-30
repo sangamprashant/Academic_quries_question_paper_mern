@@ -21,11 +21,13 @@ require("./models/Admin");
 require("./models/type");
 require("./models/course");
 require("./models/email");
+require("./models/visitors");
 app.use(require("./routes/paper"));
 app.use(require("./routes/admin"));
 app.use(require("./routes/type"));
 app.use(require("./routes/course"));
 app.use(require("./routes/email"));
+app.use(require("./routes/visitor"));
 
 mongoose.connect(process.env.MONGO_URL);
 mongoose.connection.on("connected", () => {
