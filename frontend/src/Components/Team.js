@@ -9,7 +9,7 @@ function Team() {
       <section id="team" class="team">
         <div class="container">
           <div class="section-title">
-            <h2>Team Developers</h2>
+            <h2>Team</h2>
           </div>
 
           <div class="row" style={{ justifyContent: "space-evenly" }}>

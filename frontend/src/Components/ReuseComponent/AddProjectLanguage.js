@@ -7,7 +7,7 @@ import { storage } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 
-function UploadPaper() {
+function AddProjectLanguage() {
   const [pdfFiles, setPdfFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -27,7 +27,7 @@ function UploadPaper() {
 
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/get/course")
+    fetch("http://localhost:5000/api/project/languages")
       .then((response) => response.json())
       .then((data) => {
         setPdfFiles(data);
@@ -35,7 +35,7 @@ function UploadPaper() {
       .catch((error) => {
         console.error("Failed to fetch PDF files:", error);
       });
-  },[notifyB]);
+  }, [notifyB]);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -51,7 +51,7 @@ function UploadPaper() {
     }
   };
   const uploadFile = () => {
-    if (!selectedFile || !inputName || !inputPath) {
+    if (!selectedFile || !inputName) {
       notifyA("Please fill all the fields.");
       return;
     }
@@ -64,16 +64,15 @@ function UploadPaper() {
     });
   };
   const handleUpload = (url) => {
-    if (!selectedFile || !inputName || !inputPath) {
+    if (!selectedFile || !inputName) {
       notifyA("Please fill all the fields.");
       return;
     }
     const requestBody = {
-      courseImage: url,
-      coursePath: inputPath,
-      courseName: inputName,
+      ProjectImage: url,
+      ProjectName: inputName,
     };
-    fetch("http://localhost:5000/api/add/course", {
+    fetch("http://localhost:5000/api/project/languages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -88,7 +87,6 @@ function UploadPaper() {
           setSelectedFile(null);
           setPreviewUrl(null);
           setInputName("");
-          setInputPath("");
         } else {
           notifyA(data.error);
         }
@@ -99,7 +97,7 @@ function UploadPaper() {
   };
   const handelDelete = (id) => {
     // Send a DELETE request to the server to delete the question paper
-    fetch(`http://localhost:5000/api/course/delete/by/admin/${id}`, {
+    fetch(`http://localhost:5000/api/project/language/delete/by/admin/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -128,7 +126,7 @@ function UploadPaper() {
       <section id="contact" class="contact section-bg">
         <div class="container">
           <div class="section-title">
-            <h2>Add Course</h2>
+            <h2>Add Project Language</h2>
             <p>Format should be in IMG/PNG!</p>
           </div>
 
@@ -141,38 +139,26 @@ function UploadPaper() {
                       value={inputName}
                       type="text"
                       class="form-control"
-                      placeholder="Course Name"
+                      placeholder="Language"
                       required
                       onChange={(e) => {
                         setInputName(e.target.value);
                       }}
                     />
                   </div>
-                  <div class="col-md-6 form-group mt-3 mt-md-0">
+                  <div class="col-md-6 form-group ">
                     <input
-                      type="text"
+                      type="file"
                       class="form-control"
-                      placeholder="Paper Path"
+                      name="pdf"
+                      id="pdf"
+                      placeholder="Paper in pdf"
                       required
-                      value={inputPath}
-                      onChange={(e) => {
-                        setInputPath(e.target.value);
-                      }}
+                      onChange={handleFileChange}
                     />
                   </div>
                 </div>
 
-                <div class="form-group mt-3">
-                  <input
-                    type="file"
-                    class="form-control"
-                    name="pdf"
-                    id="pdf"
-                    placeholder="Paper in pdf"
-                    required
-                    onChange={handleFileChange}
-                  />
-                </div>
                 {previewUrl && (
                   <div>
                     <h4>Selected File Preview:</h4>
@@ -199,16 +185,16 @@ function UploadPaper() {
             <hr />
             <div class="sales-boxes">
               <div class="recent-sales box">
-                <div class="title">List of course</div>
+                <div class="title">List of project language</div>
                 <div class="sales-details">
                   <ul class="details" style={{ marginRight: "20px" }}>
-                    <li class="topic">Course Name</li>
+                    <li class="topic">Language</li>
                     {pdfFiles.length !== 0
-                      ? pdfFiles.map((Papers) => {
+                      ? pdfFiles.map((Projects) => {
                           return (
                             <>
                               <hr />
-                              <li key={Papers._id}>
+                              <li key={Projects._id}>
                                 {" "}
                                 <a
                                   style={{
@@ -217,29 +203,7 @@ function UploadPaper() {
                                   }}
                                 >
                                   {" "}
-                                  {Papers.courseName}
-                                </a>
-                              </li>
-                            </>
-                          );
-                        })
-                      : ""}
-                  </ul>
-                  <ul class="details" style={{ marginRight: "20px" }}>
-                    <li class="topic">Course Path</li>
-                    {pdfFiles.length !== 0
-                      ? pdfFiles.map((Papers) => {
-                          return (
-                            <>
-                              <hr />
-                              <li key={Papers._id}>
-                                <a
-                                  style={{
-                                    height: "30px",
-                                    whiteSpace: "nowrap",
-                                  }}
-                                >
-                                  {Papers.coursePath}
+                                  {Projects.ProjectName}
                                 </a>
                               </li>
                             </>
@@ -250,18 +214,19 @@ function UploadPaper() {
                   <ul class="details" style={{ marginRight: "20px" }}>
                     <li class="topic">Action</li>
                     {pdfFiles.length !== 0
-                      ? pdfFiles.map((Papers) => {
+                      ? pdfFiles.map((Projects) => {
                           return (
                             <>
                               <hr />
-                              <Link key={Papers._id}>
-                                <a onClick={() => {
-                                    handelDelete(Papers._id);
+                              <Link key={Projects._id}>
+                                <a
+                                  onClick={() => {
+                                    handelDelete(Projects._id);
                                   }}
                                   style={{
                                     height: "30px",
                                     whiteSpace: "nowrap",
-                                    color:"red"
+                                    color: "red",
                                   }}
                                 >
                                   Delete
@@ -282,4 +247,4 @@ function UploadPaper() {
   );
 }
 
-export default UploadPaper;
+export default AddProjectLanguage;

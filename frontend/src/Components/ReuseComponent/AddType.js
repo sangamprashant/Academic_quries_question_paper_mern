@@ -23,7 +23,7 @@ function AddType() {
 
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("/api/get/types")
+    fetch("http://localhost:5000/api/get/types")
       .then((response) => response.json())
       .then((data) => {
         setPdfFiles(data);
@@ -43,7 +43,7 @@ function AddType() {
       valuePath: inputValuePath,
       valueName: inputValueName,
     };
-    fetch("/api/add/types", {
+    fetch("http://localhost:5000/api/add/types", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ function AddType() {
   };
   const handelDelete = (id) => {
     // Send a DELETE request to the server to delete the question paper
-    fetch(`/api/type/delete/by/admin/${id}`, {
+    fetch(`http://localhost:5000/api/type/delete/by/admin/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

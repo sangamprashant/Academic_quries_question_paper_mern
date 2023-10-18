@@ -22,7 +22,7 @@ function AdminEditPaper() {
 
   useEffect(() => {
     // Fetch the question paper by ID
-    fetch(`/api/get/paper/${paperId}`)
+    fetch(`http://localhost:5000//api/get/paper/${paperId}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data)
@@ -40,7 +40,7 @@ function AdminEditPaper() {
   //fetch courses
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("/api/get/course")
+    fetch("http://localhost:5000//api/get/course")
       .then((response) => response.json())
       .then((data) => {
         setCourses(data);
@@ -52,7 +52,7 @@ function AdminEditPaper() {
   //fetch types
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("/api/get/types")
+    fetch("http://localhost:5000//api/get/types")
       .then((response) => response.json())
       .then((data) => {
         setTypes(data);
@@ -73,7 +73,7 @@ function AdminEditPaper() {
       year: year,
       course: course,
     };
-    fetch(`/api/edit/paper/${paperId}`, {
+    fetch(`http://localhost:5000/api/edit/paper/${paperId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

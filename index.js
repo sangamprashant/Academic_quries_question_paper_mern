@@ -22,12 +22,16 @@ require("./models/type");
 require("./models/course");
 require("./models/email");
 require("./models/visitors");
+require("./models/projects");
+require("./models/projectLanguage");
 app.use(require("./routes/paper"));
 app.use(require("./routes/admin"));
 app.use(require("./routes/type"));
 app.use(require("./routes/course"));
 app.use(require("./routes/email"));
 app.use(require("./routes/visitor"));
+app.use(require("./routes/projects"));
+app.use(require("./routes/ProjectsLanguages"));
 
 mongoose.connect(process.env.MONGO_URL);
 mongoose.connection.on("connected", () => {

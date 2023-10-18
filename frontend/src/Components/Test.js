@@ -37,7 +37,7 @@ function Test() {
 
   const saveImageUrlToMongoDB = (url) => {
     // Make an API call to your server to store the download URL in MongoDB
-    fetch("/api/save-image-url", {
+    fetch("http://localhost:5000/api/save-image-url", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

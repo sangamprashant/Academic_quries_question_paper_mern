@@ -8,6 +8,7 @@ import Paper from "./ReuseComponent/Paper";
 import Count from "./ReuseComponent/Count";
 import Footer from "./ReuseComponent/Footer";
 import Team from "./Team";
+import ProjectHome from "./ReuseComponent/ProjectHome";
 function Home() {
   return (
     <div>
@@ -22,6 +23,9 @@ function Home() {
       </div>
       <div className="MarginTopNegative">
         <AboutUs />
+      </div>
+      <div className="MarginTopNegative">
+        <ProjectHome />
       </div>
       <div className="MarginTopNegative">
         <Team />

@@ -6,7 +6,7 @@ function VerifiedEmailPaper() {
   const [pdfFile, setPdfFile] = useState(null);
   useEffect(() => {
     // Fetch the question paper by ID
-    fetch(`/api/get/paper/${paperId}`, {
+    fetch(`http://localhost:5000/api/get/paper/${paperId}`, {
       headers: {
         "Content-Type": "application/json",
         // Add any other headers you need

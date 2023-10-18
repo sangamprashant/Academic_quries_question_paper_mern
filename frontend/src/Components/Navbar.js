@@ -88,7 +88,12 @@ export default function Navbar({ login }) {
               </li>
               <li>
                 <Link className={`nav-linksignin`} to="/user/upload/paper">
-                  Contribute Paper
+                  Contribute
+                </Link>
+              </li>
+              <li>
+                <Link className="nav-link scrollto" to="/projects">
+                  Projects
                 </Link>
               </li>
               <li>
@@ -105,21 +110,6 @@ export default function Navbar({ login }) {
             ></i>
           </nav>
 
-          <div class="header-social-links d-flex align-items-center">
-            {/* Social media links */}
-            <a
-              href="https://instagram.com/avantika_shrivastava"
-              class="instagram"
-            >
-              <i class="fab fa-instagram"></i>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/avantika-shrivastava-b67037252"
-              class="linkedin"
-            >
-              <i class="fab fa-linkedin"></i>
-            </a>
-          </div>
         </div>
       </header>
     </div>

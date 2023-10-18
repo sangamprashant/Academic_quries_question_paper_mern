@@ -80,7 +80,7 @@ function UserUploadPaper() {
       email: email,
       valid: false,
     };
-    fetch(" /api/upload", {
+    fetch("http://localhost:5000/api/upload", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

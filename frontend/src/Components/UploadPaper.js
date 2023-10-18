@@ -31,7 +31,7 @@ function UploadPaper() {
   //fetch courses
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("/api/get/course")
+    fetch("http://localhost:5000/api/get/course")
       .then((response) => response.json())
       .then((data) => {
         setCourses(data);
@@ -44,7 +44,7 @@ function UploadPaper() {
   //fetch types
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("/api/get/types")
+    fetch("http://localhost:5000/api/get/types")
       .then((response) => response.json())
       .then((data) => {
         setTypes(data);
@@ -94,7 +94,7 @@ function UploadPaper() {
       year: year,
       course: course,
     };
-    fetch("/api/admin/upload", {
+    fetch("http://localhost:5000/api/admin/upload", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -123,7 +123,7 @@ function UploadPaper() {
 
   return (
     <div style={{ marginTop: "70px" }}>
-    <AdminNav/>
+      <AdminNav />
       <section id="contact" class="contact section-bg">
         <div class="container">
           <div class="section-title">
@@ -176,10 +176,12 @@ function UploadPaper() {
                     {types.length !== 0
                       ? types.map((type) => {
                           return (
-                            <option value={type.valuePath}>{type.valueName}</option>
+                            <option value={type.valuePath}>
+                              {type.valueName}
+                            </option>
                           );
                         })
-                      : ""}                    
+                      : ""}
                   </select>
                 </div>
                 <div class="form-group mt-3">
@@ -194,12 +196,12 @@ function UploadPaper() {
                     {courses.length !== 0
                       ? courses.map((course) => {
                           return (
-                            <option value={course.coursePath}>{course.courseName}</option>
+                            <option value={course.coursePath}>
+                              {course.courseName}
+                            </option>
                           );
                         })
                       : ""}
-                    
-                    
                   </select>
                 </div>
                 <div class="form-group mt-3">

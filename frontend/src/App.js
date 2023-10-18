@@ -31,6 +31,8 @@ import AdminCourse from "./Components/ReuseComponent/AdminCourse";
 import AdminPaper from "./Components/ReuseComponent/AdminPaper";
 import AdminEditPaper from "./Components/ReuseComponent/AdminEditPaper";
 import ForgotPassword from "./Components/ReuseComponent/ForgotPassword";
+import ProjectsList from "./Components/ReuseComponent/ProjectsList";
+import AddProjectLanguage from "./Components/ReuseComponent/AddProjectLanguage";
 
 function App() {
   const [userLogin, setUserLogin] = useState(false);
@@ -65,6 +67,9 @@ function App() {
           <Route exact path="/admin/response/email/:emailId" element={<EmailToUser />}/>
           <Route exact path="/admin/add/course" element={<AddCourse />}/>
           <Route exact path="/admin/upload" element={<UploadPaper/>}/>
+
+          <Route exact path="/projects" element={<ProjectsList/>}/>
+          <Route exact path="/admin/add/project/language" element={<AddProjectLanguage/>}/>
           <Route exact path="/test" element={<Test/>}/>
           <Route exact path="*" element={<PageNotFound />} />
         </Routes>
