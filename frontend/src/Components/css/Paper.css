@@ -225,3 +225,7 @@
 .portfolio-details .portfolio-description p {
   padding: 0;
 }
+
+sup{ 
+  color: red;
+}

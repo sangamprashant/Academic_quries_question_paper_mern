@@ -49,21 +49,21 @@ function Footer() {
           </div>
         </div>
 
-        <div class="container d-md-flex py-4">
+        <div class="container text-white d-md-flex py-4">
           <div class="me-md-auto text-center text-md-start">
             <div class="copyright">
               &copy; Copyright{" "}
               <strong>
                 <span>
                   {" "}
-                  <Link to="/signin" style={{ color: "black" }}>
-                    ACADEMIC QUERIES
+                  <Link to="/signin" style={{color:"black"}}>
+                    ACADEMIC QUERIES.
                   </Link>{" "}
                 </span>
               </strong>
-              . All Rights Reserved
+               All Rights Reserved
             </div>
-            <div class="credits">
+            <div class="credits text-white">
               Designed by <a href="/">Prashant srivastav</a>
             </div>
           </div>

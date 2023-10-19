@@ -33,6 +33,7 @@ import AdminEditPaper from "./Components/ReuseComponent/AdminEditPaper";
 import ForgotPassword from "./Components/ReuseComponent/ForgotPassword";
 import ProjectsList from "./Components/ReuseComponent/ProjectsList";
 import AddProjectLanguage from "./Components/ReuseComponent/AddProjectLanguage";
+import AddProject from "./Components/ReuseComponent/AddProject";
 
 function App() {
   const [userLogin, setUserLogin] = useState(false);
@@ -70,6 +71,7 @@ function App() {
 
           <Route exact path="/projects" element={<ProjectsList/>}/>
           <Route exact path="/admin/add/project/language" element={<AddProjectLanguage/>}/>
+          <Route exact path="/admin/add/project" element={<AddProject/>}/>
           <Route exact path="/test" element={<Test/>}/>
           <Route exact path="*" element={<PageNotFound />} />
         </Routes>

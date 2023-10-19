@@ -11,22 +11,28 @@ const questionPaperSchema = new mongoose.Schema(
       required: true,
     },
     report: {
-      type: Number,
-      required: true,
+      type: String,
     },
     ppt: {
       type: String,
-      required: true,
     },
     file: {
       type: String,
-      required: true,
+    },
+    images:[{ type: String }],
+    name: {
+      type: String,
+      default: null,
+    },
+    email: {
+      type: String,
+      default: null,
     },
     valid: {
       type: Boolean,
     },
   },
-  { timestamps: true } // Add the timestamps option
+  { timestamps: true }
 );
 
 const Projects = mongoose.model(

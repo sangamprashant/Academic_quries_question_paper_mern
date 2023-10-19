@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
-import "./css/Contact.css";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import AdminNav from "./ReuseComponent/AdminNav";
-import { storage } from "../firebase";
+import AdminNav from "./AdminNav";
+import { storage } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 
-function UploadPaper() {
+function AddProject() {
   const [courses, setCourses] = useState([]);
   const [types, setTypes] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [reportUrl, setReportUrl] = useState(null);
+  const [reportFile, setReportFile] = useState(null);
+  const [pptUrl, setPptUrl] = useState(null);
+  const [pptFile, setPptFile] = useState(null);
+
   const [type, setType] = useState("");
   const [subject, setSubject] = useState("");
   const [year, setYear] = useState("");
@@ -28,23 +32,10 @@ function UploadPaper() {
     }
   }, [navigate, token]);
 
-  //fetch courses
-  useEffect(() => {
-    // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/get/course")
-      .then((response) => response.json())
-      .then((data) => {
-        setCourses(data);
-      })
-      .catch((error) => {
-        console.error("Failed to fetch PDF files:", error);
-      });
-  }, []);
-
   //fetch types
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/get/types")
+    fetch("http://localhost:5000/api/project/languages")
       .then((response) => response.json())
       .then((data) => {
         setTypes(data);
@@ -65,6 +56,34 @@ function UploadPaper() {
       reader.readAsDataURL(file);
     } else {
       setPreviewUrl(null);
+    }
+  };
+
+  const handleFileChangeReport = (event) => {
+    const file = event.target.files[0];
+    setReportFile(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setReportUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setReportUrl(null);
+    }
+  };
+
+  const handleFileChangePpt = (event) => {
+    const file = event.target.files[0];
+    setPptFile(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setPptUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setPptUrl(null);
     }
   };
 
@@ -127,7 +146,7 @@ function UploadPaper() {
       <section id="contact" class="contact section-bg">
         <div class="container">
           <div class="section-title">
-            <h2>Upload paper</h2>
+            <h2>Add Project</h2>
             <p>Format should be in PDF!</p>
           </div>
 
@@ -136,13 +155,16 @@ function UploadPaper() {
               <form role="form" class="php-email-form">
                 <div class="row">
                   <div class="col-md-6 form-group">
+                    <label>
+                      Project topic<sup>*</sup>
+                    </label>
                     <input
                       value={subject}
                       type="text"
                       name="Subject"
                       class="form-control"
                       id="Subject"
-                      placeholder="Subject Name"
+                      placeholder="Project topic"
                       required
                       onChange={(e) => {
                         setSubject(e.target.value);
@@ -150,61 +172,61 @@ function UploadPaper() {
                     />
                   </div>
                   <div class="col-md-6 form-group mt-3 mt-md-0">
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="year"
-                      id="year"
-                      placeholder="Paper Conducted in"
-                      required
-                      value={year}
+                    <label>
+                      Project language<sup>*</sup>
+                    </label>
+                    <select
+                      class="form-control p-2"
+                      value={type}
                       onChange={(e) => {
-                        setYear(e.target.value);
+                        setType(e.target.value);
                       }}
-                    />
+                    >
+                      <option value=""> Select project language...</option>
+                      {types.length !== 0
+                        ? types.map((type) => {
+                            return (
+                              <option value={type.ProjectName}>
+                                {type.ProjectName}
+                              </option>
+                            );
+                          })
+                        : ""}
+                    </select>
                   </div>
                 </div>
-                <div class="form-group mt-3">
-                  <select
-                    class="form-control"
-                    value={type}
-                    onChange={(e) => {
-                      setType(e.target.value);
-                    }}
-                  >
-                    <option value=""> Select college/university..</option>
-                    {types.length !== 0
-                      ? types.map((type) => {
-                          return (
-                            <option value={type.valuePath}>
-                              {type.valueName}
-                            </option>
-                          );
-                        })
-                      : ""}
-                  </select>
+                <div class="row">
+                  <div class="col-md-6 form-group">
+                    <label>Report</label>
+                    <input
+                      type="file"
+                      class="form-control"
+                      onChange={handleFileChangeReport}
+                    />
+                    {reportUrl && (
+                      <div>
+                        <h5>Report Preview</h5>
+                        <embed src={reportUrl} width="100%" height="300px" />
+                      </div>
+                    )}
+                  </div>
+                  <div class="col-md-6 form-group">
+                    <label>Powerpoint </label>
+                    <input
+                      type="file"
+                      class="form-control"
+                      onChange={handleFileChangePpt}
+                    />
+                    {pptUrl && (
+                      <div>
+                        <h5>Report Preview</h5>
+                        <embed src={pptUrl} width="100%" height="300px" />
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div class="form-group mt-3">
-                  <select
-                    class="form-control"
-                    value={course}
-                    onChange={(e) => {
-                      setCourse(e.target.value);
-                    }}
-                  >
-                    <option value=""> Select Course Type..</option>
-                    {courses.length !== 0
-                      ? courses.map((course) => {
-                          return (
-                            <option value={course.coursePath}>
-                              {course.courseName}
-                            </option>
-                          );
-                        })
-                      : ""}
-                  </select>
-                </div>
-                <div class="form-group mt-3">
+                <div class="form-group">
+                  <label>Source code zip file</label>
                   <input
                     type="file"
                     class="form-control"
@@ -245,4 +267,4 @@ function UploadPaper() {
   );
 }
 
-export default UploadPaper;
+export default AddProject;

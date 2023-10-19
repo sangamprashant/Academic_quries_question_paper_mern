@@ -47,7 +47,7 @@ function AdminNav() {
           <Nav.Link as={Link} to="/responses" style={{ color: "white" }}>
             Responses
           </Nav.Link>
-          <Nav.Link as={Link} to="/add-project" style={{ color: "white" }}>
+          <Nav.Link as={Link} to="/admin/add/project" style={{ color: "white" }}>
             Add Projects
           </Nav.Link>
           <Nav.Link as={Link} to="/add-project" style={{ color: "white" }}>
