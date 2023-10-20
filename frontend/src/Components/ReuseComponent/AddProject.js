@@ -7,19 +7,19 @@ import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 
 function AddProject() {
-  const [courses, setCourses] = useState([]);
-  const [types, setTypes] = useState([]);
+  const [types, setTypes] = useState([]);//fetched languages
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [reportUrl, setReportUrl] = useState(null);
   const [reportFile, setReportFile] = useState(null);
   const [pptUrl, setPptUrl] = useState(null);
   const [pptFile, setPptFile] = useState(null);
+  const [images, setImages] = useState([]);
+  const [topic, setTopic] = useState("");
+  const [language, setLanguage] = useState("");
 
-  const [type, setType] = useState("");
-  const [subject, setSubject] = useState("");
-  const [year, setYear] = useState("");
-  const [course, setCourse] = useState("");
+  const [location, setLocation] = useState(null);
+
   const token = localStorage.getItem("jwt");
   const navigate = useNavigate();
   // Toast functions
@@ -87,9 +87,57 @@ function AddProject() {
     }
   };
 
+  const handleImageSelection = (event) => {
+    const files = event.target.files;
+    const imageArray = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      imageArray.push({ file });
+    }
+    setImages(imageArray);
+    console.log(images);
+    askForLocationPermission()
+    console.log(location)
+  };
+
+  // const askForLocationPermission = () => {
+  //   const customMessage = "We need your location to provide relevant information. Is that okay?";
+  //   const isLocationAllowed = window.confirm(customMessage);
+
+  //   if (isLocationAllowed) {
+  //     if ("geolocation" in navigator) {
+  //       navigator.geolocation.getCurrentPosition(
+  //         (position) => {
+  //           const userLocation = {
+  //             latitude: position.coords.latitude,
+  //             longitude: position.coords.longitude,
+  //           };
+  //           setLocation(userLocation);
+  //         },
+  //         (error) => {
+  //           alert(`Error getting location: ${error.message}`);
+  //         }
+  //       );
+  //     } else {
+  //       alert("Geolocation is not supported in your browser.");
+  //     }
+  //   } else {
+  //     alert("You declined to share your location.");
+  //   }
+  // };
+
+
   const uploadFile = () => {
-    if (!selectedFile || !type || !subject || !year || !course) {
-      notifyA("Please fill all the fields.");
+    if (!topic) {
+      notifyA("Please fill the topic.");
+      return;
+    }
+    if (!language) {
+      notifyA("Please select the language.");
+      return;
+    }
+    if (!images.length>0) {
+      notifyA("Please select the image.");
       return;
     }
     const fileRef = ref(storage, `Pdf/${selectedFile.name + uuidv4()}`);
@@ -102,16 +150,12 @@ function AddProject() {
   };
 
   const handleUpload = (url) => {
-    if (!selectedFile || !type || !subject || !year || !course || !url) {
+    if (true) {
       notifyA("Please fill all the fields.");
       return;
     }
     const requestBody = {
-      path: url,
-      type: type,
-      subject: subject,
-      year: year,
-      course: course,
+
     };
     fetch("http://localhost:5000/api/admin/upload", {
       method: "POST",
@@ -125,12 +169,7 @@ function AddProject() {
       .then((data) => {
         if (data.message) {
           notifyB(data.message);
-          setSelectedFile(null);
-          setPreviewUrl(null);
-          setType("");
-          setSubject("");
-          setYear("");
-          setCourse("");
+
         } else {
           notifyA(data.error);
         }
@@ -159,7 +198,7 @@ function AddProject() {
                       Project topic<sup>*</sup>
                     </label>
                     <input
-                      value={subject}
+                      value={topic}
                       type="text"
                       name="Subject"
                       class="form-control"
@@ -167,7 +206,7 @@ function AddProject() {
                       placeholder="Project topic"
                       required
                       onChange={(e) => {
-                        setSubject(e.target.value);
+                        setTopic(e.target.value);
                       }}
                     />
                   </div>
@@ -177,9 +216,9 @@ function AddProject() {
                     </label>
                     <select
                       class="form-control p-2"
-                      value={type}
+                      value={language}
                       onChange={(e) => {
-                        setType(e.target.value);
+                        setLanguage(e.target.value);
                       }}
                     >
                       <option value=""> Select project language...</option>
@@ -230,24 +269,36 @@ function AddProject() {
                   <input
                     type="file"
                     class="form-control"
-                    name="pdf"
-                    id="pdf"
-                    placeholder="Paper in pdf"
-                    required
                     onChange={handleFileChange}
                   />
                 </div>
-                {previewUrl && (
-                  <div>
-                    <h4>Selected File Preview:</h4>
-                    <embed
-                      src={previewUrl}
-                      type="application/pdf"
-                      width="100%"
-                      height="600px"
-                    />
-                  </div>
-                )}
+                <div class="form-group">
+                  <label>
+                    Project images<sup>*</sup>
+                  </label>
+                  <sub>Select at atleast one</sub>
+                  <input
+                    type="file"
+                    class="form-control"
+                    required
+                    multiple
+                    onChange={handleImageSelection}
+                  />
+                  {images.length > 0 && (
+                    <div>
+                      <p>Selected images</p>
+                      <div className="project-input-image">
+                        {images.map((image, index) => (
+                          <img
+                            key={index}
+                            src={URL.createObjectURL(image.file)}
+                            alt={`Selected Image ${index}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <div class="text-center">
                   <button
                     type="button"
