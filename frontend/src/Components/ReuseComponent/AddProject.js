@@ -8,18 +8,18 @@ import { v4 as uuidv4 } from "uuid";
 
 function AddProject() {
   const [types, setTypes] = useState([]);//fetched languages
-  const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [reportUrl, setReportUrl] = useState(null);
-  const [reportFile, setReportFile] = useState(null);
   const [pptUrl, setPptUrl] = useState(null);
-  const [pptFile, setPptFile] = useState(null);
   const [images, setImages] = useState([]);
   const [imagesLink,setImagesLink] = useState(null)
   const [topic, setTopic] = useState("");
   const [language, setLanguage] = useState("");
   const [waiting ,setWaiting] = useState(false);
-
+  const [waitingReport, setWaitingReport] = useState(false);
+  const [waitingPpt, setWaitingPpt] = useState(false);
+  const [waitingZip, setWaitingZip] = useState(false);
+  const [waitingImages, setWaitingImages] = useState(false);
 
   const token = localStorage.getItem("jwt");
   const navigate = useNavigate();
@@ -46,49 +46,37 @@ function AddProject() {
       });
   }, []);
 
-  const handleFileChangeZip = (event) => {
+  const handleFileChangeZip = async (event) => {
     const file = event.target.files[0];
-    setSelectedFile(file);
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPreviewUrl(reader.result);
-      };
-      reader.readAsDataURL(file);
+      setWaitingZip(true)
+      await handleGetZipLink(file);
     } else {
       setPreviewUrl(null);
     }
   };
 
-  const handleFileChangeReport = (event) => {
+  const handleFileChangeReport = async (event) => {
     const file = event.target.files[0];
-    setReportFile(file);
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setReportUrl(reader.result);
-      };
-      reader.readAsDataURL(file);
+      setWaitingReport(true);
+      await handleGetReportLink(file);
     } else {
       setReportUrl(null);
     }
   };
 
-  const handleFileChangePpt = (event) => {
+  const handleFileChangePpt = async (event) => {
     const file = event.target.files[0];
-    setPptFile(file);
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPptUrl(reader.result);
-      };
-      reader.readAsDataURL(file);
+      setWaitingPpt(true);
+      await handleGetPptLink(file);
     } else {
       setPptUrl(null);
     }
   };
 
-  const handleImageSelection = (event) => {
+  const handleImageSelection = async (event) => {
     const files = event.target.files;
     const imageArray = [];
     for (let i = 0; i < files.length; i++) {
@@ -96,7 +84,8 @@ function AddProject() {
       imageArray.push({ file });
     }
     setImages(imageArray);
-    console.log(images);
+    setWaitingImages(true)
+    await handleGetImagesLink(imageArray);
   };
   
   const uploadFile = async () => {
@@ -108,7 +97,7 @@ function AddProject() {
       notifyA("Please select the language.");
       return;
     }
-    if (!selectedFile) {
+    if (!previewUrl) {
       notifyA("Please select the zip file.");
       return;
     }
@@ -120,22 +109,6 @@ function AddProject() {
     setWaiting(true);
   
     try {
-      // Upload report file (if exists)
-      if (reportFile) {
-        await handleGetReportLink();
-      }
-      // Upload ppt file (if exists)
-      if (pptFile) {
-        await handleGetPptLink();
-      }
-      // Upload zip file
-      if (selectedFile) {
-        await handleGetZipLink();
-      }
-      // Upload images
-      if (images.length > 0) {
-        await handleGetImagesLink();
-      }
       // Prepare the request body
       const requestBody = {
         type: language,
@@ -148,37 +121,36 @@ function AddProject() {
       };
   
       console.log(requestBody);
-      return;
       // Send the data to your server
       handleUpload(requestBody);
     } catch (error) {
-      notifyA("An error occurred while uploading files. Please try again.");
       console.error("File upload error:", error);
-    } finally {
-      setWaiting(false);
-    }
+    } 
   };
   
   //firebase wait
-  const handleGetReportLink =async () => {
+  const handleGetReportLink =async (reportFile) => {
     const reportRef = ref(storage, `ProjectReport/${reportFile.name + uuidv4()}`);
     const reportSnapshot = await uploadBytes(reportRef, reportFile);
     const reportUrl = await getDownloadURL(reportSnapshot.ref);
     setReportUrl(reportUrl);
+    setWaitingReport(false);
   }
-  const handleGetPptLink = async () => {
+  const handleGetPptLink = async (pptFile) => {
     const pptRef = ref(storage, `ProjectPPT/${pptFile.name + uuidv4()}`);
     const pptSnapshot = await uploadBytes(pptRef, pptFile);
     const pptUrl = await getDownloadURL(pptSnapshot.ref);
     setPptUrl(pptUrl);
+    setWaitingPpt(false);
   }
-  const handleGetZipLink = async () => {
+  const handleGetZipLink = async (selectedFile) => {
     const zipRef = ref(storage, `ProjectCode/${selectedFile.name + uuidv4()}`);
     const zipSnapshot = await uploadBytes(zipRef, selectedFile);
     const zipUrl = await getDownloadURL(zipSnapshot.ref);
     setPreviewUrl(zipUrl);
+    setWaitingZip(false)
   }
-  const handleGetImagesLink = async () => {
+  const handleGetImagesLink = async (images) => {
     const imageUploadPromises = [];
     images.forEach((image) => {
       const imageRef = ref(storage, `ProjectImages/${image.file.name + uuidv4()}`);
@@ -190,6 +162,7 @@ function AddProject() {
     // Extract the image URLs and store them in the imagesLink state
     const imageUrls = await Promise.all(imageSnapshots.map((snapshot) => getDownloadURL(snapshot.ref)));
     setImagesLink(imageUrls);
+    setWaitingImages(false)
   }
 
 const handleUpload = (requestBody) => {
@@ -340,12 +313,12 @@ const handleUpload = (requestBody) => {
                 <div class="text-center">
                   <button
                     type="button"
-                    disabled={waiting}
+                    disabled={waiting||waitingReport||waitingPpt || waitingZip || waitingImages}
                     onClick={() => {
                       uploadFile();
                     }}
                   >
-                    {waiting?"please wait...":"upload file"}
+                    {waiting ||waitingReport ||waitingPpt || waitingZip || waitingImages ?"please wait...":"upload file"}
                   </button>
                 </div>
               </form>
