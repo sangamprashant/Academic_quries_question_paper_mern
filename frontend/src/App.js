@@ -34,6 +34,7 @@ import ForgotPassword from "./Components/ReuseComponent/ForgotPassword";
 import ProjectsList from "./Components/ReuseComponent/ProjectsList";
 import AddProjectLanguage from "./Components/ReuseComponent/AddProjectLanguage";
 import AddProject from "./Components/ReuseComponent/AddProject";
+import ProjectsListSelected from "./Components/ReuseComponent/ProjectListSelected";
 
 function App() {
   const [userLogin, setUserLogin] = useState(false);
@@ -70,6 +71,7 @@ function App() {
           <Route exact path="/admin/upload" element={<UploadPaper/>}/>
 
           <Route exact path="/projects" element={<ProjectsList/>}/>
+          <Route exact path="/projects/:language" element={<ProjectsListSelected/>}/>
           <Route exact path="/admin/add/project/language" element={<AddProjectLanguage/>}/>
           <Route exact path="/admin/add/project" element={<AddProject/>}/>
           <Route exact path="/test" element={<Test/>}/>

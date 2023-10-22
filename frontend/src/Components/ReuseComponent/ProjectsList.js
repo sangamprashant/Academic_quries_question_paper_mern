@@ -6,22 +6,28 @@ import "../css/ProjectsList.css";
 import ProjectLanguages from "./ProjectLanguages";
 
 function ProjectsList() {
-  const [pdfFiles, setPdfFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/get/course")
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    fetch("http://localhost:5000/api/get/project")
       .then((response) => response.json())
       .then((data) => {
-        setPdfFiles(data);
-        setIsLoading(false); // Turn off loading state when data is fetched
+        setProjects(data.map((project) => ({
+          ...project,
+          createdAt: new Date(project.createdAt).toLocaleDateString(), // Format the date
+        })));
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Failed to fetch PDF files:", error);
         setIsLoading(false); // Turn off loading state in case of an error
       });
-  }, []);
+  };
 
   return (
     <div style={{ marginTop: "70px" }}>
@@ -33,90 +39,28 @@ function ProjectsList() {
           <div className="row">
             <div className="project-list-left">
               <div className="project-type">
-                <h4>Projects</h4>
+                <h4>Top Projects {projects.length}</h4>
                 <div className="project-by-language-container">
-                  <div className="project-by-language">
-                    <p>Language</p>
-                    <h5>project title</h5>
-                    <p>upload date</p>
-                  </div>
-                  <div className="project-by-language">
-                    <p>Language</p>
-                    <h5>project title</h5>
-                    <p>upload date</p>
-                  </div>
-                  <div className="project-by-language">
-                    <p>Language</p>
-                    <h5>project title</h5>
-                    <p>upload date</p>
-                  </div>
-                  <div className="project-by-language">
-                    <p>Language</p>
-                    <h5>project title</h5>
-                    <p>upload date</p>
-                  </div>
-                  <div className="project-by-language">
-                    <p>Language</p>
-                    <h5>project title</h5>
-                    <p>upload date</p>
-                  </div>
-                  <div className="project-by-language">
-                    <p>Language</p>
-                    <h5>project title</h5>
-                    <p>upload date</p>
-                  </div>
-                  <div className="project-by-language">
-                    <p>Language</p>
-                    <h5>project title</h5>
-                    <p>upload date</p>
-                  </div>
-                  <div className="project-by-language">
-                    <p>Language</p>
-                    <h5>project title</h5>
-                    <p>upload date</p>
-                  </div>
-                  <div className="project-by-language">
-                    <p>Language</p>
-                    <h5>project title</h5>
-                    <p>upload date</p>
-                  </div>
-                  <div className="project-by-language">
-                    <p>Language</p>
-                    <h5>project title</h5>
-                    <p>upload date</p>
-                  </div>
+                  {isLoading ? (
+                    <div className="text-center">
+                      <Spinner animation="border" variant="primary" />
+                      <p>Loading...</p>
+                    </div>
+                  ) : (
+                    projects.map((project) => (
+                      <div className="project-by-language" key={project._id}>
+                        <p>{project.type}</p>
+                        <h5>{project.topic}</h5>
+                        <p>{project.createdAt}</p>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             </div>
             <div className="project-list-right">
               <h4>Languages</h4>
-              {/* <div className="language-container">
-                {pdfFiles.map((Papers) => (
-                  <Link
-                    className="m-2 portfolio-item filter-app wow fadeInUp"
-                    to={`/course/${Papers.coursePath}/${Papers.courseName}`}
-                  >
-                    <div className="portfolio-wrap">
-                      <figure>
-                        <img
-                          src={`${Papers.courseImage}`}
-                          type="application/pdf"
-                          width="100%"
-                          height="200px"
-                        />
-                      </figure>
-                      <div className="portfolio-info">
-                        <h4>
-                          <a href="portfolio-details.html">
-                            {Papers.courseName}
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div> */}
-              <ProjectLanguages/>
+              <ProjectLanguages />
             </div>
           </div>
         </div>

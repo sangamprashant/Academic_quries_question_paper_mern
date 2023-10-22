@@ -24,29 +24,36 @@ function ProjectLanguages() {
 
   return (
     <div className="language-container">
-      {pdfFiles.map((Projects) => (
-        <Link
-          key={Projects._id}
-          className="m-2 portfolio-item filter-app wow fadeInUp"
-          to={`/project/${Projects.ProjectName}`}
-        >
-          <div className="portfolio-wrap">
-            <figure>
-              <img
-                src={`${Projects.ProjectImage}`}
-                type="application/pdf"
-                width="100%"
-                height="200px"
-              />
-            </figure>
-            <div className="portfolio-info">
-              <h4>
-                <a href="portfolio-details.html">{Projects.ProjectName}</a>
-              </h4>
+      {isLoading ? (
+        <div className="text-center">
+          <Spinner animation="border" variant="primary" />
+          <p>Loading...</p>
+        </div>
+      ) : (
+        pdfFiles.map((Projects) => (
+          <Link
+            key={Projects._id}
+            className="m-2 portfolio-item filter-app wow fadeInUp"
+            to={`/projects/${Projects.ProjectName}`}
+          >
+            <div className="portfolio-wrap">
+              <figure>
+                <img
+                  src={`${Projects.ProjectImage}`}
+                  type="application/pdf"
+                  width="100%"
+                  height="200px"
+                />
+              </figure>
+              <div className="portfolio-info">
+                <h4>
+                  <a>{Projects.ProjectName}</a>
+                </h4>
+              </div>
             </div>
-          </div>
-        </Link>
-      ))}
+          </Link>
+        ))
+      )}
     </div>
   );
 }

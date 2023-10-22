@@ -119,8 +119,6 @@ function AddProject() {
         images: imagesLink,
         valid: true,
       };
-  
-      console.log(requestBody);
       // Send the data to your server
       handleUpload(requestBody);
     } catch (error) {

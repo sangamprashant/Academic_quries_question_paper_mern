@@ -34,11 +34,23 @@ router.post("/api/admin/upload/project", requireLogin, async (req, res) => {
     return res.status(500).json({ error: "Failed to save project data" });
   }
 });
+//get valid project
 router.get("/api/get/project", async (req, res) => {
   try {
     const projects = await Projects.find({valid:true})
 
-    return res.json({ message: "Project data saved successfully",projects });
+    return res.json(projects);
+  } catch (error) {
+    console.error("Failed to save project data:", error);
+    return res.status(500).json({ error: "Failed to save project data" });
+  }
+});
+//get valid project by type
+router.get("/api/get/project/by/type/:type", async (req, res) => {
+  try {
+    const {type} = req.params;
+    const projects = await Projects.find({type:type})
+    return res.json(projects);
   } catch (error) {
     console.error("Failed to save project data:", error);
     return res.status(500).json({ error: "Failed to save project data" });
