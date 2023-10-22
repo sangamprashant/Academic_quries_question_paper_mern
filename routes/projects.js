@@ -8,7 +8,7 @@ const ProjectLanguage = mongoose.model("ACADEMICQUERIESPROJECTLANGUAGE");
 const requireLogin = require("../middleware/requiredLogin");
 
 // Route to handle the POST request to save data
-router.post("/api/admin/upload", async (req, res) => {
+router.post("/api/admin/upload/project", async (req, res) => {
     try {
       const { type, topic, report, ppt, file, images, name, email, valid } = req.body;
   

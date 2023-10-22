@@ -15,10 +15,11 @@ function AddProject() {
   const [pptUrl, setPptUrl] = useState(null);
   const [pptFile, setPptFile] = useState(null);
   const [images, setImages] = useState([]);
+  const [imagesLink,setImagesLink] = useState(null)
   const [topic, setTopic] = useState("");
   const [language, setLanguage] = useState("");
+  const [waiting ,setWaiting] = useState(false);
 
-  const [location, setLocation] = useState(null);
 
   const token = localStorage.getItem("jwt");
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ function AddProject() {
       });
   }, []);
 
-  const handleFileChange = (event) => {
+  const handleFileChangeZip = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
     if (file) {
@@ -96,38 +97,9 @@ function AddProject() {
     }
     setImages(imageArray);
     console.log(images);
-    askForLocationPermission()
-    console.log(location)
   };
-
-  // const askForLocationPermission = () => {
-  //   const customMessage = "We need your location to provide relevant information. Is that okay?";
-  //   const isLocationAllowed = window.confirm(customMessage);
-
-  //   if (isLocationAllowed) {
-  //     if ("geolocation" in navigator) {
-  //       navigator.geolocation.getCurrentPosition(
-  //         (position) => {
-  //           const userLocation = {
-  //             latitude: position.coords.latitude,
-  //             longitude: position.coords.longitude,
-  //           };
-  //           setLocation(userLocation);
-  //         },
-  //         (error) => {
-  //           alert(`Error getting location: ${error.message}`);
-  //         }
-  //       );
-  //     } else {
-  //       alert("Geolocation is not supported in your browser.");
-  //     }
-  //   } else {
-  //     alert("You declined to share your location.");
-  //   }
-  // };
-
-
-  const uploadFile = () => {
+  
+  const uploadFile = async () => {
     if (!topic) {
       notifyA("Please fill the topic.");
       return;
@@ -136,48 +108,114 @@ function AddProject() {
       notifyA("Please select the language.");
       return;
     }
-    if (!images.length>0) {
-      notifyA("Please select the image.");
+    if (!selectedFile) {
+      notifyA("Please select the zip file.");
       return;
     }
-    const fileRef = ref(storage, `Pdf/${selectedFile.name + uuidv4()}`);
-    uploadBytes(fileRef, selectedFile).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        // Send the download URL to your server for storage in MongoDB
-        handleUpload(url);
-      });
+    if (images.length === 0) {
+      notifyA("Please select at least one image.");
+      return;
+    }
+  
+    setWaiting(true);
+  
+    try {
+      // Upload report file (if exists)
+      if (reportFile) {
+        await handleGetReportLink();
+      }
+      // Upload ppt file (if exists)
+      if (pptFile) {
+        await handleGetPptLink();
+      }
+      // Upload zip file
+      if (selectedFile) {
+        await handleGetZipLink();
+      }
+      // Upload images
+      if (images.length > 0) {
+        await handleGetImagesLink();
+      }
+      // Prepare the request body
+      const requestBody = {
+        type: language,
+        topic,
+        report: reportUrl || null,
+        ppt: pptUrl || null,
+        file: previewUrl || null,
+        images: imagesLink,
+        valid: true,
+      };
+  
+      console.log(requestBody);
+      return;
+      // Send the data to your server
+      handleUpload(requestBody);
+    } catch (error) {
+      notifyA("An error occurred while uploading files. Please try again.");
+      console.error("File upload error:", error);
+    } finally {
+      setWaiting(false);
+    }
+  };
+  
+  //firebase wait
+  const handleGetReportLink =async () => {
+    const reportRef = ref(storage, `ProjectReport/${reportFile.name + uuidv4()}`);
+    const reportSnapshot = await uploadBytes(reportRef, reportFile);
+    const reportUrl = await getDownloadURL(reportSnapshot.ref);
+    setReportUrl(reportUrl);
+  }
+  const handleGetPptLink = async () => {
+    const pptRef = ref(storage, `ProjectPPT/${pptFile.name + uuidv4()}`);
+    const pptSnapshot = await uploadBytes(pptRef, pptFile);
+    const pptUrl = await getDownloadURL(pptSnapshot.ref);
+    setPptUrl(pptUrl);
+  }
+  const handleGetZipLink = async () => {
+    const zipRef = ref(storage, `ProjectCode/${selectedFile.name + uuidv4()}`);
+    const zipSnapshot = await uploadBytes(zipRef, selectedFile);
+    const zipUrl = await getDownloadURL(zipSnapshot.ref);
+    setPreviewUrl(zipUrl);
+  }
+  const handleGetImagesLink = async () => {
+    const imageUploadPromises = [];
+    images.forEach((image) => {
+      const imageRef = ref(storage, `ProjectImages/${image.file.name + uuidv4()}`);
+      const imageSnapshot = uploadBytes(imageRef, image.file);
+      imageUploadPromises.push(imageSnapshot);
     });
-  };
+    // Wait for all image uploads to complete
+    const imageSnapshots = await Promise.all(imageUploadPromises);
+    // Extract the image URLs and store them in the imagesLink state
+    const imageUrls = await Promise.all(imageSnapshots.map((snapshot) => getDownloadURL(snapshot.ref)));
+    setImagesLink(imageUrls);
+  }
 
-  const handleUpload = (url) => {
-    if (true) {
-      notifyA("Please fill all the fields.");
-      return;
-    }
-    const requestBody = {
-
-    };
-    fetch("http://localhost:5000/api/admin/upload", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-      },
-      body: JSON.stringify(requestBody),
+const handleUpload = (requestBody) => {
+  fetch("http://localhost:5000/api/admin/upload/project", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    },
+    body: JSON.stringify(requestBody),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.message) {
+        notifyB(data.message);
+      } else {
+        notifyA(data.error);
+      }
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.message) {
-          notifyB(data.message);
-
-        } else {
-          notifyA(data.error);
-        }
-      })
-      .catch((error) => {
-        console.error("Failed to upload question paper:", error);
-      });
-  };
+    .catch((error) => {
+      console.error("Failed to upload project:", error);
+    })
+    .finally(() => {
+      setWaiting(false);
+    });
+};
 
   return (
     <div style={{ marginTop: "70px" }}>
@@ -265,18 +303,18 @@ function AddProject() {
                   </div>
                 </div>
                 <div class="form-group">
-                  <label>Source code zip file</label>
+                  <label>Source code zip file<sup>*</sup></label>
                   <input
                     type="file"
                     class="form-control"
-                    onChange={handleFileChange}
+                    onChange={handleFileChangeZip}
                   />
                 </div>
                 <div class="form-group">
                   <label>
                     Project images<sup>*</sup>
-                  </label>
-                  <sub>Select at atleast one</sub>
+                  </label><br/>
+                  {!images.length>0&&<sup>select at atleast one</sup>}
                   <input
                     type="file"
                     class="form-control"
@@ -302,11 +340,12 @@ function AddProject() {
                 <div class="text-center">
                   <button
                     type="button"
+                    disabled={waiting}
                     onClick={() => {
                       uploadFile();
                     }}
                   >
-                    Upload file
+                    {waiting?"please wait...":"upload file"}
                   </button>
                 </div>
               </form>
