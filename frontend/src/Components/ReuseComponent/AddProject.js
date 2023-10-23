@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from "uuid";
 
 function AddProject() {
   const [types, setTypes] = useState([]);//fetched languages
-  const [previewUrl, setPreviewUrl] = useState(null);
   const [reportUrl, setReportUrl] = useState(null);
   const [pptUrl, setPptUrl] = useState(null);
   const [images, setImages] = useState([]);
@@ -18,7 +17,6 @@ function AddProject() {
   const [waiting ,setWaiting] = useState(false);
   const [waitingReport, setWaitingReport] = useState(false);
   const [waitingPpt, setWaitingPpt] = useState(false);
-  const [waitingZip, setWaitingZip] = useState(false);
   const [waitingImages, setWaitingImages] = useState(false);
 
   const token = localStorage.getItem("jwt");
@@ -45,16 +43,6 @@ function AddProject() {
         console.error("Failed to fetch PDF files:", error);
       });
   }, []);
-
-  const handleFileChangeZip = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setWaitingZip(true)
-      await handleGetZipLink(file);
-    } else {
-      setPreviewUrl(null);
-    }
-  };
 
   const handleFileChangeReport = async (event) => {
     const file = event.target.files[0];
@@ -97,10 +85,6 @@ function AddProject() {
       notifyA("Please select the language.");
       return;
     }
-    if (!previewUrl) {
-      notifyA("Please select the zip file.");
-      return;
-    }
     if (images.length === 0) {
       notifyA("Please select at least one image.");
       return;
@@ -115,7 +99,6 @@ function AddProject() {
         topic,
         report: reportUrl || null,
         ppt: pptUrl || null,
-        file: previewUrl || null,
         images: imagesLink,
         valid: true,
       };
@@ -141,13 +124,6 @@ function AddProject() {
     setPptUrl(pptUrl);
     setWaitingPpt(false);
   }
-  const handleGetZipLink = async (selectedFile) => {
-    const zipRef = ref(storage, `ProjectCode/${selectedFile.name + uuidv4()}`);
-    const zipSnapshot = await uploadBytes(zipRef, selectedFile);
-    const zipUrl = await getDownloadURL(zipSnapshot.ref);
-    setPreviewUrl(zipUrl);
-    setWaitingZip(false)
-  }
   const handleGetImagesLink = async (images) => {
     const imageUploadPromises = [];
     images.forEach((image) => {
@@ -163,30 +139,40 @@ function AddProject() {
     setWaitingImages(false)
   }
 
-const handleUpload = (requestBody) => {
-  fetch("http://localhost:5000/api/admin/upload/project", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-    },
-    body: JSON.stringify(requestBody),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.message) {
-        notifyB(data.message);
-      } else {
-        notifyA(data.error);
-      }
+  const handleUpload = (requestBody) => {
+    fetch("http://localhost:5000/api/admin/upload/project", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+      body: JSON.stringify(requestBody),
     })
-    .catch((error) => {
-      console.error("Failed to upload project:", error);
-    })
-    .finally(() => {
-      setWaiting(false);
-    });
-};
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          notifyB(data.message);
+          // Reset the form fields and state
+          setTopic("");
+          setLanguage("");
+          setReportUrl(null);
+          setPptUrl(null);
+          setImages([]);
+          setImagesLink(null);
+        } else {
+          notifyA(data.error);
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to upload project:", error);
+      })
+      .finally(() => {
+        setWaiting(false);
+        setWaitingReport(false);
+        setWaitingPpt(false);
+        setWaitingImages(false);
+      });
+  };
 
   return (
     <div style={{ marginTop: "70px" }}>
@@ -274,14 +260,6 @@ const handleUpload = (requestBody) => {
                   </div>
                 </div>
                 <div class="form-group">
-                  <label>Source code zip file<sup>*</sup></label>
-                  <input
-                    type="file"
-                    class="form-control"
-                    onChange={handleFileChangeZip}
-                  />
-                </div>
-                <div class="form-group">
                   <label>
                     Project images<sup>*</sup>
                   </label><br/>
@@ -311,12 +289,12 @@ const handleUpload = (requestBody) => {
                 <div class="text-center">
                   <button
                     type="button"
-                    disabled={waiting||waitingReport||waitingPpt || waitingZip || waitingImages}
+                    disabled={waiting||waitingReport||waitingPpt || waitingImages}
                     onClick={() => {
                       uploadFile();
                     }}
                   >
-                    {waiting ||waitingReport ||waitingPpt || waitingZip || waitingImages ?"please wait...":"upload file"}
+                    {waiting ||waitingReport ||waitingPpt || waitingImages ?"please wait...":"upload file"}
                   </button>
                 </div>
               </form>

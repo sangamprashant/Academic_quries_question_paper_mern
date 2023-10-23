@@ -35,6 +35,17 @@ router.get("/api/project/languages", async (req, res) => {
   }
 });
 
+// Get a project languages
+router.get("/api/project/:languages", async (req, res) => {
+  try {
+    const {languages} = req.params;
+    const projectLanguages = await ProjectLanguage.findOne({ProjectName:languages});
+    res.status(200).json(projectLanguages);
+  } catch (error) {
+    res.status(500).json({ error: "Error getting project languages" });
+  }
+});
+
 // Delete a specific project language by ID
 router.delete("/api/project/language/delete/by/admin/:id",requireLogin, async (req, res) => {
   try {

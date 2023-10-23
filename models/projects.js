@@ -16,9 +16,6 @@ const questionPaperSchema = new mongoose.Schema(
     ppt: {
       type: String,
     },
-    file: {
-      type: String,
-    },
     images:[{ type: String }],
     name: {
       type: String,

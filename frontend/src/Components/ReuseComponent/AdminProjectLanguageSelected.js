@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import "../css/ProjectsList.css";
+import AdminNav from "./AdminNav";
 
-function ProjectsListSelected() {
+function AdminProjectLanguageSelected() {
   const { language } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [projects, setProjects] = useState([]);
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProjects();
@@ -17,10 +19,12 @@ function ProjectsListSelected() {
     fetch(`http://localhost:5000/api/get/project/by/type/${language}`)
       .then((response) => response.json())
       .then((data) => {
-        setProjects(data.map((project) => ({
-          ...project,
-          createdAt: new Date(project.createdAt).toLocaleDateString(),
-        })));
+        setProjects(
+          data.map((project) => ({
+            ...project,
+            createdAt: new Date(project.createdAt).toLocaleDateString(),
+          }))
+        );
         setIsLoading(false);
       })
       .catch((error) => {
@@ -29,12 +33,35 @@ function ProjectsListSelected() {
       });
   };
 
+  const handleDelete = (projectId) => {
+    // Send a DELETE request to the server to delete the project
+    fetch(`http://localhost:5000/api/admin/delete/project/${projectId}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          // Refresh the project list after successful deletion
+          fetchProjects();
+        } else {
+          console.error("Failed to delete project:", data.error);
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to delete project:", error);
+      });
+  };
+
   return (
     <div style={{ marginTop: "70px" }}>
+      <AdminNav />
       <section id="portfolio" className="portfolio">
         <div className="container">
           <div className="section-title">
-            <h2>Projects List for {language}</h2>
+            <h2>Admin Projects List for {language}</h2>
           </div>
           {isLoading ? (
             <div className="text-center">
@@ -51,14 +78,25 @@ function ProjectsListSelected() {
                       <th>Sr no.</th>
                       <th>Topic</th>
                       <th>Created At</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     {projects.map((project, index) => (
-                      <tr key={project._id} onClick={()=>{navigate(`/project/${project.type}/${project._id}`)}}>
+                      <tr key={project._id}>
                         <td>{index + 1}</td>
-                        <td>{project.topic}</td>
+                        <td>
+                          <Link>{project.topic}</Link>
+                        </td>
                         <td>{project.createdAt}</td>
+                        <td>
+                          <Link
+                            className="text-danger"
+                            onClick={() => handleDelete(project._id)}
+                          >
+                            Delete
+                          </Link>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -72,4 +110,4 @@ function ProjectsListSelected() {
   );
 }
 
-export default ProjectsListSelected;
+export default AdminProjectLanguageSelected;

@@ -82,6 +82,11 @@ export default function Navbar({ login }) {
                 </Link>
               </li>
               <li>
+                <Link className="nav-link scrollto" to="/projects">
+                  Projects
+                </Link>
+              </li>
+              <li>
                 <Link className={`nav-linksignin`} to="/contact">
                   Contact
                 </Link>
@@ -92,8 +97,13 @@ export default function Navbar({ login }) {
                 </Link>
               </li>
               <li>
-                <Link className="nav-link scrollto" to="/projects">
-                  Projects
+                <Link className="nav-link scrollto" to="/policy">
+                  Policy
+                </Link>
+              </li>
+              <li>
+                <Link className="nav-link scrollto" to="/terms">
+                Terms
                 </Link>
               </li>
               <li>

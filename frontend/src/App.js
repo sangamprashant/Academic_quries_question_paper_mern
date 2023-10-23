@@ -35,6 +35,9 @@ import ProjectsList from "./Components/ReuseComponent/ProjectsList";
 import AddProjectLanguage from "./Components/ReuseComponent/AddProjectLanguage";
 import AddProject from "./Components/ReuseComponent/AddProject";
 import ProjectsListSelected from "./Components/ReuseComponent/ProjectListSelected";
+import ProjectOpen from "./Components/ReuseComponent/ProjectOpen";
+import AdminProjectHome from "./Components/ReuseComponent/AdminProjectHome";
+import AdminProjectLanguageSelected from "./Components/ReuseComponent/AdminProjectLanguageSelected";
 
 function App() {
   const [userLogin, setUserLogin] = useState(false);
@@ -72,8 +75,11 @@ function App() {
 
           <Route exact path="/projects" element={<ProjectsList/>}/>
           <Route exact path="/projects/:language" element={<ProjectsListSelected/>}/>
+          <Route exact path="/project/:language/:id" element={<ProjectOpen/>}/>
           <Route exact path="/admin/add/project/language" element={<AddProjectLanguage/>}/>
           <Route exact path="/admin/add/project" element={<AddProject/>}/>
+          <Route exact path="/admin/edit/project" element={<AdminProjectHome/>}/>
+          <Route exact path="/admin/projects/:language" element={<AdminProjectLanguageSelected/>}/>
           <Route exact path="/test" element={<Test/>}/>
           <Route exact path="*" element={<PageNotFound />} />
         </Routes>
