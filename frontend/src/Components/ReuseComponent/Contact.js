@@ -26,7 +26,7 @@ function Contact() {
       input: message,
     };
 
-    fetch("http://localhost:5000/api/public/sendemail", {
+    fetch("/api/public/sendemail", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

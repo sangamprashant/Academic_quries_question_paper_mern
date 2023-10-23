@@ -27,7 +27,7 @@ function AddProjectLanguage() {
 
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/project/languages")
+    fetch("/api/project/languages")
       .then((response) => response.json())
       .then((data) => {
         setPdfFiles(data);
@@ -72,7 +72,7 @@ function AddProjectLanguage() {
       ProjectImage: url,
       ProjectName: inputName,
     };
-    fetch("http://localhost:5000/api/project/languages", {
+    fetch("/api/project/languages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -97,7 +97,7 @@ function AddProjectLanguage() {
   };
   const handelDelete = (id) => {
     // Send a DELETE request to the server to delete the question paper
-    fetch(`http://localhost:5000/api/project/language/delete/by/admin/${id}`, {
+    fetch(`/api/project/language/delete/by/admin/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

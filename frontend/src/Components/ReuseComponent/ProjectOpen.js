@@ -23,7 +23,7 @@ function ProjectOpen() {
   const fetchProject = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/get/project/by/id/${id}`
+        `/api/get/project/by/id/${id}`
       );
       if (response.status === 200) {
         setProject(response.data);

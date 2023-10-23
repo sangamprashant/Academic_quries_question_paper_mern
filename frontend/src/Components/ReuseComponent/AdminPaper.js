@@ -16,7 +16,7 @@ function AdminPaper() {
 
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch(`http://localhost:5000/api/course/${branch}`)
+    fetch(`/api/course/${branch}`)
       .then((response) => response.json())
       .then((data) => {
         setAllData(data);
@@ -46,7 +46,7 @@ function AdminPaper() {
 
   const handelDelete = (id) => {
     // Send a DELETE request to the server to delete the question paper
-    fetch(`http://localhost:5000/api/paper/delete/by/admin/${id}`, {
+    fetch(`/api/paper/delete/by/admin/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

@@ -16,7 +16,7 @@ function AdminProjectLanguageSelected() {
   }, [language]);
 
   const fetchProjects = async () => {
-    fetch(`http://localhost:5000/api/get/project/by/type/${language}`)
+    fetch(`/api/get/project/by/type/${language}`)
       .then((response) => response.json())
       .then((data) => {
         setProjects(
@@ -35,7 +35,7 @@ function AdminProjectLanguageSelected() {
 
   const handleDelete = (projectId) => {
     // Send a DELETE request to the server to delete the project
-    fetch(`http://localhost:5000/api/admin/delete/project/${projectId}`, {
+    fetch(`/api/admin/delete/project/${projectId}`, {
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${localStorage.getItem("jwt")}`,

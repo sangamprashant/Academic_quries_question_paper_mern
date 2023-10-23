@@ -34,7 +34,7 @@ function AddProject() {
   //fetch types
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/project/languages")
+    fetch("/api/project/languages")
       .then((response) => response.json())
       .then((data) => {
         setTypes(data);
@@ -140,7 +140,7 @@ function AddProject() {
   }
 
   const handleUpload = (requestBody) => {
-    fetch("http://localhost:5000/api/admin/upload/project", {
+    fetch("/api/admin/upload/project", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

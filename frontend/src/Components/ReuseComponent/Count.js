@@ -7,7 +7,7 @@ function Count() {
 
   useEffect(() => {
     // Fetch the count of valid question papers
-    fetch("http://localhost:5000/api/count/valid-question-papers")
+    fetch("/api/count/valid-question-papers")
       .then((response) => response.json())
       .then((data) => {
         setCount(data.count);
@@ -20,7 +20,7 @@ function Count() {
     const postRequestSent = localStorage.getItem("postRequestSent");
     if (!postRequestSent) {
       // Send the visitor count to the backend
-      fetch("http://localhost:5000/api/increment/visitors", {
+      fetch("/api/increment/visitors", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +40,7 @@ function Count() {
 
   useEffect(() => {
     // Fetch the count of visitors
-    fetch("http://localhost:5000/api/count/visitors")
+    fetch("/api/count/visitors")
       .then((response) => response.json())
       .then((data) => {
         setVisitors(data.count);

@@ -12,7 +12,7 @@ function ProjectLeft() {
   }, []);
 
   const fetchProjects = async () => {
-    fetch("http://localhost:5000/api/get/recent/projects")
+    fetch("/api/get/recent/projects")
       .then((response) => response.json())
       .then((data) => {
         setProjects(

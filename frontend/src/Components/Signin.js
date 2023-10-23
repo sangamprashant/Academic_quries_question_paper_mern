@@ -23,7 +23,7 @@ function Signin() {
 
   const postData = () => {
     // Sending data to server
-    fetch("http://localhost:5000/api/signin", {
+    fetch("/api/signin", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

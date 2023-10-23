@@ -11,7 +11,7 @@ function AdminProjectHome() {
 
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/project/languages")
+    fetch("/api/project/languages")
       .then((response) => response.json())
       .then((data) => {
         setPdfFiles(data);

@@ -24,7 +24,7 @@ function GetPaperToAdmin() {
 
   useEffect(() => {
     // Fetch the question paper by ID
-    fetch(`http://localhost:5000/api/get/paper/${paperId}`)
+    fetch(`/api/get/paper/${paperId}`)
       .then((response) => response.json())
       .then((data) => {
         setPdfFile(data);
@@ -39,7 +39,7 @@ function GetPaperToAdmin() {
   //fetch courses
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/get/course")
+    fetch("/api/get/course")
       .then((response) => response.json())
       .then((data) => {
         setCourses(data);
@@ -51,7 +51,7 @@ function GetPaperToAdmin() {
   //fetch types
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("http://localhost:5000/api/get/types")
+    fetch("/api/get/types")
       .then((response) => response.json())
       .then((data) => {
         setTypes(data);
@@ -79,7 +79,7 @@ function GetPaperToAdmin() {
       name: name,
       valid: true,
     };
-    fetch(`http://localhost:5000/api/update/paper/${paperId}`, {
+    fetch(`/api/update/paper/${paperId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

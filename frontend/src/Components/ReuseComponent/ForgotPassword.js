@@ -26,7 +26,7 @@ function ForgotPassword() {
       setEmailError(true);
     } else {
       // Sending data to server
-      fetch("http://localhost:5000/api/check/email", {
+      fetch("/api/check/email", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +68,7 @@ function ForgotPassword() {
   const passwordReset = () => {
     if (password === rePassword) {
       // Sending data to server
-      fetch("http://localhost:5000/api/admin/backend/reset-password", {
+      fetch("/api/admin/backend/reset-password", {
         method: "put",
         headers: {
           "Content-Type": "application/json",

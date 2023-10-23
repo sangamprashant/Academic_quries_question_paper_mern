@@ -14,7 +14,7 @@ function ProjectsListSelected() {
   }, [language]);
 
   const fetchProjects = async () => {
-    fetch(`http://localhost:5000/api/get/project/by/type/${language}`)
+    fetch(`/api/get/project/by/type/${language}`)
       .then((response) => response.json())
       .then((data) => {
         setProjects(data.map((project) => ({
