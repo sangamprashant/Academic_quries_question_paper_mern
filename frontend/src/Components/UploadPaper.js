@@ -17,6 +17,7 @@ function UploadPaper() {
   const [year, setYear] = useState("");
   const [course, setCourse] = useState("");
   const token = localStorage.getItem("jwt");
+  const [loading,setLoading] = useState(false);
   const navigate = useNavigate();
   // Toast functions
   const notifyA = (msg) => toast.error(msg);
@@ -73,6 +74,7 @@ function UploadPaper() {
       notifyA("Please fill all the fields.");
       return;
     }
+    setLoading(true)
     const fileRef = ref(storage, `Pdf/${selectedFile.name + uuidv4()}`);
     uploadBytes(fileRef, selectedFile).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
@@ -112,8 +114,10 @@ function UploadPaper() {
           setSubject("");
           setYear("");
           setCourse("");
+          setLoading(false)
         } else {
           notifyA(data.error);
+          setLoading(false)
         }
       })
       .catch((error) => {
@@ -229,11 +233,12 @@ function UploadPaper() {
                 <div class="text-center">
                   <button
                     type="button"
+                    disabled={loading}
                     onClick={() => {
                       uploadFile();
                     }}
                   >
-                    Upload file
+                    {loading?"Please wait..":"Upload file"}
                   </button>
                 </div>
               </form>
