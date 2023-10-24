@@ -40,11 +40,6 @@ mongoose.connection.on("connected", () => {
 mongoose.connection.on("error", () => {
   console.log("Failed to connect to mongo");
 });
-// Serve the ads.txt file
-app.use(express.static(path.join(__dirname, "static")));
-app.get('/ads.txt', (req, res) => {
-  res.sendFile(path.join(__dirname, '/ads.txt'));
-});
 // Serve the frontend
 app.use(express.static(path.join(__dirname, "frontend/build")));
 app.get("*", (req, res) => {
