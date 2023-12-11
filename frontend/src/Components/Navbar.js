@@ -14,7 +14,7 @@ export default function Navbar({ login }) {
       return [
         <>
           <li>
-            <Link className={`nav-link scrollto`} to="/admin">
+            <Link className={`nav-link scrollto`} to="/admin" onClick={OptionSelection}>
               Admin
             </Link>
           </li>
@@ -27,17 +27,10 @@ export default function Navbar({ login }) {
     setMobileNavOpen(!mobileNavOpen);
   };
 
-  const handleScrollTo = (e) => {
-    const target = document.querySelector(e.currentTarget.hash);
-    if (target) {
-      e.preventDefault();
-      setMobileNavOpen(false);
-      window.scrollTo({
-        top: target.offsetTop - 70,
-        behavior: "smooth",
-      });
-    }
-  };
+  const OptionSelection = () => {
+    setMobileNavOpen(false)
+  }
+
   return (
     <div>
       <header
@@ -50,11 +43,11 @@ export default function Navbar({ login }) {
             class="logo me-auto"
             style={{ display: "flex", justifyContent: "center" }}
           >
-            <Link to="/">
+            <Link to="/" onClick={OptionSelection}>
               <img src={logo} alt="" class="img-fluid" />
             </Link>
             <h1>
-              <Link to="/"> ACADEMIC QUERIES</Link>
+              <Link to="/" onClick={OptionSelection}> ACADEMIC QUERIES</Link>
             </h1>
           </div>
 
@@ -67,47 +60,47 @@ export default function Navbar({ login }) {
             <ul>
               {/* Menu items */}
               <li>
-                <Link className={`nav-linksignin`} to="/about">
+                <Link className={`nav-linksignin`} to="/about" onClick={OptionSelection}>
                   About
                 </Link>
               </li>
               <li>
-                <Link className="nav-link scrollto" to="/services">
+                <Link className="nav-link scrollto" to="/services" onClick={OptionSelection}>
                   Services
                 </Link>
               </li>
               <li>
-                <Link className={`nav-linksignin`} to="/paper">
+                <Link className={`nav-linksignin`} to="/paper" onClick={OptionSelection}>
                   Courses
                 </Link>
               </li>
               <li>
-                <Link className="nav-link scrollto" to="/projects">
+                <Link className="nav-link scrollto" to="/projects" onClick={OptionSelection}>
                   Projects
                 </Link>
               </li>
               <li>
-                <Link className={`nav-linksignin`} to="/contact">
+                <Link className={`nav-linksignin`} to="/contact" onClick={OptionSelection}>
                   Contact
                 </Link>
               </li>
               <li>
-                <Link className={`nav-linksignin`} to="/user/upload/paper">
+                <Link className={`nav-linksignin`} to="/user/upload/paper" onClick={OptionSelection}>
                   Contribute
                 </Link>
               </li>
               <li>
-                <Link className="nav-link scrollto" to="/policy">
+                <Link className="nav-link scrollto" to="/policy" onClick={OptionSelection}>
                   Policy
                 </Link>
               </li>
               <li>
-                <Link className="nav-link scrollto" to="/terms">
+                <Link className="nav-link scrollto" to="/terms" onClick={OptionSelection}>
                 Terms
                 </Link>
               </li>
               <li>
-                <Link className="nav-link scrollto" to="/testimonials">
+                <Link className="nav-link scrollto" to="/testimonials" onClick={OptionSelection}>
                   Testimonials
                 </Link>
               </li>
