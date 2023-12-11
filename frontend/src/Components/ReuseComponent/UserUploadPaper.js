@@ -19,6 +19,10 @@ function UserUploadPaper() {
   const notifyA = (msg) => toast.error(msg);
   const notifyB = (msg) => toast.success(msg);
 
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  },[])
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);

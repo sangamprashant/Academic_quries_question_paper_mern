@@ -38,7 +38,6 @@ import ProjectsListSelected from "./Components/ReuseComponent/ProjectListSelecte
 import ProjectOpen from "./Components/ReuseComponent/ProjectOpen";
 import AdminProjectHome from "./Components/ReuseComponent/AdminProjectHome";
 import AdminProjectLanguageSelected from "./Components/ReuseComponent/AdminProjectLanguageSelected";
-import Add from "./Components/Add";
 
 function App() {
   const [userLogin, setUserLogin] = useState(false);
@@ -82,7 +81,6 @@ function App() {
           <Route exact path="/admin/edit/project" element={<AdminProjectHome/>}/>
           <Route exact path="/admin/projects/:language" element={<AdminProjectLanguageSelected/>}/>
           <Route exact path="/test" element={<Test/>}/>
-          <Route exact path="/ads.txt" element={<Add/>}/>
           <Route exact path="*" element={<PageNotFound />} />
         </Routes>
         <Footer/>

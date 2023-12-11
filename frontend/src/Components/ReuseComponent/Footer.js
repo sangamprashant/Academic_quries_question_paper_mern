@@ -11,8 +11,6 @@ function Footer() {
               <div class="col-lg-6 col-md-6 footer-contact">
                 <h3>ACADEMIC QUERIES</h3>
                 <p>
-                  <strong>Phone:</strong> +91 6387692665
-                  <br />
                   <strong>Email:</strong> queriesacademic@gmail.com
                   <br />
                 </p>
@@ -49,7 +47,7 @@ function Footer() {
           </div>
         </div>
 
-        <div class="container text-white d-md-flex py-4">
+        <div class="container text-gray d-md-flex py-4">
           <div class="me-md-auto text-center text-md-start">
             <div class="copyright">
               &copy; Copyright{" "}
@@ -63,7 +61,7 @@ function Footer() {
               </strong>
                All Rights Reserved
             </div>
-            <div class="credits text-white">
+            <div class="credits text-gray">
               Designed by <a href="/">Prashant srivastav</a>
             </div>
           </div>
@@ -71,7 +69,7 @@ function Footer() {
             <a href="https://instagram.com/sangam_prashant">
               <i class="bi bi-instagram"></i>
             </a>
-            <a href="https://www.linkedin.com/in/prashant-srivastav-63b44b242">
+            <a href="https://www.linkedin.com/in/sangamprashantsrivastav">
               <i class="bi bi-linkedin"></i>
             </a>
           </div>

@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./css/Team.css";
 import Prashant from "./img/prashant.png";
 import Avantika from "./img/avantika.jpg";
 
 function Team() {
+
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  },[])
+
   return (
     <div style={{ marginTop: "60px" }}>
       <section id="team" class="team">
@@ -46,7 +51,7 @@ function Team() {
                   <a href="https://instagram.com/sangam_prashant">
                     <i class="bi bi-instagram"></i>
                   </a>
-                  <a href="https://www.linkedin.com/in/prashant-srivastav-63b44b242">
+                  <a href="https://www.linkedin.com/in/sangamprashantsrivastav">
                     <i class="bi bi-linkedin"></i>
                   </a>
                 </div>

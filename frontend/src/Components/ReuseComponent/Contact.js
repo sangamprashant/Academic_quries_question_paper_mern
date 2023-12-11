@@ -10,22 +10,22 @@ function Contact() {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  },[])
 
   const handleSendEmail = () => {
     if (!name || !email || !subject || !message) {
       setErrorMessage("Please fill in all the fields.");
       return;
     }
-
     setLoading(true);
-
     const requestBody = {
       name: name,
       to: email,
       subject: subject,
       input: message,
     };
-
     fetch("/api/public/sendemail", {
       method: "POST",
       headers: {
@@ -44,7 +44,9 @@ function Contact() {
           setMessage("");
           setErrorMessage("");
         } else {
-          setErrorMessage("Failed to send the message. Please try again later.");
+          setErrorMessage(
+            "Failed to send the message. Please try again later."
+          );
         }
       })
       .catch((error) => {
@@ -69,32 +71,14 @@ function Contact() {
 
           <div className="row mt-5 justify-content-center">
             <div className="col-lg-10">
-              <div className="info-wrap">
-                <div className="row d-flex justify-content-around">
-
-
-                  <div className="col-lg-4 info mt-4 mt-lg-0">
-                    <i className="fa fa-envelope"></i>
-                    <h4>Email:</h4>
-                    <a href="mailto: queriesacademic@gmail.com">
+              <div className="row d-flex justify-content-around">
+                <div className="col-lg-4 info mt-4 mt-lg-0 d-flex justify-content-center align-items-center">
+                  <i className="fa fa-envelope"></i>
+                  {/* <h4>Email:</h4> */}
+                  <a href="mailto: queriesacademic@gmail.com">
                     queriesacademic@gmail.com
-                      <br />
-                     
-                    </a>
-                  </div>
-
-                  <div className="col-lg-4 info mt-4 mt-lg-0">
-                    <i className="fa fa-phone"></i>
-                    <h4>Call:</h4>
-                
-                      
-                    <p>
-                    <a href="tel:+919984529509">+91 9984529509</a><br/>
-                      <a href="tel:+916387692665">+91 6387692665</a>
-                    </p>
-                      
-                 
-                  </div>
+                    
+                  </a>
                 </div>
               </div>
             </div>

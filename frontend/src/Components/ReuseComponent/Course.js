@@ -12,6 +12,10 @@ function Course() {
   const [uniqueYears, setUniqueYears] = useState([]);
   const [uniqueTypes, setUniqueTypes] = useState([]);
 
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  },[])
+
   useEffect(() => {
     // Fetch PDF file data from the server
     fetch(`/api/course/${branch}`)

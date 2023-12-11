@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../css/WhatWeDo.css";
-import Footer from "./Footer";
 import { Link } from "react-router-dom";
+
 function WhatWeDo() {
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  },[])
   return (
     <div style={{ marginTop: "70px" }}>
       <section id="what-we-do" class="what-we-do">

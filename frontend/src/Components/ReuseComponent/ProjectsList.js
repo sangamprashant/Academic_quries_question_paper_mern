@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../css/Paper.css";
 import "../css/ProjectsList.css";
 import ProjectLanguages from "./ProjectLanguages";
 import ProjectLeft from "./ProjectLeft";
 
 function ProjectsList() {
+
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  },[])
+
   return (
     <div style={{ marginTop: "70px" }}>
       <section id="portfolio" className="portfolio">

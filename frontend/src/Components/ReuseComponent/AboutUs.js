@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../css/AboutUs.css";
 import pic from "../img/logo aq.png";
-import Footer from "./Footer";
 function AboutUs() {
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  },[])
   return (
     <div style={{ marginTop: "70px" }}>
       <section id="about" class="about">

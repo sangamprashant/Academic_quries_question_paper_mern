@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../css/Term.css";
 import { Link } from "react-router-dom";
 
 function Policy() {
+
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  },[])
+
   return (
     <div style={{ marginTop: "70px" }}>
       <div class="space"></div>
