@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import "../css/Course.css";
 
 function Course() {
@@ -11,10 +11,11 @@ function Course() {
   const [searchType, setSearchType] = useState("");
   const [uniqueYears, setUniqueYears] = useState([]);
   const [uniqueTypes, setUniqueTypes] = useState([]);
+  const navigate = useNavigate();
 
-  useEffect(()=>{
-    window.scrollTo(0,0)
-  },[])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     // Fetch PDF file data from the server
@@ -78,7 +79,11 @@ function Course() {
                 onChange={(e) => setSearchInput(e.target.value)}
               />
               <select
-              style={{marginLeft:"5px",marginRight:"5px",padding:"2px"}}
+                style={{
+                  marginLeft: "5px",
+                  marginRight: "5px",
+                  padding: "2px",
+                }}
                 className="Paper_search"
                 value={searchYear}
                 onChange={(e) => setSearchYear(e.target.value)}
@@ -111,7 +116,11 @@ function Course() {
                           <hr />
                           <li>
                             <a
-                              href={`${Papers.pdfPath}`}
+                              onClick={() =>
+                                navigate(`/selected-paper/${Papers.subject}`, {
+                                  state: { paperData: Papers },
+                                })
+                              }
                               style={{ height: "30px", whiteSpace: "nowrap" }}
                             >
                               {Papers.subject}
@@ -131,7 +140,11 @@ function Course() {
                           <hr />
                           <li>
                             <a
-                              href={`${Papers.pdfPath}`}
+                              onClick={() =>
+                                navigate(`/selected-paper/${Papers.subject}`, {
+                                  state: { paperData: Papers },
+                                })
+                              }
                               style={{ height: "30px", whiteSpace: "nowrap" }}
                             >
                               {Papers.year}
@@ -151,7 +164,11 @@ function Course() {
                           <hr />
                           <li>
                             <a
-                              href={`${Papers.pdfPath}`}
+                              onClick={() =>
+                                navigate(`/selected-paper/${Papers.subject}`, {
+                                  state: { paperData: Papers },
+                                })
+                              }
                               style={{ height: "30px", whiteSpace: "nowrap" }}
                             >
                               {Papers.type}
@@ -171,7 +188,11 @@ function Course() {
                           <hr />
                           <li>
                             <a
-                              href={`${Papers.pdfPath}`}
+                              onClick={() =>
+                                navigate(`/selected-paper/${Papers.subject}`, {
+                                  state: { paperData: Papers },
+                                })
+                              }
                               style={{ height: "30px", whiteSpace: "nowrap" }}
                             >
                               {Papers.name ? Papers.name : "Admin"}

@@ -38,6 +38,7 @@ import ProjectsListSelected from "./Components/ReuseComponent/ProjectListSelecte
 import ProjectOpen from "./Components/ReuseComponent/ProjectOpen";
 import AdminProjectHome from "./Components/ReuseComponent/AdminProjectHome";
 import AdminProjectLanguageSelected from "./Components/ReuseComponent/AdminProjectLanguageSelected";
+import PaperOpen from "./Components/ReuseComponent/PaperOpen";
 
 function App() {
   const [userLogin, setUserLogin] = useState(false);
@@ -49,6 +50,7 @@ function App() {
         <Navbar login={userLogin} />
         <Routes>
           <Route exact path="/" element={<Home />} />
+          <Route exact path="/selected-paper/:subject" element={<PaperOpen />} />
           <Route exact path="/terms" element={<Term/>}/>
           <Route exact path="/privacy-policy" element={<Policy/>}/>
           <Route exact path="/signin" element={<Signin/>}/>

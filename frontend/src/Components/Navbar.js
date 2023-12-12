@@ -96,7 +96,7 @@ export default function Navbar({ login }) {
               </li>
               <li>
                 <Link className="nav-link scrollto" to="/terms" onClick={OptionSelection}>
-                Terms
+                Terms and Conditions
                 </Link>
               </li>
               <li>

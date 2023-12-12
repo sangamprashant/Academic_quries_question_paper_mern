@@ -21,11 +21,11 @@ function Footer() {
                 <ul>
                   <li>
                     <i class="fa fa-chevron-right"></i>{" "}
-                    <Link to="/terms">Terms of service</Link>
+                    <Link to="/terms">Terms and Conditions</Link>
                   </li>
                   <li>
                     <i class="fa fa-chevron-right"></i>{" "}
-                    <Link to="/policy">Privacy policy</Link>
+                    <Link to="/privacy-policy">Privacy policy</Link>
                   </li>
                 </ul>
               </div>
