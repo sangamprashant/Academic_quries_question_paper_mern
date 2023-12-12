@@ -90,8 +90,8 @@ export default function Navbar({ login }) {
                 </Link>
               </li>
               <li>
-                <Link className="nav-link scrollto" to="/policy" onClick={OptionSelection}>
-                  Policy
+                <Link className="nav-link scrollto" to="/privacy-policy" onClick={OptionSelection}>
+                privacy policy
                 </Link>
               </li>
               <li>

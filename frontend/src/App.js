@@ -50,7 +50,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/terms" element={<Term/>}/>
-          <Route exact path="/policy" element={<Policy/>}/>
+          <Route exact path="/privacy-policy" element={<Policy/>}/>
           <Route exact path="/signin" element={<Signin/>}/>
           <Route exact path="/contact" element={<Contact  />} />
           <Route exact path="/paper" element={<Paper/>}/>
