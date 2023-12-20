@@ -54,15 +54,23 @@ function Footer() {
               <strong>
                 <span>
                   {" "}
-                  <Link to="/signin" style={{color:"black"}}>
+                  <Link to="/testimonials" className="text-white">
                     ACADEMIC QUERIES.
                   </Link>{" "}
                 </span>
               </strong>
-               All Rights Reserved
+              All Rights Reserved
             </div>
             <div class="credits text-gray">
-              Designed by <a href="/">Prashant srivastav</a>
+              Designed by{" "}
+              <a
+                href="https://github.com/sangamprashant"
+                target="_blank"
+                rel="noreferrer"
+                className="text-white"
+              >
+                Prashant srivastav
+              </a>
             </div>
           </div>
           <div class="social-links text-center text-md-right pt-3 pt-md-0">

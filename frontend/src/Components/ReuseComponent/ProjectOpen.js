@@ -79,6 +79,7 @@ function ProjectOpen() {
                           alt={`Selected Image ${index}`}
                           onClick={() => handleImageClick(image)}
                           style={{ cursor: "pointer" }}
+                          loading="lazy"
                         />
                       ))}
                     </div>

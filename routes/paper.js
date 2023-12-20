@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const router = express.Router();
 const nodemailer = require("nodemailer");
 const QuestionPaper = mongoose.model("ACADEMICQUERIESQUESTIONPAPER");
-const requireLogin = require("../middleware/requiredLogin");
 
 // Handle file upload endpoint by user
 router.post("/api/upload", (req, res) => {
@@ -15,7 +14,7 @@ router.post("/api/upload", (req, res) => {
     year: year,
     course: course,
     pdfPath: path,
-    valid: valid || false, // Set valid to false if not provided
+    valid: false,
     name: valid ? null : name, // Set name to null if valid is false
     email: valid ? null : email, // Set name to null if valid is false
   });
@@ -74,33 +73,6 @@ router.post("/api/upload", (req, res) => {
       console.log(error);
     });
 });
-// Handle file upload endpoint by Admin
-router.post("/api/admin/upload", requireLogin, (req, res) => {
-  const { type, subject, year, course, path } = req.body;
-  // Create a new QuestionPaper document
-  const questionPaper = new QuestionPaper({
-    type: type,
-    subject: subject,
-    year: year,
-    course: course,
-    pdfPath: path,
-    valid: true, // Set valid to false if not provided
-    name: null, // Set name to null if valid is false
-    email: null, // Set name to null if valid is false
-  });
-  // Save the document to MongoDB
-  questionPaper
-    .save()
-    .then(() => {
-      res
-        .status(200)
-        .json({ message: "Question paper uploaded successfully." });
-    })
-    .catch((error) => {
-      res.status(500).json({ error: error });
-      console.log(error);
-    });
-});
 //get all papers
 router.get("/api/question-papers", (req, res) => {
   QuestionPaper.find()
@@ -139,141 +111,6 @@ router.get("/api/get/paper/:id", async (req, res) => {
     res.json(questionPaper);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch question paper" });
-  }
-});
-// Delete question paper by ID AND SEND EMAIL
-router.delete("/api/delete/paper/:id", requireLogin, async (req, res) => {
-  try {
-    const questionPaper = await QuestionPaper.findByIdAndDelete(req.params.id);
-    if (!questionPaper) {
-      return res.status(404).json({ error: "Question paper not found" });
-    }
-
-    // Send email notification to the user if the question paper is rejected
-    if (!questionPaper.valid) {
-      const transporter = nodemailer.createTransport({
-        service: "Gmail",
-        auth: {
-          user: process.env.EMAIL, // Replace with your own email address
-          pass: process.env.EMAIL_PASSWORD, // Replace with your own email password
-        },
-      });
-
-      const mailOptions = {
-        from: `"Academic Queries" <${process.env.EMAIL}>`, // Replace with your own name and email address
-        to: questionPaper.email, // Assuming the question paper has an email property, change it to the actual property name
-        subject: "Question Paper Rejected",
-        text: `Dear ${questionPaper.name},
-        
-        We're sorry to inform you that your question paper submission has been rejected. 
-        Please review the submission guidelines and make sure to meet all the requirements before resubmitting. 
-        Thank you for your understanding and support.`,
-      };
-
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.error("Failed to send email:", error);
-        } else {
-          console.log("Email sent: %s", info.messageId);
-        }
-      });
-    }
-
-    res.json({ message: "Question paper deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ error: "Failed to delete question paper" });
-  }
-});
-// DELETE a question paper by ID
-router.delete("/api/paper/delete/by/admin/:id", requireLogin, (req, res) => {
-  const paperId = req.params.id;
-
-  QuestionPaper.findByIdAndDelete(paperId)
-    .then(() => {
-      res.status(200).json({ message: "Question paper deleted successfully" });
-    })
-    .catch((error) => {
-      console.error("Failed to delete question paper:", error);
-      res.status(500).json({ error: "Failed to delete question paper" });
-    });
-});
-// Update question paper
-router.put("/api/update/paper/:id", requireLogin, async (req, res) => {
-  const { valid, type, subject, course, year } = req.body;
-  const id = req.params.id;
-
-  try {
-    const questionPaper = await QuestionPaper.findByIdAndUpdate(
-      id,
-      {
-        valid: valid,
-        type: type,
-        subject: subject,
-        course: course,
-        year: year,
-      },
-      { new: true }
-    );
-
-    if (!questionPaper) {
-      return res.status(404).json({ error: "Question paper not found" });
-    }
-
-    // Generate an access link
-    const accessLink = `${process.env.DOMAIN}/varified/paper/${questionPaper._id}`;
-
-    // Send email notification to the user
-    const transporter = nodemailer.createTransport({
-      service: "Gmail",
-      auth: {
-        user: process.env.EMAIL, // Replace with your own email address
-        pass: process.env.EMAIL_PASSWORD, // Replace with your own email password
-      },
-    });
-
-    const mailOptions = {
-      from: `"Academic Queries" <${process.env.EMAIL}>`, // Replace with your own name and email address
-      to: questionPaper.email, // Assuming the question paper has an email property, change it to the actual property name
-      subject: "Question Paper Accepted",
-      text: `Your question paper has been accepted and is now available for review. Access the paper here: ${accessLink}`,
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error("Failed to send email:", error);
-      } else {
-        console.log("Email sent: %s", info.messageId);
-      }
-    });
-
-    res.json({ message: "Question paper updated successfully", questionPaper });
-  } catch (error) {
-    res.status(500).json({ error: "Failed to update question paper" });
-  }
-});
-// Update question paper
-router.put("/api/edit/paper/:id", requireLogin, async (req, res) => {
-  const { type, subject, course, year } = req.body;
-  const id = req.params.id;
-
-  try {
-    const questionPaper = await QuestionPaper.findByIdAndUpdate(
-      id,
-      {
-        type: type,
-        subject: subject,
-        course: course,
-        year: year,
-      },
-      { new: true }
-    );
-
-    if (!questionPaper) {
-      return res.status(404).json({ error: "Question paper not found" });
-    }
-    res.json({ message: "Question paper edited successfully", questionPaper });
-  } catch (error) {
-    res.status(500).json({ error: "Failed to update question paper" });
   }
 });
 // Get all unique years

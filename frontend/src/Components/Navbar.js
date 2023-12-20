@@ -4,24 +4,8 @@ import logo from "./img/logo.png";
 import { Link } from "react-router-dom";
 
 export default function Navbar({ login }) {
-  const loggeduser = JSON.parse(localStorage.getItem("user"));
 
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-
-  const AdminPart = () => {
-    const token = localStorage.getItem("jwt");
-    if (login || token) {
-      return [
-        <>
-          <li>
-            <Link className={`nav-link scrollto`} to="/admin" onClick={OptionSelection}>
-              Admin
-            </Link>
-          </li>
-        </>,
-      ];
-    }
-  };
 
   const handleMobileNavToggle = () => {
     setMobileNavOpen(!mobileNavOpen);
@@ -104,7 +88,6 @@ export default function Navbar({ login }) {
                   Testimonials
                 </Link>
               </li>
-              {AdminPart()}
             </ul>
             <i
               style={{ color: "black" }}

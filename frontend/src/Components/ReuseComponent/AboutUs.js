@@ -11,7 +11,7 @@ function AboutUs() {
         <div class="container">
           <div class="row">
             <div class="col-lg-6">
-              <img src={pic} class="img-fluid" alt="" />
+              <img src={pic} class="img-fluid" alt="" loading="lazy" />
             </div>
             <div class="col-lg-6 pt-4 pt-lg-0">
               <h3>About Us</h3>

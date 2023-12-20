@@ -43,6 +43,7 @@ function ProjectLanguages() {
                   type="application/pdf"
                   width="100%"
                   height="200px"
+                  loading="lazy"
                 />
               </figure>
               <div className="portfolio-info">

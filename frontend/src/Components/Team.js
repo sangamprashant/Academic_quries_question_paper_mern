@@ -20,7 +20,7 @@ function Team() {
           <div class="row" style={{ justifyContent: "space-evenly" }}>
             <div class="col-lg-4 col-md-6 d-flex align-items-center ">
               <div class="member">
-                <img src={Avantika} alt="" />
+                <img src={Avantika} alt="" loading="lazy" />
                 <h4>Avantika Shrivastava</h4>
                 <span>Product Manager</span>
 
@@ -43,7 +43,7 @@ function Team() {
 
             <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
               <div class="member">
-                <img src={Prashant} alt="" />
+                <img src={Prashant} alt="" loading="lazy" />
                 <h4>Prashant Srivastav</h4>
                 <span>Chief technology officer (CTO)</span>
 

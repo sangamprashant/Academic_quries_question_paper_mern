@@ -9,7 +9,8 @@ function Hero() {
       >
         <div class="container text-center text-md-left" data-aos="fade-up">
           <h1>
-            Welcome to <span >Academic Queries</span>
+            Welcome to <br className="mobile-show"
+            /><span >Academic Queries</span>
           </h1>
           <h2>
           EMPOWERING EDUACTION , ACADEMIC ASSISTENCE
