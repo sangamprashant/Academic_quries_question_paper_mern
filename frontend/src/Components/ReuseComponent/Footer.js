@@ -67,7 +67,7 @@ function Footer() {
                 href="https://github.com/sangamprashant"
                 target="_blank"
                 rel="noreferrer"
-                className="text-white"
+                className="text-black"
               >
                 Prashant srivastav
               </a>

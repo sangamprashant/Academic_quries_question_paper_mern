@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.40db5340.css",
-    "main.js": "/static/js/main.416fddf0.js",
+    "main.js": "/static/js/main.d289ef88.js",
     "static/js/787.cda612ba.chunk.js": "/static/js/787.cda612ba.chunk.js",
     "static/media/prashant.png": "/static/media/prashant.685f1ab62c8ab4e5223a.png",
     "static/media/avantika.jpg": "/static/media/avantika.93c59ad3a9c0fdd40807.jpg",
@@ -9,11 +9,11 @@
     "static/media/logo.png": "/static/media/logo.b5264f90022431ba727b.png",
     "index.html": "/index.html",
     "main.40db5340.css.map": "/static/css/main.40db5340.css.map",
-    "main.416fddf0.js.map": "/static/js/main.416fddf0.js.map",
+    "main.d289ef88.js.map": "/static/js/main.d289ef88.js.map",
     "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.40db5340.css",
-    "static/js/main.416fddf0.js"
+    "static/js/main.d289ef88.js"
   ]
 }
