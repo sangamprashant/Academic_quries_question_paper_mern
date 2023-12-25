@@ -120,6 +120,15 @@ function NavBar() {
               <li>
                 <Link
                   className="nav-link scrollto"
+                  href="/visitor"
+                  onClick={OptionSelection}
+                >
+                  Visitor
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="nav-link scrollto"
                   href="/testimonials"
                   onClick={OptionSelection}
                 >

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "../css/Paper.css";
 import { Link } from "react-router-dom";
-import { Spinner } from 'react-bootstrap';
+import { Spinner } from "react-bootstrap";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function Paper() {
   const [pdfFiles, setPdfFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(()=>{
-    window.scrollTo(0,0)
-  },[])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     // Fetch PDF file data from the server
@@ -43,14 +44,20 @@ function Paper() {
           ) : (
             <div className="row portfolio-container">
               {pdfFiles.map((Papers) => (
-                <Link className="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" to={`/course/${Papers.coursePath}/${Papers.courseName}`}>
+                <Link
+                  className="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp"
+                  to={`/course/${Papers.coursePath}/${Papers.courseName}`}
+                >
                   <div className="portfolio-wrap">
                     <figure>
-                      <img
+                      <LazyLoadImage
+                        key={`${Papers.courseImage}`}
                         src={`${Papers.courseImage}`}
+                        placeholderSrc={`${Papers.courseImage}`}
+                        effect="blur"
                         type="application/pdf"
                         width="100%"
-                        height="200px"
+                        height="250px"
                         loading="lazy"
                       />
                     </figure>

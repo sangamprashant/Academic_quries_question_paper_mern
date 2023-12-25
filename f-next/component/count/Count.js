@@ -1,63 +1,9 @@
-"use client"
-import React, { useEffect, useState } from "react";
 import "./Count.css";
+import { fetchPaperCount } from "./ApiCall";
+import SubCountBox from "./SubCountBox";
 
-function Count() {
-  const [count, setCount] = useState(0);
-  const [visitors, setVisitors] = useState(0);
-
-  useEffect(() => {
-    // Fetch the count of valid question papers
-    fetch("/api/count/valid-question-papers")
-      .then((response) => response.json())
-      .then((data) => {
-        setCount(data.count);
-      })
-      .catch((error) => {
-        console.error("Failed to fetch count of valid question papers:", error);
-      });
-
-    // Check if the POST request has already been sent using local storage
-    const postRequestSent = localStorage.getItem("postRequestSent");
-    if (!postRequestSent) {
-      // Send the visitor count to the backend
-      fetch("/api/increment/visitors", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setVisitors(data.count);
-          // Set the flag in local storage to prevent further POST requests
-          localStorage.setItem("postRequestSent", "true");
-        })
-        .catch((error) => {
-          console.error("Failed to save visitor count to the backend:", error);
-        });
-    }
-  }, []); // Empty dependency array to run the effect only once on page load
-
-  useEffect(() => {
-    // Fetch the count of visitors
-    fetch("/api/count/visitors")
-      .then((response) => response.json())
-      .then((data) => {
-        setVisitors(data.count);
-      })
-      .catch((error) => {
-        console.error("Failed to fetch count of visitors:", error);
-      });
-  }, []);
-
-  useEffect(() => {
-    // Clear the flag after 10 seconds
-    setTimeout(() => {
-      localStorage.removeItem("postRequestSent");
-    }, 10000);
-  }, []); // Empty dependency array to run the effect only once on page load
-
+async function Count() {
+  const count= await fetchPaperCount()
 
   return (
     <div>
@@ -67,7 +13,7 @@ function Count() {
             <div className="col-lg-3 col-6">
               <div className="count-box">
                 <i className="fa fa-eye"></i>
-                <span>{visitors}</span>
+                <span>{count}</span>
                 <p>Number of visitors</p>
               </div>
             </div>
@@ -87,6 +33,7 @@ function Count() {
                 <p>Hours Of Support</p>
               </div>
             </div>
+            <SubCountBox/>
 
             <div className="col-lg-3 col-6 mt-5 mt-lg-0">
               <div className="count-box">

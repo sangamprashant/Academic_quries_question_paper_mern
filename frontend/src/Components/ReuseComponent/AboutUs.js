@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import "../css/AboutUs.css";
 import pic from "../img/logo aq.png";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+
 function AboutUs() {
   useEffect(()=>{
     window.scrollTo(0,0)
@@ -11,7 +13,7 @@ function AboutUs() {
         <div class="container">
           <div class="row">
             <div class="col-lg-6">
-              <img src={pic} class="img-fluid" alt="" loading="lazy" />
+              <LazyLoadImage height="400" width="100%" src={pic} class="img-fluid" alt="" loading="lazy" effect="blur" placeholderSrc={pic} />
             </div>
             <div class="col-lg-6 pt-4 pt-lg-0">
               <h3>About Us</h3>

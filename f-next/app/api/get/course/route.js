@@ -1,20 +1,36 @@
-import { CourseQuestionPaper } from "@/utils/models/course";
-import mongoose from "mongoose";
+import Cors from 'cors';
+import initMiddleware from '@/lib/init-middleware'; // Replace with the correct path
 
-export const GET = async (req, res) => {
-    console.log(req)
-    try {
-      // Connect to MongoDB using mongoose.connect
-      await mongoose.connect(process.env.MONGODB_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
-      const courseQuestionPaper = await CourseQuestionPaper.find({});
-      console.log("courseQuestionPaper",courseQuestionPaper)
-      return new Response(JSON.stringify(courseQuestionPaper), { status: 200 });
-    } catch (error) {
-      console.error("Error:", error);
-      return new Response("Failed to fetch the Category", { error:"Failed to fetch the Category",status: 500 })
-    }
-  };
-  
+// Initialize the cors middleware
+const cors = initMiddleware(
+  Cors({
+    methods: ['GET', 'HEAD'],
+  })
+);
+
+export default async function handler(req, res) {
+  // Run cors
+  await cors(req, res);
+
+  try {
+    // Connect to MongoDB using mongoose.connect
+    await mongoose.connect(process.env.MONGO_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
+    const courseQuestionPaperCount = await CourseQuestionPaperCount.find({});
+
+    // Close the connection
+    await mongoose.connection.close();
+
+    // Send a proper JSON response
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json(courseQuestionPaperCount);
+  } catch (error) {
+    console.error("Error:", error);
+
+    // Send an error response
+    res.status(500).json({ error: "Failed to fetch the Category" });
+  }
+}

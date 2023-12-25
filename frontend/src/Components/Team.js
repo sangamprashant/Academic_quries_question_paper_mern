@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import "./css/Team.css";
 import Prashant from "./img/prashant.png";
 import Avantika from "./img/avantika.jpg";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function Team() {
-
-  useEffect(()=>{
-    window.scrollTo(0,0)
-  },[])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div style={{ marginTop: "60px" }}>
@@ -20,7 +20,14 @@ function Team() {
           <div class="row" style={{ justifyContent: "space-evenly" }}>
             <div class="col-lg-4 col-md-6 d-flex align-items-center ">
               <div class="member">
-                <img src={Avantika} alt="" loading="lazy" />
+                <LazyLoadImage
+                  key={Avantika}
+                  src={Avantika}
+                  placeholderSrc={Avantika}
+                  alt=""
+                  effect="blur"
+                  loading="lazy"
+                />
                 <h4>Avantika Shrivastava</h4>
                 <span>Product Manager</span>
 
