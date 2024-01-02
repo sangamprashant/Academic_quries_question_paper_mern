@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const { Schema, model, models, default: mongoose } = require("mongoose");
 
-const questionPaperSchema = new mongoose.Schema(
+const ModelSchema = new Schema(
   {
     type: {
       type: String,
@@ -34,12 +34,9 @@ const questionPaperSchema = new mongoose.Schema(
       type: Boolean,
     },
   },
-  { timestamps: true } // Add the timestamps option
+  { timestamps: true }
 );
 
-const QuestionPaper = mongoose.model(
-  "ACADEMICQUERIESQUESTIONPAPER",
-  questionPaperSchema
-);
-
-module.exports = QuestionPaper;
+export const QuestionPaper =
+  models.ACADEMICQUERIESQUESTIONPAPER ||
+  model("ACADEMICQUERIESQUESTIONPAPER", ModelSchema);

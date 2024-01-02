@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const { Schema, model, models, default: mongoose } = require("mongoose");
 
-const ContactSchema = new mongoose.Schema({
+const ModelSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -19,18 +19,17 @@ const ContactSchema = new mongoose.Schema({
   },
   deleted: {
     type: Boolean,
-    defau:false
+    defau: false,
   },
   responded: {
     type: Boolean,
-    defau:false
+    defau: false,
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-});
+}); // Add the timestamps option)
 
-const Contact = mongoose.model("ACADEMICQUERIESEMAIL", ContactSchema);
-
-module.exports = Contact;
+export const Contact =
+  models.ACADEMICQUERIESEMAIL || model("ACADEMICQUERIESEMAIL", ModelSchema);

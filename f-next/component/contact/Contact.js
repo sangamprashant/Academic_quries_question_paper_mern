@@ -1,60 +1,64 @@
-"use client"
-import React, { useEffect, useState } from "react";
+"use client";
+import React, { useState } from "react";
 import "./Contact.css";
+import Form from "./Form";
 
 function Contact() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  useEffect(()=>{
-    window.scrollTo(0,0)
-  },[])
+  const [MailData, setMailData] = useState({
+    name: "",
+    to: "",
+    subject: "",
+    input: "",
+  });
 
-  const handleSendEmail = () => {
-    if (!name || !email || !subject || !message) {
+  const handleSendEmail = async (e) => {
+    e.preventDefault();
+
+    console.log("Hello contact");
+
+    if (
+      !MailData.name ||
+      !MailData.to ||
+      !MailData.subject ||
+      !MailData.input
+    ) {
       setErrorMessage("Please fill in all the fields.");
       return;
     }
     setLoading(true);
-    const requestBody = {
-      name: name,
-      to: email,
-      subject: subject,
-      input: message,
-    };
-    fetch("/api/public/sendemail", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setLoading(false);
-        if (data.message) {
-          setSuccessMessage("Your message has been sent. Thank you!");
-          setName("");
-          setEmail("");
-          setSubject("");
-          setMessage("");
-          setErrorMessage("");
-        } else {
-          setErrorMessage(
-            "Failed to send the message. Please try again later."
-          );
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-        setErrorMessage("Failed to send the message. Please try again later.");
-        console.error("Failed to send the message:", error);
+    console.log("Request body:", MailData);
+
+    try {
+      const response = await fetch("/api/public/sendemail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(MailData),
       });
+
+      console.log(response);
+
+      const data = await response.json();
+      if (data.message) {
+        setSuccessMessage("Your message has been sent. Thank you!");
+        setMailData({
+          name: "",
+          to: "",
+          subject: "",
+          input: "",
+        });
+      } else {
+        setErrorMessage("Failed to send the message. Please try again later.");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setErrorMessage("Failed to send the message. Please try again later.");
+    }
   };
 
   return (
@@ -78,82 +82,19 @@ function Contact() {
                   {/* <h4>Email:</h4> */}
                   <a href="mailto: queriesacademic@gmail.com">
                     queriesacademic@gmail.com
-                    
                   </a>
                 </div>
               </div>
             </div>
           </div>
-
-          <div className="row mt-5 justify-content-center">
-            <div className="col-lg-10">
-              <form role="form" className="php-email-form">
-                <div className="row">
-                  <div className="col-md-6 form-group">
-                    <input
-                      type="text"
-                      name="name"
-                      className="form-control"
-                      id="name"
-                      placeholder="Your Name"
-                      required
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </div>
-                  <div className="col-md-6 form-group mt-3 mt-md-0">
-                    <input
-                      type="email"
-                      className="form-control"
-                      name="email"
-                      id="email"
-                      placeholder="Your Email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="form-group mt-3">
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Subject"
-                    required
-                    value={subject}
-                    onChange={(e) => setSubject(e.target.value)}
-                  />
-                </div>
-                <div className="form-group mt-3">
-                  <textarea
-                    className="form-control"
-                    name="message"
-                    rows="5"
-                    placeholder="Message"
-                    required
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                  ></textarea>
-                </div>
-                <div className="my-3">
-                  {loading && <div className="loading">Loading</div>}
-                  {errorMessage && (
-                    <div className="error-message">{errorMessage}</div>
-                  )}
-                  {successMessage && (
-                    <div className="sent-message">{successMessage}</div>
-                  )}
-                </div>
-                <div className="text-center">
-                  <button type="button" onClick={handleSendEmail}>
-                    Send Message
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
+          <Form
+            successMessage={successMessage}
+            errorMessage={errorMessage}
+            loading={loading}
+            MailData={MailData}
+            setMailData={setMailData}
+            handleSubmit={handleSendEmail}
+          />
         </div>
       </section>
     </div>

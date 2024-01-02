@@ -1,9 +1,8 @@
-"use client"
-import { Contact } from '@/component'
+import { Team } from '@/component'
 import React from 'react'
 
 function page() {
-  return (<Contact/>
+  return (<Team/>
   )
 }
 
