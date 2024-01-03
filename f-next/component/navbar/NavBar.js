@@ -27,7 +27,13 @@ function NavBar() {
             style={{ display: "flex", justifyContent: "center" }}
           >
             <Link href="/" onClick={OptionSelection}>
-              <Image width="50" height="50" src="/logo.png" alt="" className="img-fluid" />
+              <Image
+                width="50"
+                height="50"
+                src="/logo.png"
+                alt=""
+                className="img-fluid"
+              />
             </Link>
             <h1>
               <Link href="/" onClick={OptionSelection}>
@@ -93,7 +99,7 @@ function NavBar() {
               <li>
                 <Link
                   className={`nav-linksignin`}
-                  href="/user/upload/paper"
+                  href="contribute"
                   onClick={OptionSelection}
                 >
                   Contribute

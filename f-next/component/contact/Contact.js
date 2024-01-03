@@ -2,12 +2,10 @@
 import React, { useState } from "react";
 import "./Contact.css";
 import Form from "./Form";
+import { toast } from "react-toastify";
 
 function Contact() {
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-
   const [MailData, setMailData] = useState({
     name: "",
     to: "",
@@ -19,8 +17,7 @@ function Contact() {
     e.preventDefault();
 
     if (!MailData.name.trim() || !MailData.to.trim() || !MailData.subject.trim() || !MailData.input.trim()) {
-      setErrorMessage("Please fill in all the fields.");
-      setSuccessMessage("");
+      toast.error("Please fill in all the fields.");
       return;
     }
     setLoading(true);
@@ -36,8 +33,7 @@ function Contact() {
 
       const data = await response.json();
       if (data.message) {
-        setSuccessMessage("Your message has been sent. Thank you!");
-        setErrorMessage("")
+        toast.success("Your message has been sent. Thank you!");
         setMailData({
           name: "",
           to: "",
@@ -45,13 +41,11 @@ function Contact() {
           input: "",
         });
       } else {
-        setErrorMessage("Failed to send the message. Please try again later.");
-        setSuccessMessage("")
+        toast.error("Failed to send the message. Please try again later.");
       }
     } catch (error) {
       console.error("Error fetching data:", error);
-      setErrorMessage("Failed to send the message. Please try again later.");
-      setSuccessMessage("")
+      toast.error("Failed to send the message. Please try again later.");
     } finally{
       setLoading(false)
     }
@@ -83,8 +77,6 @@ function Contact() {
             </div>
           </div>
           <Form
-            successMessage={successMessage}
-            errorMessage={errorMessage}
             loading={loading}
             MailData={MailData}
             setMailData={setMailData}

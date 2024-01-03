@@ -7,6 +7,7 @@ import Hero from "./hero/Hero"
 import NavBar from "./navbar/NavBar"
 import Paper from "./course/Paper"
 import Team from "./team/Team"
+import Rating from "./rating/Rating"
 
 export {
     Hero,
@@ -18,4 +19,5 @@ export {
     Count,
     Contact,
     NavBar,
+    Rating,
 }

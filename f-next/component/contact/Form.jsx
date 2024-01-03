@@ -1,12 +1,5 @@
 "use client";
-function Form({
-  successMessage,
-  errorMessage,
-  loading,
-  MailData,
-  setMailData,
-  handleSubmit,
-}) {
+function Form({ loading, MailData, setMailData, handleSubmit }) {
   return (
     <div className="row mt-5 justify-content-center">
       <div className="col-lg-10">
@@ -68,18 +61,10 @@ function Form({
               }
             ></textarea>
           </div>
-          
           <div className="text-center">
             <button type="button" disabled={loading} onClick={handleSubmit}>
-              {loading?"Please Wait..":"Send Message"}
+              {loading ? "Please Wait.." : "Send Message"}
             </button>
-          </div>
-          <div className="my-3">
-            {loading && <p className="loading">Loading</p>}
-
-            <p className="error-message">{errorMessage}</p>
-
-            <p className="sent-message">{successMessage}</p>
           </div>
         </form>
       </div>

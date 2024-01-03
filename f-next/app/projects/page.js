@@ -1,5 +1,7 @@
 import ProjectLanguages from "@/component/project/ProjectLanguages";
 import ProjectLeft from "@/component/project/ProjectLeft";
+import "./Project.css"
+import "../../component/course/Paper.css"
 
 async function page() {
   return (

@@ -32,7 +32,7 @@ function WhatWeDo() {
               title={`Contribute Here`}
               desc={` Your contributions fuel our success. Join us and be part of
                     a community that values your input.`}
-              pathTo={"/upload/paper"}
+              pathTo={"/contribute"}
               icon={"upload"}
             />
           </div>

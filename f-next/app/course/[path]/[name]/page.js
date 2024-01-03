@@ -1,5 +1,5 @@
 import PaperTable from "@/component/paper/PaperTable";
-import "./PaperTable.css"
+import "./PaperTable.css";
 
 export const fetchCourseOpen = async (path) => {
   const res = await fetch(`${process.env.DOMAIN}/api/get/course/${path}`, {
@@ -19,7 +19,7 @@ async function page({ params }) {
             <div className="section-title">
               <h2>Papers of {params.name}</h2>
             </div>
-          <PaperTable paperData={pdfFiles}/>
+            <PaperTable paperData={pdfFiles} />
           </div>
         </section>
       </div>

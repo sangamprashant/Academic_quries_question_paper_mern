@@ -8,4 +8,4 @@ const ModelSchema = new Schema({
 },
 { timestamps: true }) // Add the timestamps option)
 
- export const CourseQuestionPaperCount = models.ACADEMICQUERIESVISITOR||model("ACADEMICQUERIESVISITOR",ModelSchema);
+ export const Visitor = models.ACADEMICQUERIESVISITOR||model("ACADEMICQUERIESVISITOR",ModelSchema);
