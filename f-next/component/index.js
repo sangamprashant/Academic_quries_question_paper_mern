@@ -5,7 +5,7 @@ import Count from "./count/Count"
 import Footer from "./footer/Footer"
 import Hero from "./hero/Hero"
 import NavBar from "./navbar/NavBar"
-import Paper from "./paper/Paper"
+import Paper from "./course/Paper"
 import Team from "./team/Team"
 
 export {

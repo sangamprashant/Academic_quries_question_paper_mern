@@ -68,21 +68,18 @@ function Form({
               }
             ></textarea>
           </div>
-          <div className="my-3">
-            {loading && <div className="loading">Loading</div>}
-            {errorMessage && (
-              <div className="error-message">{errorMessage}</div>
-            )}
-            {successMessage && (
-              <div className="sent-message">{successMessage}</div>
-            )}
-          </div>
+          
           <div className="text-center">
-            {!loading && (
-              <button type="button" onClick={handleSubmit}>
-                Send Message
-              </button>
-            )}
+            <button type="button" disabled={loading} onClick={handleSubmit}>
+              {loading?"Please Wait..":"Send Message"}
+            </button>
+          </div>
+          <div className="my-3">
+            {loading && <p className="loading">Loading</p>}
+
+            <p className="error-message">{errorMessage}</p>
+
+            <p className="sent-message">{successMessage}</p>
           </div>
         </form>
       </div>

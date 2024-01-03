@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const { Schema, model, models, default: mongoose } = require("mongoose");
 
-const questionPaperSchema = new mongoose.Schema(
+const ModelSchema = new Schema(
   {
     type: {
       type: String,
@@ -16,7 +16,7 @@ const questionPaperSchema = new mongoose.Schema(
     ppt: {
       type: String,
     },
-    images:[{ type: String }],
+    images: [{ type: String }],
     name: {
       type: String,
       default: null,
@@ -32,9 +32,4 @@ const questionPaperSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Projects = mongoose.model(
-  "ACADEMICQUERIESPROJECTS",
-  questionPaperSchema
-);
-
-module.exports = Projects;
+export const Projects = models.ACADEMICQUERIESPROJECTS || model("ACADEMICQUERIESPROJECTS", ModelSchema);

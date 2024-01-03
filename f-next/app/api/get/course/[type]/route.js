@@ -1,10 +1,13 @@
 import { connectToDB } from "@/utils/dataBase";
-import { CourseQuestionPaper } from "@/utils/models/course";
+import { QuestionPaper } from "@/utils/models/paper";
 
-export const GET = async (request) => {
+export const GET = async (request, { params }) => {
   try {
     await connectToDB();
-    const courseQuestionPaper = await CourseQuestionPaper.find({}).sort({ courseName: 1 });
+    const courseQuestionPaper = await QuestionPaper.find({
+      course: params.type,
+      valid: true,
+    }).sort({ year: -1 });
     return new Response(JSON.stringify(courseQuestionPaper), { status: 200 });
   } catch (error) {
     console.error("Error:", error);

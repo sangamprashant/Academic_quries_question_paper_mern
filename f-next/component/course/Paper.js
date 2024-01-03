@@ -1,7 +1,14 @@
 import React from "react";
 import "./Paper.css";
 import Link from "next/link";
-import { fetchCourse } from "./gettingPaper";
+
+export const fetchCourse = async () => {
+  const res = await fetch(`${process.env.DOMAIN}/api/get/course`,{
+    cache:"no-store",  
+  });
+  const data = await res.json();
+  return data;
+};
 
 async function Paper() {
   const data = await fetchCourse();
@@ -14,7 +21,7 @@ async function Paper() {
           </div>
 
           <div className="row portfolio-container">
-            {data?.map((Papers) => (
+            {data && data.length>0 &&data?.map((Papers) => (
               <div
                 key={Papers.courseName}
                 className="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp"

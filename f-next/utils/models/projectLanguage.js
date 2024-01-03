@@ -1,16 +1,13 @@
-const mongoose = require("mongoose");
 
-const CoursequestionPaperSchema = new mongoose.Schema(
+
+const { Schema, model, models, default: mongoose } = require("mongoose");
+
+const ModelSchema = new Schema(
   {
     ProjectName: { type: String, required: true },
     ProjectImage: { type: String, required: true },
   },
-  { timestamps: true } // Add the timestamps option
+  { timestamps: true }
 );
 
-const ProjectLanguage = mongoose.model(
-  "ACADEMICQUERIESPROJECTLANGUAGE",
-  CoursequestionPaperSchema
-);
-
-module.exports = ProjectLanguage;
+export const ProjectLanguage =models.ACADEMICQUERIESPROJECTLANGUAGE || model("ACADEMICQUERIESPROJECTLANGUAGE", ModelSchema);

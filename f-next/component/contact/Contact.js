@@ -18,19 +18,12 @@ function Contact() {
   const handleSendEmail = async (e) => {
     e.preventDefault();
 
-    console.log("Hello contact");
-
-    if (
-      !MailData.name ||
-      !MailData.to ||
-      !MailData.subject ||
-      !MailData.input
-    ) {
+    if (!MailData.name.trim() || !MailData.to.trim() || !MailData.subject.trim() || !MailData.input.trim()) {
       setErrorMessage("Please fill in all the fields.");
+      setSuccessMessage("");
       return;
     }
     setLoading(true);
-    console.log("Request body:", MailData);
 
     try {
       const response = await fetch("/api/public/sendemail", {
@@ -41,11 +34,10 @@ function Contact() {
         body: JSON.stringify(MailData),
       });
 
-      console.log(response);
-
       const data = await response.json();
       if (data.message) {
         setSuccessMessage("Your message has been sent. Thank you!");
+        setErrorMessage("")
         setMailData({
           name: "",
           to: "",
@@ -54,10 +46,14 @@ function Contact() {
         });
       } else {
         setErrorMessage("Failed to send the message. Please try again later.");
+        setSuccessMessage("")
       }
     } catch (error) {
       console.error("Error fetching data:", error);
       setErrorMessage("Failed to send the message. Please try again later.");
+      setSuccessMessage("")
+    } finally{
+      setLoading(false)
     }
   };
 
@@ -73,7 +69,6 @@ function Contact() {
               get back to you soon.
             </p>
           </div>
-
           <div className="row mt-5 justify-content-center">
             <div className="col-lg-10">
               <div className="row d-flex justify-content-around">
