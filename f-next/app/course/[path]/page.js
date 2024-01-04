@@ -1,10 +1,4 @@
-export const fetchOpenPaper = async (id) => {
-  const res = await fetch(`${process.env.DOMAIN}/api/get/paper/${id}`, {
-    cache: "no-store",
-  });
-  const data = await res.json();
-  return data;
-};
+import { fetchOpenPaper } from "@/api_calls";
 
 async function page({ params }) {
   const data = await fetchOpenPaper(params.path);

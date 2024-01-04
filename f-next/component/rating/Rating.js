@@ -1,19 +1,12 @@
 import React from "react";
 import "./Rating.css";
 import Link from "next/link";
-
-export async function fetchReviewsStars() {
-  const res = await fetch(`${process.env.DOMAIN}/api/public/review/average`, {
-    cache: "no-store",
-  });
-  const data = await res.json();
-  return data;
-}
+import { fetchReviewsStars } from "@/api_calls";
 
 async function Rating() {
-  const data  = await fetchReviewsStars();
-  const progressData =data.starsPercentage;
-  const averageStar = data.averageStars
+  const data = await fetchReviewsStars();
+  const progressData = data.starsPercentage;
+  const averageStar = data.averageStars;
 
   // Set the total number of stars you want to display
   const totalStars = 5;
@@ -35,11 +28,6 @@ async function Rating() {
   // Reverse the starsData array
   const reversedStarsData = starsData.reverse();
 
-
-
-
-
-
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -49,12 +37,14 @@ async function Rating() {
               <tr>
                 <td>
                   <div className="col-md-4 col-sm-5 d-flex flex-column justify-content-center align-items-center">
-                    <button className="rating_circle">{averageStar.toFixed(1)}</button>
+                    <button className="rating_circle">
+                      {averageStar.toFixed(1)}
+                    </button>
                     <div>
                       <div className="stars-outer mt-4 ">
                         <div
                           className="stars-inner"
-                          style={{ width: `${(averageStar/5)*100}%` }}
+                          style={{ width: `${(averageStar / 5) * 100}%` }}
                         ></div>
                       </div>
                     </div>

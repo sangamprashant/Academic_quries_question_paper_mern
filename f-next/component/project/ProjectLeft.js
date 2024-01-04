@@ -1,23 +1,5 @@
+import { fetchRecentProjects } from "@/api_calls";
 import Link from "next/link";
-
-export async function fetchRecentProjects() {
-  try {
-    const response = await fetch(
-      `${process.env.DOMAIN}/api/get/projects/recent`,
-      {
-        cache: "no-store",
-      }
-    );
-    const data = await response.json();
-    return data.map((project) => ({
-      ...project,
-      createdAt: new Date(project.createdAt).toLocaleDateString(), // Format the date
-    }));
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return [];
-  }
-}
 
 async function ProjectLeft() {
   const projects = await fetchRecentProjects();

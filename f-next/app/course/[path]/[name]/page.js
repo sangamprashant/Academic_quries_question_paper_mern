@@ -1,13 +1,6 @@
 import PaperTable from "@/component/paper/PaperTable";
 import "./PaperTable.css";
-
-export const fetchCourseOpen = async (path) => {
-  const res = await fetch(`${process.env.DOMAIN}/api/get/course/${path}`, {
-    cache: "no-store",
-  });
-  const data = await res.json();
-  return data;
-};
+import { fetchCourseOpen } from "@/api_calls";
 
 async function page({ params }) {
   const pdfFiles = await fetchCourseOpen(params.path);

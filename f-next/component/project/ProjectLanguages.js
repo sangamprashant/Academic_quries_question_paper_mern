@@ -1,21 +1,8 @@
+import { fetchProjectsLanguages } from "@/api_calls";
 import Link from "next/link";
-
-export async function fetchProjectsLanguages() {
-  try {
-    const res = await fetch(`${process.env.DOMAIN}/api/get/projects/language`, {
-      cache: "no-store",
-    });
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error("Error fetching project language:", error);
-    return [];
-  }
-}
 
 async function ProjectLanguages() {
   const pdfFiles = await fetchProjectsLanguages();
-
   return (
     <div className="language-container">
       {pdfFiles.map((Projects) => (

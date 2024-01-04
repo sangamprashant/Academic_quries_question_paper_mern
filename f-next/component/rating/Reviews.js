@@ -1,12 +1,5 @@
+import { fetchReviews } from "@/api_calls";
 import { Images } from "./Images";
-
-export async function fetchReviews() {
-  const res = await fetch(`${process.env.DOMAIN}/api/public/review`, {
-    cache: "no-store",
-  });
-  const data = await res.json();
-  return data;
-}
 
 // Function to render stars based on count
 const renderStars = (count) => {

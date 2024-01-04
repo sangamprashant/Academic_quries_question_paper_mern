@@ -1,29 +1,6 @@
+import { fetchPaperCount, fetchUserCount } from "@/api_calls";
 import "./Count.css";
 import SubCountBox from "./SubCountBox";
-
-export const fetchUserCount = async () => {
-  const res = await fetch(`${process.env.DOMAIN}/api/count/visitors`,{
-    // cache:"force-cache",  //SSG get static side props
-    cache:"no-store",  //SSR get server side props
-    // next: {
-    //   revalidate:0,
-    // }
-  });
-  const data = await res.json();
-  return data;
-};
-
-export const fetchPaperCount = async () => {
-  const res = await fetch(`${process.env.DOMAIN}/api/count/valid-paper`,{
-    // cache:"force-cache",  //SSG get static side props
-    cache:"no-store",  //SSR get server side props
-    // next: {
-    //   revalidate:0,
-    // }
-  });
-  const data = await res.json();
-  return data;
-};
 
 async function Count() {
   const count= await fetchUserCount();

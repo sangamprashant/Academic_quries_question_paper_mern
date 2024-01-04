@@ -1,15 +1,5 @@
+import { fetchProjectByLanguage } from "@/api_calls";
 import ProjectByLanguageTable from "@/component/project/ProjectByLanguage/ProjectByLanguageTable";
-
-export async function fetchProjectByLanguage(language) {
-  const res = await fetch(
-    `${process.env.DOMAIN}/api/get/projects/language/${language}`,
-    {
-      cache: "no-store",
-    }
-  );
-  const data = await res.json();
-  return data;
-}
 
 async function ProjectLanguage({ params }) {
   const projects = await fetchProjectByLanguage(params.language);

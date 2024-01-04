@@ -1,14 +1,7 @@
 import ProjectLeft from "@/component/project/ProjectLeft";
 import ProjectOpenComponent from "@/component/project/ProjectOpen/ProjectOpen";
 import "../../Project.css";
-
-export async function fetchProjectById(id) {
-  const res = await fetch(`${process.env.DOMAIN}/api/get/projects/id/${id}`, {
-    cache: "no-store",
-  });
-  const data = await res.json();
-  return data;
-}
+import { fetchProjectById } from "@/api_calls";
 
 async function ProjectOpen({ params }) {
   const project = await fetchProjectById(params.id);
