@@ -77,7 +77,7 @@ function UserUploadPaper() {
       name: name,
       email: email,
     };
-    fetch("/api/public/upload-paper", {
+    fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/upload`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

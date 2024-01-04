@@ -2,8 +2,8 @@ import Head from "next/head";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { Footer, NavBar, RatingBtn } from "@/component";
-import 'react-toastify/dist/ReactToastify.css';
-import {ToastContainer} from "../component/ToastContainer"
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "../component/ToastContainer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +17,7 @@ export const metadata = {
   
   The web page interface is designed to be user-friendly, allowing users to navigate through the available courses, select their desired papers, and initiate the download process effortlessly. The website's primary focus is on delivering a seamless experience for accessing and obtaining previous year question papers in a convenient and widely compatible PDF format.`,
   icons: {
-    icon: '/favicon.ico', 
+    icon: "/favicon.ico",
   },
 };
 
@@ -29,19 +29,22 @@ const MainLayout = ({ children }) => (
       <meta name="description" content="Your website description here." />
       <link rel="icon" href="/favicon.ico" />
       <title>ACADEMIC QUERIES</title>
-      <script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4170668216012046"
-        crossOrigin="anonymous"
-      ></script>
+      {typeof window !== "undefined" &&
+        process.env.NODE_ENV === "production" && (
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4170668216012046"
+            crossOrigin="anonymous"
+          ></script>
+        )}
     </Head>
 
     <body className={inter.className}>
       <NavBar />
       {children}
       <Footer />
-      <ToastContainer theme="colored"/>
-      <RatingBtn/>
+      <ToastContainer theme="colored" />
+      <RatingBtn />
     </body>
   </>
 );

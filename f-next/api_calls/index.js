@@ -1,6 +1,6 @@
 async function fetchProjectsLanguages() {
   try {
-    const res = await fetch(`${process.env.DOMAIN}/api/get/projects/language`, {
+    const res = await fetch(`${process.env.DOMAIN}/api/project/languages`, {
       cache: "no-store",
     });
     const responseBody = await res.text();
@@ -14,7 +14,7 @@ async function fetchProjectsLanguages() {
 
 async function fetchRecentProjects() {
   try {
-    const res = await fetch(`${process.env.DOMAIN}/api/get/projects/recent`, {
+    const res = await fetch(`${process.env.DOMAIN}/api/get/recent/projects`, {
       cache: "no-store",
     });
     const responseBody = await res.text();
@@ -32,7 +32,7 @@ async function fetchRecentProjects() {
 async function fetchProjectByLanguage(language) {
   try {
     const res = await fetch(
-      `${process.env.DOMAIN}/api/get/projects/language/${language}`,
+      `${process.env.DOMAIN}/api/get/project/by/type/${language}`,
       {
         cache: "no-store",
       }
@@ -48,7 +48,7 @@ async function fetchProjectByLanguage(language) {
 
 async function fetchProjectById(id) {
   try {
-    const res = await fetch(`${process.env.DOMAIN}/api/get/projects/id/${id}`, {
+    const res = await fetch(`${process.env.DOMAIN}/api/get/project/by/id/${id}`, {
       cache: "no-store",
     });
     const responseBody = await res.text();
@@ -79,12 +79,11 @@ async function fetchReviewsStars() {
     const res = await fetch(`${process.env.DOMAIN}/api/public/review/average`, {
       cache: "no-store",
     });
-    const responseBody = await res.text();
-    const data = JSON.parse(responseBody);
+    const data =await res.json()
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
-    return [];
+    return {};
   }
 }
 
@@ -109,6 +108,7 @@ const fetchUserCount = async () => {
     });
     const responseBody = await res.text();
     const data = JSON.parse(responseBody);
+    console.log(data)
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -118,7 +118,7 @@ const fetchUserCount = async () => {
 
 const fetchPaperCount = async () => {
   try {
-    const res = await fetch(`${process.env.DOMAIN}/api/count/valid-paper`, {
+    const res = await fetch(`${process.env.DOMAIN}/api/count/valid-question-papers`, {
       cache: "no-store",
     });
     const responseBody = await res.text();
@@ -146,7 +146,7 @@ const fetchOpenPaper = async (id) => {
 
 const fetchCourseOpen = async (path) => {
   try {
-    const res = await fetch(`${process.env.DOMAIN}/api/get/course/${path}`, {
+    const res = await fetch(`${process.env.DOMAIN}/api/course/${path}`, {
       cache: "no-store",
     });
     const responseBody = await res.text();

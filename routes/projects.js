@@ -6,17 +6,17 @@ const QuestionPaper = mongoose.model("ACADEMICQUERIESQUESTIONPAPER");
 const Projects = mongoose.model("ACADEMICQUERIESPROJECTS");
 const ProjectLanguage = mongoose.model("ACADEMICQUERIESPROJECTLANGUAGE");
 
-//get valid project
-router.get("/api/get/project", async (req, res) => {
-  try {
-    const projects = await Projects.find({valid:true}).sort({ topic: 1 })
+// //get valid project
+// router.get("/api/get/project", async (req, res) => {
+//   try {
+//     const projects = await Projects.find({valid:true}).sort({ topic: 1 })
 
-    return res.json(projects);
-  } catch (error) {
-    console.error("Failed to save project data:", error);
-    return res.status(500).json({ error: "Failed to save project data" });
-  }
-});
+//     return res.json(projects);
+//   } catch (error) {
+//     console.error("Failed to save project data:", error);
+//     return res.status(500).json({ error: "Failed to save project data" });
+//   }
+// });
 // Get valid projects by type
 router.get("/api/get/project/by/type/:type", async (req, res) => {
   try {

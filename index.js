@@ -22,6 +22,7 @@ require("./models/course");
 require("./models/email");
 require("./models/visitors");
 require("./models/projects");
+require("./models/reviews");
 require("./models/projectLanguage");
 app.use(require("./routes/paper"));
 app.use(require("./routes/type"));
@@ -29,6 +30,7 @@ app.use(require("./routes/course"));
 app.use(require("./routes/email"));
 app.use(require("./routes/visitor"));
 app.use(require("./routes/projects"));
+app.use(require("./routes/reviews"));
 app.use(require("./routes/ProjectsLanguages"));
 
 mongoose.connect(process.env.MONGO_URL);

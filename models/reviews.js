@@ -1,6 +1,6 @@
-const { Schema, model, models, default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 
-const ModelSchema = new Schema(
+const TypequestionPaperSchema = new mongoose.Schema(
   {
     email: {
       type: String,
@@ -27,5 +27,9 @@ const ModelSchema = new Schema(
   }
 );
 
-export const Reviews =
-  models.ACADEMICQUERIESREVIEWS || model("ACADEMICQUERIESREVIEWS", ModelSchema);
+const Reviews = mongoose.model(
+  "ACADEMICQUERIESREVIEWS",
+  TypequestionPaperSchema
+);
+
+module.exports = Reviews;

@@ -57,7 +57,7 @@ async function Rating() {
                 </td>
                 <td className="w-100">
                   <table className="w-100">
-                    {reversedStarsData.map((item, index) => (
+                    {reversedStarsData?.map((item, index) => (
                       <tr key={index}>
                         <td className="w-100" style={{ padding: "15px" }}>
                           <div className="progress" style={{ height: "10px" }}>

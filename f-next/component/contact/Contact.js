@@ -23,7 +23,7 @@ function Contact() {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/public/sendemail", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/public/sendemail`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

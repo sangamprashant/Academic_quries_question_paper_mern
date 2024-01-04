@@ -6,7 +6,7 @@ function CountUserPost() {
     if (typeof window !== "undefined") {
       const postRequestSent = window.localStorage.getItem("postRequestSent");
       if (!postRequestSent) {
-        fetch("/api/count/visitors", {
+        fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/increment/visitors`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

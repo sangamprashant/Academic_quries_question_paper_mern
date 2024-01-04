@@ -4,7 +4,9 @@ import SubCountBox from "./SubCountBox";
 
 async function Count() {
   const count= await fetchUserCount();
+  console.log(count)
   const paperCount = await fetchPaperCount()
+  console.log(paperCount)
 
   return (
     <div>

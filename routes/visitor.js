@@ -9,7 +9,7 @@ router.get("/api/count/visitors", async (req, res) => {
     const visitor = await Visitor.findOne({});
     if (visitor) {
       const countLength = visitor.counts.length;
-      res.status(200).json({ count: countLength });
+      res.status(200).json(  countLength );
     } else {
       res.status(404).json({ error: "Visitor count not found" });
     }

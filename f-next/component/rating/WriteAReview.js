@@ -23,7 +23,7 @@ function WriteAReview() {
     }
 
     try {
-      const response = await fetch("/api/public/review", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/public/review`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
