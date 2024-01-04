@@ -5,10 +5,10 @@ export default async function Amone() {
     <div>
       <h1>Hello</h1>
       {data?.map((da) => (
-        <>
-          <p key={da._id}>na {da._id}</p>
+        <div key={da._id}>
+          <p >na {da._id}</p>
           <img src={da.courseImage} />
-        </>
+        </div>
       ))}
     </div>
   );
