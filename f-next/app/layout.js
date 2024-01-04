@@ -17,7 +17,7 @@ export const metadata = {
   
   The web page interface is designed to be user-friendly, allowing users to navigate through the available courses, select their desired papers, and initiate the download process effortlessly. The website's primary focus is on delivering a seamless experience for accessing and obtaining previous year question papers in a convenient and widely compatible PDF format.`,
   icons: {
-    icon: '/favicon.ico',
+    icon: '/favicon.ico', 
   },
 };
 

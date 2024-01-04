@@ -1,11 +1,16 @@
 import Link from "next/link";
 
 export async function fetchProjectsLanguages() {
-  const res = await fetch(`${process.env.DOMAIN}/api/get/projects/language`, {
-    cache: "no-store",
-  });
-  const data = await res.json();
-  return data;
+  try {
+    const res = await fetch(`${process.env.DOMAIN}/api/get/projects/language`, {
+      cache: "no-store",
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching project language:", error);
+    return [];
+  }
 }
 
 async function ProjectLanguages() {
