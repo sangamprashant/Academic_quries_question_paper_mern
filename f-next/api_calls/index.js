@@ -1,6 +1,6 @@
 async function fetchProjectsLanguages() {
   try {
-    const res = await fetch(`${process.env.DOMAIN}/api/project/languages`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/project/languages`, {
       cache: "no-store",
     });
     const responseBody = await res.text();
@@ -14,7 +14,7 @@ async function fetchProjectsLanguages() {
 
 async function fetchRecentProjects() {
   try {
-    const res = await fetch(`${process.env.DOMAIN}/api/get/recent/projects`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/get/recent/projects`, {
       cache: "no-store",
     });
     const responseBody = await res.text();
@@ -32,7 +32,7 @@ async function fetchRecentProjects() {
 async function fetchProjectByLanguage(language) {
   try {
     const res = await fetch(
-      `${process.env.DOMAIN}/api/get/project/by/type/${language}`,
+      `${process.env.NEXT_PUBLIC_DOMAIN}/api/get/project/by/type/${language}`,
       {
         cache: "no-store",
       }
@@ -48,7 +48,7 @@ async function fetchProjectByLanguage(language) {
 
 async function fetchProjectById(id) {
   try {
-    const res = await fetch(`${process.env.DOMAIN}/api/get/project/by/id/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/get/project/by/id/${id}`, {
       cache: "no-store",
     });
     const responseBody = await res.text();
@@ -62,7 +62,7 @@ async function fetchProjectById(id) {
 
 async function fetchReviews() {
   try {
-    const res = await fetch(`${process.env.DOMAIN}/api/public/review`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/public/review`, {
       cache: "no-store",
     });
     const responseBody = await res.text();
@@ -76,7 +76,7 @@ async function fetchReviews() {
 
 async function fetchReviewsStars() {
   try {
-    const res = await fetch(`${process.env.DOMAIN}/api/public/review/average`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/public/review/average`, {
       cache: "no-store",
     });
     const data =await res.json()
@@ -89,7 +89,7 @@ async function fetchReviewsStars() {
 
 const fetchCourse = async () => {
   try {
-    const res = await fetch(`${process.env.DOMAIN}/api/get/course`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/get/course`, {
       cache: "no-store",
     });
     const responseBody = await res.text();
@@ -103,7 +103,7 @@ const fetchCourse = async () => {
 
 const fetchUserCount = async () => {
   try {
-    const res = await fetch(`${process.env.DOMAIN}/api/count/visitors`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/count/visitors`, {
       cache: "no-store",
     });
     const responseBody = await res.text();
@@ -118,7 +118,7 @@ const fetchUserCount = async () => {
 
 const fetchPaperCount = async () => {
   try {
-    const res = await fetch(`${process.env.DOMAIN}/api/count/valid-question-papers`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/count/valid-question-papers`, {
       cache: "no-store",
     });
     const responseBody = await res.text();
@@ -132,7 +132,7 @@ const fetchPaperCount = async () => {
 
 const fetchOpenPaper = async (id) => {
   try {
-    const res = await fetch(`${process.env.DOMAIN}/api/get/paper/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/get/paper/${id}`, {
       cache: "no-store",
     });
     const responseBody = await res.text();
@@ -146,7 +146,7 @@ const fetchOpenPaper = async (id) => {
 
 const fetchCourseOpen = async (path) => {
   try {
-    const res = await fetch(`${process.env.DOMAIN}/api/course/${path}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/course/${path}`, {
       cache: "no-store",
     });
     const responseBody = await res.text();

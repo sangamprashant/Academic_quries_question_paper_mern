@@ -8,7 +8,7 @@ function Loading() {
 
     </div>
     <div className="animation-path">
-      <Image src="/loading.gif" height="150" width="200"/>
+      <Image src="/loading.gif" height="150" width="200" alt="Loading..."/>
     </div>
   </>
   );
