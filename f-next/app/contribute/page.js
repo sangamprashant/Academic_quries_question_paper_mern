@@ -112,7 +112,8 @@ function UserUploadPaper() {
       <section id="contact" className="contact section-bg">
         <div className="container">
           <div className="section-title">
-            <h2>Upload Your Question Paper</h2>
+          <h5>CONTRIBUTE</h5>
+            <h2>Your Question Paper</h2>
             <p>Your contribution is valuable to us :)</p>
             <p>Format should be in PDF!</p>
             <p className="smiley"></p>

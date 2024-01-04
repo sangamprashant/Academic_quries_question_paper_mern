@@ -8,6 +8,8 @@ import NavBar from "./navbar/NavBar"
 import Paper from "./course/Paper"
 import Team from "./team/Team"
 import Rating from "./rating/Rating"
+import RatingBtn from "./rating/RatingBtn"
+import WriteAReview from "./rating/WriteAReview"
 
 export {
     Hero,
@@ -20,4 +22,6 @@ export {
     Contact,
     NavBar,
     Rating,
+    RatingBtn,
+    WriteAReview,
 }

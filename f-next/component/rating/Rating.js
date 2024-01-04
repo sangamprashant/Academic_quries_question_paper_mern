@@ -1,41 +1,86 @@
-import React from 'react';
-import './Rating.css';
+import React from "react";
+import "./Rating.css";
+import Link from "next/link";
 
-function Rating() {
-  const progressData = [
-    { value: 70, label: '1' },
-    { value: 30, label: '2' },
-    { value: 40, label: '3' },
-    { value: 50, label: '4' },
-    { value: 10, label: '5' },
-  ];
+export async function fetchReviewsStars() {
+  const res = await fetch(`${process.env.DOMAIN}/api/public/review/average`, {
+    cache: "no-store",
+  });
+  const data = await res.json();
+  return data;
+}
+
+async function Rating() {
+  const data  = await fetchReviewsStars();
+  const progressData =data.starsPercentage;
+  const averageStar = data.averageStars
+
+  // Set the total number of stars you want to display
+  const totalStars = 5;
+
+  // Generate an array with data for all stars, initializing percentage to 0
+  const starsData = Array.from({ length: totalStars }, (_, index) => ({
+    star: index + 1,
+    percentage: 0,
+  }));
+
+  // Update the percentages for stars that have data
+  progressData.forEach((item) => {
+    const index = item.star - 1;
+    if (index >= 0 && index < totalStars) {
+      starsData[index].percentage = item.percentage;
+    }
+  });
+
+  // Reverse the starsData array
+  const reversedStarsData = starsData.reverse();
+
+
+
+
+
 
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-9">
-          <table className='table'>
+          <table className="table">
             <tbody>
               <tr>
                 <td>
-                  <div className="col-md-4 col-sm-5">
-                    <h2>Reviews</h2>
-                    <button className="rating_circle">4.1</button>
-                    <div className="stars-outer mt-4">
-                      <div className="stars-inner" style={{ width: '80%' }}></div>
+                  <div className="col-md-4 col-sm-5 d-flex flex-column justify-content-center align-items-center">
+                    <button className="rating_circle">{averageStar.toFixed(1)}</button>
+                    <div>
+                      <div className="stars-outer mt-4 ">
+                        <div
+                          className="stars-inner"
+                          style={{ width: `${(averageStar/5)*100}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                    <div className="mt-3">
+                      <Link href={"/review"} className="btn btn-outline-dark">
+                        Reviews
+                      </Link>
                     </div>
                   </div>
                 </td>
-                <td className='w-100'>
-                  <table className='w-100'>
-                    {progressData.map((item, index) => (
+                <td className="w-100">
+                  <table className="w-100">
+                    {reversedStarsData.map((item, index) => (
                       <tr key={index}>
-                        <td className='w-100' style={{ padding: '15px' }}>
-                          <div className="progress" style={{ height: '10px' }}>
-                            <div className="progress-bar dark" style={{ width: `${item.value}%`, height: '10px' }}></div>
+                        <td className="w-100" style={{ padding: "15px" }}>
+                          <div className="progress" style={{ height: "10px" }}>
+                            <div
+                              className="progress-bar dark"
+                              style={{
+                                width: `${item.percentage}%`,
+                                height: "10px",
+                              }}
+                            ></div>
                           </div>
                         </td>
-                        <td>{item.label}</td>
+                        <td>{item.star}</td>
                       </tr>
                     ))}
                   </table>

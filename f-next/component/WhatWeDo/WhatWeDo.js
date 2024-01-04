@@ -1,6 +1,5 @@
 import React from "react";
 import "./WhatWeDo.css";
-import Link from "next/link";
 import SubWhatWeDo from "./SubWhatWeDo";
 
 function WhatWeDo() {

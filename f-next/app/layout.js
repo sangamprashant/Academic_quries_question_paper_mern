@@ -1,7 +1,7 @@
 import Head from "next/head";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { Footer, NavBar } from "@/component";
+import { Footer, NavBar, RatingBtn } from "@/component";
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer} from "../component/ToastContainer"
 
@@ -16,7 +16,9 @@ export const metadata = {
   This service caters to individuals who are preparing for exams, seeking additional study resources, or looking to familiarize themselves with the question patterns of previous years. By providing free access and easy download options, the website aims to support students and educators in their academic pursuits.
   
   The web page interface is designed to be user-friendly, allowing users to navigate through the available courses, select their desired papers, and initiate the download process effortlessly. The website's primary focus is on delivering a seamless experience for accessing and obtaining previous year question papers in a convenient and widely compatible PDF format.`,
-  icon: "logo192.png",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 const MainLayout = ({ children }) => (
@@ -25,7 +27,7 @@ const MainLayout = ({ children }) => (
       <meta name="theme-color" content="#000000" />
       <meta name="google-adsense-account" content="ca-pub-4170668216012046" />
       <meta name="description" content="Your website description here." />
-      <link rel="apple-touch-icon" href="./logo192.png" />
+      <link rel="icon" href="/favicon.ico" />
       <title>ACADEMIC QUERIES</title>
       <script
         async
@@ -39,6 +41,7 @@ const MainLayout = ({ children }) => (
       {children}
       <Footer />
       <ToastContainer theme="colored"/>
+      <RatingBtn/>
     </body>
   </>
 );

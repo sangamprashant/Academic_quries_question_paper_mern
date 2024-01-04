@@ -36,3 +36,15 @@
   .dark {
     background-color: #000000;
   }
+
+
+  .rating-btn{
+    padding: 18px 12px;
+    border-radius: 50px;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
