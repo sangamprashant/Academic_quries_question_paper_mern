@@ -4,62 +4,53 @@ const router = express.Router();
 const nodemailer = require("nodemailer");
 const Contact = mongoose.model("ACADEMICQUERIESEMAIL");
 
-router.post("/api/public/sendemail", (req, res) => {
-  const { to, name, input, subject } = req.body;
+router.post("/api/public/sendemail", async (req, res) => {
+  try {
+    const { to, name, input, subject } = req.body;
 
-  const message = `Dear ${name},
+    const message = `Dear ${name},
     
     Thank you for contacting us. We have received your message and will respond to you soon.
   
-    Your mssage: ${input}
+    Your message: ${input}
     
     Best regards,
-    AcademicQuries`;
+    AcademicQueries`;
 
-  // Create a Nodemailer transporter
-  let transporter = nodemailer.createTransport({
-    service: "Gmail",
-    auth: {
-      user: process.env.EMAIL, // Replace with your own email address
-      pass: process.env.EMAIL_PASSWORD, // Replace with your own email password
-    },
-  });
-
-  // Set up email data
-  let mailOptions = {
-    from: `"AcademicQuries" <${process.env.EMAIL}>`, // Replace with your own name and email address
-    to: to,
-    subject: subject,
-    text: message,
-  };
-
-  // Send the email
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-      return res.status(500).json({ error: "Failed to send email" });
-    }
-    console.log("Email sent: %s", info.messageId);
-
-    // Save the contact details to the database
-    const contact = new Contact({
-      name: name,
-      email: to,
-      message: input,
-      subject: subject,
-      responded: false,
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD,
+      },
     });
 
-    contact
-      .save()
-      .then(() => {
-        res.json({ message: "Email sent successfully" });
-      })
-      .catch((error) => {
-        console.log(error);
-        res.status(500).json({ error: "Failed to save contact details" });
-      });
-  });
+    const mailOptions = {
+      from: `"AcademicQueries" <${process.env.EMAIL}>`,
+      to: to,
+      subject: subject,
+      text: message,
+    };
+
+    // Use Promise.all to parallelize saving contact and sending email
+    const [contactSaveResult, emailSendResult] = await Promise.all([
+      Contact.create({
+        name: name,
+        email: to,
+        message: input,
+        subject: subject,
+        responded: false,
+      }),
+      transporter.sendMail(mailOptions),
+    ]);
+
+    console.log("Email sent: %s", emailSendResult.messageId);
+
+    res.status(200).json({ message: "Email sent successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to send email" });
+  }
 });
 
 module.exports = router;

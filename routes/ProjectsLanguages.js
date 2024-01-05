@@ -15,7 +15,6 @@ router.get("/api/project/languages", async (req, res) => {
     res.status(500).json({ error: "Error getting project languages" });
   }
 });
-
 // Get a project languages
 router.get("/api/project/:languages", async (req, res) => {
   try {

@@ -10,7 +10,7 @@ function Count() {
     fetch("/api/count/valid-question-papers")
       .then((response) => response.json())
       .then((data) => {
-        setCount(data.count);
+        setCount(data);
       })
       .catch((error) => {
         console.error("Failed to fetch count of valid question papers:", error);
@@ -28,7 +28,7 @@ function Count() {
       })
         .then((response) => response.json())
         .then((data) => {
-          setVisitors(data.count);
+          setVisitors(data);
           // Set the flag in local storage to prevent further POST requests
           localStorage.setItem("postRequestSent", "true");
         })
@@ -43,7 +43,7 @@ function Count() {
     fetch("/api/count/visitors")
       .then((response) => response.json())
       .then((data) => {
-        setVisitors(data.count);
+        setVisitors(data);
       })
       .catch((error) => {
         console.error("Failed to fetch count of visitors:", error);

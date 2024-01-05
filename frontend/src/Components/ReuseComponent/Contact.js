@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../css/Contact.css";
+import { toast } from "react-toastify";
 
 function Contact() {
   const [name, setName] = useState("");
@@ -7,16 +8,14 @@ function Contact() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(()=>{
     window.scrollTo(0,0)
   },[])
 
   const handleSendEmail = () => {
-    if (!name || !email || !subject || !message) {
-      setErrorMessage("Please fill in all the fields.");
+    if (!name.trim() || !email.trim() || !subject.trim() || !message.trim()) {
+      toast.error("All fields are required.")
       return;
     }
     setLoading(true);
@@ -37,21 +36,20 @@ function Contact() {
       .then((data) => {
         setLoading(false);
         if (data.message) {
-          setSuccessMessage("Your message has been sent. Thank you!");
+          toast.success("Your message has been sent. Thank you!");
           setName("");
           setEmail("");
           setSubject("");
           setMessage("");
-          setErrorMessage("");
         } else {
-          setErrorMessage(
+          toast.error(
             "Failed to send the message. Please try again later."
           );
         }
       })
       .catch((error) => {
         setLoading(false);
-        setErrorMessage("Failed to send the message. Please try again later.");
+        toast.error("Failed to send the message. Please try again later.");
         console.error("Failed to send the message:", error);
       });
   };
@@ -138,16 +136,11 @@ function Contact() {
                 </div>
                 <div className="my-3">
                   {loading && <div className="loading">Loading</div>}
-                  {errorMessage && (
-                    <div className="error-message">{errorMessage}</div>
-                  )}
-                  {successMessage && (
-                    <div className="sent-message">{successMessage}</div>
-                  )}
+
                 </div>
                 <div className="text-center">
                   <button type="button" onClick={handleSendEmail}>
-                    Send Message
+                    {loading?"Please wait..":"Send Message"}
                   </button>
                 </div>
               </form>
