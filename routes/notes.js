@@ -188,7 +188,7 @@ router.post("/api/upload/notes", async (req, res) => {
 
     await transporter.sendMail(mailOptionsAdmin);
 
-    res.status(200).json({ message: "Question paper uploaded successfully." });
+    res.status(200).json({ message: "Notes uploaded successfully." });
   } catch (error) {
     console.error("Failed to process file upload:", error);
     res.status(500).json({ error: "Internal Server Error" });
