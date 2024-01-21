@@ -80,6 +80,15 @@ function NavBar() {
               </li>
               <li>
                 <Link
+                  className={`nav-linksignin`}
+                  href="/notes"
+                  onClick={OptionSelection}
+                >
+                  Notes
+                </Link>
+              </li>
+              <li>
+                <Link
                   className="nav-link scrollto"
                   href="/projects"
                   onClick={OptionSelection}
@@ -111,7 +120,7 @@ function NavBar() {
                   href="/privacy-policy"
                   onClick={OptionSelection}
                 >
-                  privacy policy
+                  Privacy Policy
                 </Link>
               </li>
               <li>

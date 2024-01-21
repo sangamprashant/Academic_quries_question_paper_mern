@@ -18,7 +18,7 @@ async function Rating() {
   }));
 
   // Update the percentages for stars that have data
-  progressData.forEach((item) => {
+  progressData?.forEach((item) => {
     const index = item.star - 1;
     if (index >= 0 && index < totalStars) {
       starsData[index].percentage = item.percentage;
@@ -38,7 +38,7 @@ async function Rating() {
                 <td>
                   <div className="col-md-4 col-sm-5 d-flex flex-column justify-content-center align-items-center">
                     <button className="rating_circle">
-                      {averageStar.toFixed(1)}
+                      {averageStar?.toFixed(1)}
                     </button>
                     <div>
                       <div className="stars-outer mt-4 ">

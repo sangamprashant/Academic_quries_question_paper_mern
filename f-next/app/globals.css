@@ -307,7 +307,6 @@ a {
   display: block;
 }
 
-
 /* Loading css */
 .loading-container {
   display: flex;
@@ -347,7 +346,7 @@ a {
   }
 }
 
-.animation-path{
+.animation-path {
   width: 100%;
   height: 80vh;
   display: flex;

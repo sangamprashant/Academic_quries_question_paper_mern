@@ -8,14 +8,16 @@ import {
   Team,
   WhatWeDo,
 } from "@/component";
+import AppLink from "@/component/AppLink/AppLink";
 import CountUserPost from "@/component/count/CountUserPost";
+import NotesHome from "@/component/notes/NotesHome";
 import ProjectHome from "@/component/project/ProjectHome";
 import React from "react";
 
 function Home() {
   return (
     <div>
-       <Hero />
+      <Hero />
       <div className="MarginTopNegative">
         <WhatWeDo />
       </div>
@@ -29,8 +31,12 @@ function Home() {
         <ProjectHome />
       </div>
       <div className="MarginTopNegative">
+        <NotesHome />
+      </div>
+      <div className="MarginTopNegative">
         <AboutUs />
       </div>
+      <AppLink />
       <div className="MarginTopNegative">
         <Rating />
       </div>
@@ -40,7 +46,7 @@ function Home() {
       <div className="MarginTopNegative">
         <Contact />
       </div>
-      <CountUserPost/>
+      <CountUserPost />
     </div>
   );
 }

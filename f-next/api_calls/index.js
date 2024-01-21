@@ -108,7 +108,6 @@ const fetchUserCount = async () => {
     });
     const responseBody = await res.text();
     const data = JSON.parse(responseBody);
-    console.log(data)
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -158,6 +157,48 @@ const fetchCourseOpen = async (path) => {
   }
 };
 
+const fetchSubjectNames = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/subjects`, {
+      cache: "no-store",
+    });
+    const responseBody = await res.text();
+    const data = JSON.parse(responseBody);
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return [];
+  }
+};
+
+const fetchNotesBySubject = async (path) => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/subject-notes/${path}`, {
+      cache: "no-store",
+    });
+    const responseBody = await res.text();
+    const data = JSON.parse(responseBody);
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return [];
+  }
+};
+
+const fetchOpenNotes = async (id) => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/subject-notes/id/${id}`, {
+      cache: "no-store",
+    });
+    const responseBody = await res.text();
+    const data = JSON.parse(responseBody);
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return [];
+  }
+};
+
 export {
   fetchProjectsLanguages,
   fetchRecentProjects,
@@ -170,4 +211,7 @@ export {
   fetchPaperCount,
   fetchOpenPaper,
   fetchCourseOpen,
+  fetchSubjectNames,
+  fetchNotesBySubject,
+  fetchOpenNotes,
 };
