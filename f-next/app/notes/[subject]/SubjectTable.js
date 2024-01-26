@@ -6,7 +6,7 @@ function SubjectTable({ projects, subject }) {
   const router = useRouter();
 
   return (
-    <table className="table table-striped">
+    <table className="table table-hover">
       <thead className="head">
         <tr>
           <th>Sr.no</th>

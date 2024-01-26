@@ -1,28 +1,26 @@
 import Link from "next/link";
 
-async function NotesSubject({pdfFiles}) {
+async function NotesSubject({ pdfFiles }) {
   return (
-    <div className="language-container">
+    <div className="notes-container">
       {pdfFiles.map((Subjects) => (
-        <div
-          className="m-2 portfolio-item filter-app wow fadeInUp"
+        <div className="p-3 text-center"
           key={Subjects._id}
         >
           <Link href={`/notes/${Subjects.subjectPath}`}>
-            <div className="portfolio-wrap">
+            <div className="card shadow rounded border-0">
               <figure>
                 <img
+                className="object-fit-contain"
                   src={`${Subjects.subjectImage}`}
                   type="application/pdf"
                   width="100%"
-                  height="200px"
+                  height="100%"
                 />
               </figure>
-              <div className="portfolio-info">
-                <h4>
-                  <a>{Subjects.subjectName}</a>
-                </h4>
-              </div>
+              <p className="p-1">
+                <a>{Subjects.subjectName}</a>
+              </p>
             </div>
           </Link>
         </div>

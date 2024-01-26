@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 function TableDataShowing({ filteredData }) {
   const router = useRouter();
   return (
-    <table className="table">
+    <table className="table table-hover">
       <thead>
         <tr>
           <th>Subject Name</th>
