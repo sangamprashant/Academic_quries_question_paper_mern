@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import Hero from "./ReuseComponent/Hero";
 import Contact from "./ReuseComponent/Contact";
 import "./css/Home.css";
-import WhatWeDo from "./ReuseComponent/WhatWeDo";
 import AboutUs from "./ReuseComponent/AboutUs";
-import Paper from "./ReuseComponent/Paper";
-import Count from "./ReuseComponent/Count";
+import Count from "./ReuseComponent/Count/Count";
 import Footer from "./ReuseComponent/Footer";
 import Team from "./Team";
 import ProjectHome from "./ReuseComponent/ProjectHome";
+import WhatWeDo from "./ReuseComponent/WhatWeDo";
+import Courses from "./ReuseComponent/Courses";
 function Home() {
 
   useEffect(()=>{
@@ -22,9 +22,10 @@ function Home() {
       </div>
       <div className="MarginTopNegative">
         <WhatWeDo />
+        <Count />
       </div>
       <div className="MarginTopNegative">
-        <Paper />
+        <Courses />
       </div>
       <div className="MarginTopNegative">
         <AboutUs />
@@ -35,9 +36,7 @@ function Home() {
       <div className="MarginTopNegative">
         <Team />
       </div>
-      <div>
-        <Count />
-      </div>
+
       <div className="MarginTopNegative">
         <Contact />
       </div>

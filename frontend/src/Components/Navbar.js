@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import "./css/Navbar.css";
 import logo from "./img/logo.png";
 import { Link } from "react-router-dom";
+import { AppName, menuItems } from "../Strings/Strings";
 
-export default function Navbar({ login }) {
-
+export default function Navbar() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const handleMobileNavToggle = () => {
@@ -12,29 +12,32 @@ export default function Navbar({ login }) {
   };
 
   const OptionSelection = () => {
-    setMobileNavOpen(false)
-  }
+    setMobileNavOpen(false);
+  };
 
   return (
     <div>
       <header
         id="header"
-        class={` d-flex align-items-center fixed-top`}
+        className={`d-flex align-items-center fixed-top`}
         style={{ display: "flex", justifyContent: "center" }}
       >
-        <div class=" d-flex align-items-center">
+        <div className="d-flex align-items-center justify-content-between w-100 px-3">
           <div
-            class="logo me-auto"
+            className="logo me-auto"
             style={{ display: "flex", justifyContent: "center" }}
           >
             <Link to="/" onClick={OptionSelection}>
-              <img src={logo} alt="" class="img-fluid" />
+              <img src={logo} alt="" className="img-fluid" />
             </Link>
             <h1>
-              <Link to="/" onClick={OptionSelection}> ACADEMIC QUERIES</Link>
+              <Link to="/" onClick={OptionSelection}>
+                {" "}
+                {AppName}
+              </Link>
             </h1>
           </div>
-
+          {/* nav items */}
           <nav
             id="navbar"
             className={`navbar order-last order-lg-0 ${
@@ -42,60 +45,26 @@ export default function Navbar({ login }) {
             }`}
           >
             <ul>
-              {/* Menu items */}
-              <li>
-                <Link className={`nav-linksignin`} to="/about" onClick={OptionSelection}>
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link className="nav-link scrollto" to="/services" onClick={OptionSelection}>
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link className={`nav-linksignin`} to="/paper" onClick={OptionSelection}>
-                  Courses
-                </Link>
-              </li>
-              <li>
-                <Link className="nav-link scrollto" to="/projects" onClick={OptionSelection}>
-                  Projects
-                </Link>
-              </li>
-              <li>
-                <Link className={`nav-linksignin`} to="/contact" onClick={OptionSelection}>
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link className={`nav-linksignin`} to="/user/upload/paper" onClick={OptionSelection}>
-                  Contribute
-                </Link>
-              </li>
-              <li>
-                <Link className="nav-link scrollto" to="/privacy-policy" onClick={OptionSelection}>
-                privacy policy
-                </Link>
-              </li>
-              <li>
-                <Link className="nav-link scrollto" to="/terms" onClick={OptionSelection}>
-                Terms and Conditions
-                </Link>
-              </li>
-              <li>
-                <Link className="nav-link scrollto" to="/testimonials" onClick={OptionSelection}>
-                  Testimonials
-                </Link>
-              </li>
+              {/* Map over menu items */}
+              {menuItems.map((item, index) => (
+                <li key={index}>
+                  <Link
+                    className={`nav-linksignin`}
+                    to={item.link}
+                    onClick={OptionSelection}
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
             <i
-              style={{ color: "black" }}
-              className="fa fa-list mobile-nav-toggle"
+              className={`fa fa-${
+                mobileNavOpen ? "close text-white" : "list"
+              } mobile-nav-toggle`}
               onClick={handleMobileNavToggle}
             ></i>
           </nav>
-
         </div>
       </header>
     </div>

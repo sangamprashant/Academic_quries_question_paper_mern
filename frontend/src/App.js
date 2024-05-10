@@ -8,7 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Contact from "./Components/ReuseComponent/Contact";
 import Footer from "./Components/ReuseComponent/Footer";
 import AboutUs from "./Components/ReuseComponent/AboutUs";
-import Paper from "./Components/ReuseComponent/Paper";
 import WhatWeDo from "./Components/ReuseComponent/WhatWeDo";
 import Team from "./Components/Team";
 import Course from "./Components/ReuseComponent/Course";
@@ -21,11 +20,27 @@ import ProjectsList from "./Components/ReuseComponent/ProjectsList";
 import ProjectsListSelected from "./Components/ReuseComponent/ProjectListSelected";
 import ProjectOpen from "./Components/ReuseComponent/ProjectOpen";
 import PaperOpen from "./Components/ReuseComponent/PaperOpen";
+import { SERVER } from "./config/domain";
+import Courses from "./Components/ReuseComponent/Courses";
+import { Modal } from "antd";
+import { AppName } from "./Strings/Strings";
+import { AppContext } from "./context/AppContext";
 
 function App() {
+  const [modal2Open, setModal2Open] = React.useState(true);
+  const [modalContent,setModalContent] = React.useState(null)
+
+  const handleResponse = (data) => {
+    setModal2Open(true);
+    setModalContent(data);
+  };
+
+console.log({SERVER})
+
   return (
+    <AppContext.Provider value={{setModal2Open, setModalContent,handleResponse}}>
+
     <BrowserRouter>
-     
         <Navbar  />
         <Routes>
           <Route exact path="/" element={<Home />} />
@@ -33,7 +48,7 @@ function App() {
           <Route exact path="/terms" element={<Term/>}/>
           <Route exact path="/privacy-policy" element={<Policy/>}/>
           <Route exact path="/contact" element={<Contact  />} />
-          <Route exact path="/paper" element={<Paper/>}/>
+          <Route exact path="/courses" element={<Courses/>}/>
           <Route exact path="/about" element={<AboutUs/>}/>
           <Route exact path="/services" element={<WhatWeDo/>}/>
           <Route exact path="/testimonials" element={<Team/>}/>
@@ -49,7 +64,17 @@ function App() {
         </Routes>
         <Footer/>
         <ToastContainer theme="dark" />
+        <Modal
+          title={`${AppName}' says`}
+          centered
+          open={modal2Open}
+          onOk={() => setModal2Open(false)}
+          onCancel={() => setModal2Open(false)}
+        >
+          {modalContent}
+        </Modal>
     </BrowserRouter>
+    </AppContext.Provider>
   );
 }
 
