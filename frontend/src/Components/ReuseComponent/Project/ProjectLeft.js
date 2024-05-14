@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { SERVER } from "../../../config/domain";
 
 function ProjectLeft() {
   const [isLoading, setIsLoading] = useState(true);
@@ -12,7 +13,7 @@ function ProjectLeft() {
   }, []);
 
   const fetchProjects = async () => {
-    fetch("/api/get/recent/projects")
+    fetch(`${SERVER}/api/get/recent/projects`)
       .then((response) => response.json())
       .then((data) => {
         setProjects(

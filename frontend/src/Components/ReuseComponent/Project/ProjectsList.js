@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import "../css/Paper.css";
-import "../css/ProjectsList.css";
+import "../../css/Paper.css";
+import "../../css/ProjectsList.css";
 import ProjectLanguages from "./ProjectLanguages";
 import ProjectLeft from "./ProjectLeft";
 

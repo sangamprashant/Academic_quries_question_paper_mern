@@ -1,6 +1,6 @@
 import React from "react";
-import "../css/Hero.css";
-import { heroStrings } from "../../Strings/Strings";
+import "../../css/Hero.css";
+import { heroStrings } from "../../../Strings/Strings";
 
 function Hero() {
   return (

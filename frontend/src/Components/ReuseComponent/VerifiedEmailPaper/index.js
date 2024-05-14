@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { SERVER } from "../../../config/domain";
 
 function VerifiedEmailPaper() {
   const { paperId } = useParams();
   const [pdfFile, setPdfFile] = useState(null);
   useEffect(() => {
     // Fetch the question paper by ID
-    fetch(`/api/get/paper/${paperId}`, {
+    fetch(`${SERVER}/api/get/paper/${paperId}`, {
       headers: {
         "Content-Type": "application/json",
-        // Add any other headers you need
       },
     })
       .then((response) => response.json())

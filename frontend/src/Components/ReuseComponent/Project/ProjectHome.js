@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../css/Paper.css";
+import "../../css/Paper.css";
 import ProjectLanguages from "./ProjectLanguages";
 
 function ProjectHome() {

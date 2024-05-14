@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
-import "../css/ProjectsList.css";
+import "../../css/ProjectsList.css";
+import { SERVER } from "../../../config/domain";
 
 function ProjectsListSelected() {
   const { language } = useParams();
@@ -14,7 +15,7 @@ function ProjectsListSelected() {
   }, [language]);
 
   const fetchProjects = async () => {
-    fetch(`/api/get/project/by/type/${language}`)
+    fetch(`${SERVER}/api/get/project/by/type/${language}`)
       .then((response) => response.json())
       .then((data) => {
         setProjects(data.map((project) => ({

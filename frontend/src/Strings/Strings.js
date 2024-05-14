@@ -10,12 +10,10 @@ const heroStrings = {
 const menuItems = [
   { title: "About", link: "/about" },
   { title: "Services", link: "/services" },
-  { title: "Courses", link: "/courses" },
+  { title: "Courses", link: "/course" },
   { title: "Projects", link: "/projects" },
   { title: "Contact", link: "/contact" },
-  { title: "Contribute", link: "/user/upload/paper" },
-  { title: "Privacy Policy", link: "/privacy-policy" },
-  { title: "Terms and Conditions", link: "/terms" },
+  { title: "Contribute", link: "/contribute" },
   { title: "Testimonials", link: "/testimonials" },
 ];
 const teamData = {
@@ -68,7 +66,7 @@ const whatWeDoItems = {
     {
       icon: "fa fa-upload",
       title: "Contribute Here",
-      link: "/user/upload/paper",
+      link: "/CONTRIBUTE",
       description:
         "Your contributions fuel our success. Join us and be part of a community that values your input.",
     },
@@ -78,5 +76,35 @@ const aboutString = {
   title: "About Us",
   content: `Academic Queries is a platform that provides free surveys from the past year to support the academic efforts of students and faculty. The surveys are available for a variety of courses and academic levels. <br /> <br /> Operating our platform is easy and user-friendly. You can browse different courses and select the specific survey you need. Once selected, the document will be available for download in PDF format for easy access on a variety of devices. We take the quality and accuracy of our surveys very seriously and we guarantee that the surveys are from trusted and reputable educational institutions. We continually update our collection to provide you with the most up-to-date surveys and ensure you have access to the most relevant and up-to-date materials. <br /> <br /> Join us on our educational journey and take advantage of previous year's surveys. Improve your exam preparation, boost your confidence and improve your academic performance with our comprehensive collection of surveys. Be part of the community by providing surveys about your course.`,
 };
+const footerString = {
+  AppName,
+  contact: [{ label: "Email", value: emailAddress }],
+  links: [
+    {
+      label: "Useful Links",
+      data: [
+        { name: "Terms and Conditions", path: "/terms" },
+        { name: "Privacy policy", path: "/privacy-policy" },
+      ],
+    },
+    {
+      label: "Our Services",
+      data: [
+        { name: "About us", path: "/about" },
+        { name: "Services", path: "/services" },
+      ],
+    },
+  ],
+};
 
-export { heroStrings,menuItems, AppName, teamData, contactStrings, whatWeDoItems,aboutString };
+export {
+  heroStrings,
+  menuItems,
+  AppName,
+  teamData,
+  contactStrings,
+  whatWeDoItems,
+  aboutString,
+  emailAddress,
+  footerString,
+};

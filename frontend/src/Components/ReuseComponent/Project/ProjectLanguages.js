@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "../css/Paper.css";
+import "../../css/Paper.css";
 import { Link } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
-import "../css/ProjectsList.css";
+import "../../css/ProjectsList.css";
+import { SERVER } from "../../../config/domain";
 
 function ProjectLanguages() {
   const [pdfFiles, setPdfFiles] = useState([]);
@@ -10,7 +11,7 @@ function ProjectLanguages() {
 
   useEffect(() => {
     // Fetch PDF file data from the server
-    fetch("/api/project/languages")
+    fetch(`${SERVER}/api/project/languages`)
       .then((response) => response.json())
       .then((data) => {
         setPdfFiles(data);

@@ -1,6 +1,7 @@
 import React from "react";
-import "../css/Footer.css";
+import "../../css/Footer.css";
 import { Link } from "react-router-dom";
+import { AppName, footerString } from "../../../Strings/Strings";
 function Footer() {
   return (
     <div>
@@ -9,40 +10,34 @@ function Footer() {
           <div class="container">
             <div class="row">
               <div class="col-lg-6 col-md-6 footer-contact">
-                <h3>ACADEMIC QUERIES</h3>
-                <p>
-                  <strong>Email:</strong> queriesacademic@gmail.com
-                  <br />
-                </p>
+                <h3>{footerString.AppName}</h3>
+                {footerString.contact.map((data, index) => {
+                  return (
+                    <p key={index}>
+                      <strong>{data.label}:</strong> {data.value}
+                      <br />
+                    </p>
+                  );
+                })}
               </div>
 
-              <div class="col-lg-2 col-md-6 footer-links">
-                <h4>Useful Links</h4>
-                <ul>
-                  <li>
-                    <i class="fa fa-chevron-right"></i>{" "}
-                    <Link to="/terms">Terms and Conditions</Link>
-                  </li>
-                  <li>
-                    <i class="fa fa-chevron-right"></i>{" "}
-                    <Link to="/privacy-policy">Privacy policy</Link>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="col-lg-3 col-md-6 footer-links">
-                <h4>Our Services</h4>
-                <ul>
-                  <li>
-                    <i class="fa fa-chevron-right"></i>{" "}
-                    <Link to="/about">About us</Link>
-                  </li>
-                  <li>
-                    <i class="fa fa-chevron-right"></i>{" "}
-                    <Link to="/services">Services</Link>
-                  </li>
-                </ul>
-              </div>
+              {footerString.links.map((L, index) => {
+                return (
+                  <div class="col-lg-3 col-md-6 footer-links" key={index}>
+                    <h4>{L.label}</h4>
+                    <ul>
+                      {L.data.map((D, i) => {
+                        return (
+                          <li key={i}>
+                            <i class="fa fa-chevron-right"></i>{" "}
+                            <Link to={D.path}>{D.name}</Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -55,7 +50,7 @@ function Footer() {
                 <span>
                   {" "}
                   <Link to="/testimonials" className="text-white">
-                    ACADEMIC QUERIES.
+                    {AppName}.
                   </Link>{" "}
                 </span>
               </strong>

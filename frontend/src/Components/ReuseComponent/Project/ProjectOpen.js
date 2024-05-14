@@ -4,9 +4,10 @@ import { Link, useParams } from "react-router-dom";
 import { Spinner, Modal } from "react-bootstrap";
 import { MdClose } from "react-icons/md";
 import { saveAs } from "file-saver"; // Import 'file-saver' for downloading files
-import "../css/ProjectsList.css";
+import "../../css/ProjectsList.css";
 import ProjectLanguages from "./ProjectLanguages";
 import ProjectLeft from "./ProjectLeft";
+import { SERVER } from "../../../config/domain";
 
 function ProjectOpen() {
   const { language, id } = useParams();
@@ -16,15 +17,15 @@ function ProjectOpen() {
   const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
+    setProject(null);
+    setLoading(true);
     fetchProject();
   }, [language, id]);
 
   // Function to fetch project details
   const fetchProject = async () => {
     try {
-      const response = await axios.get(
-        `/api/get/project/by/id/${id}`
-      );
+      const response = await axios.get(`${SERVER}/api/get/project/by/id/${id}`);
       if (response.status === 200) {
         setProject(response.data);
       }
@@ -51,9 +52,6 @@ function ProjectOpen() {
     <div style={{ marginTop: "70px" }}>
       <section id="portfolio" className="portfolio">
         <div className="container">
-          <div className="section-title">
-            <h2>{language}</h2>
-          </div>
           <div className="row">
             <div className="project-list-left">
               <ProjectLeft />
