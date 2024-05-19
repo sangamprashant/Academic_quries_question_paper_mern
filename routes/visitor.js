@@ -23,15 +23,13 @@ router.post("/api/increment/visitors", async (req, res) => {
   try {
     const visitor = await Visitor.findOne({});
     if (visitor) {
-      // Increment the count by one
-      visitor.counts.push("Prashant");
+      visitor.count = visitor.count + 1;
       const updatedVisitor = await visitor.save();
-      res.status(200).json({ count: updatedVisitor.counts.length });
+      res.status(200).json({ count: updatedVisitor.count });
     } else {
-      // If visitor document does not exist, create a new one and initialize the count with "adadw"
-      const newVisitor = new Visitor({ counts: ["Prashant"] });
+      const newVisitor = new Visitor({ count: 1 });
       const savedVisitor = await newVisitor.save();
-      res.status(200).json({ count: savedVisitor.counts.length });
+      res.status(200).json({ count: savedVisitor.count });
     }
   } catch (error) {
     res.status(500).json({ error: "Failed to update visitor count" });
