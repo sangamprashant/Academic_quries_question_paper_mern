@@ -37,7 +37,9 @@ app.use(require("./routes/projects"));
 app.use(require("./routes/reviews"));
 app.use(require("./routes/ProjectsLanguages"));
 
-mongoose.connect(process.env.MONGO_URL);
+mongoose.connect(process.env.MONGO_URL,{
+  dbName: process.env.MONGO_DATABASE,
+});
 mongoose.connection.on("connected", () => {
   console.log("Connected to mongo");
 });

@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const RatingDisplay = ({ data }) => {
-  const progressData = data.starsPercentage;
-  const averageStar = data.averageStars;
+  const progressData = data?.starsPercentage;
+  const averageStar = data?.averageStars;
 
   // Set the total number of stars you want to display
   const totalStars = 5;
@@ -23,7 +23,7 @@ const RatingDisplay = ({ data }) => {
   });
 
   // Reverse the starsData array
-  const reversedStarsData = starsData.reverse();
+  const reversedStarsData = starsData?.reverse();
 
   return (
     <div className="container mt-5">
