@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { Image } from "antd";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
-import { Spinner, Modal } from "react-bootstrap";
-import { MdClose } from "react-icons/md";
-import { saveAs } from "file-saver"; // Import 'file-saver' for downloading files
-import "../../css/ProjectsList.css";
-import ProjectLanguages from "./ProjectLanguages";
-import ProjectLeft from "./ProjectLeft";
+import React, { useEffect, useState } from "react";
+import { Spinner } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import { SERVER } from "../../../config/domain";
+import "../../css/ProjectsList.css";
+import ProjectLeft from "./ProjectLeft";
 
 function ProjectOpen() {
   const { language, id } = useParams();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     setProject(null);
@@ -34,18 +30,6 @@ function ProjectOpen() {
     } finally {
       setLoading(false);
     }
-  };
-
-  // Function to handle image click
-  const handleImageClick = (image) => {
-    setSelectedImage(image);
-    setShowModal(true);
-  };
-
-  // Function to close the modal
-  const closeModal = () => {
-    setSelectedImage(null);
-    setShowModal(false);
   };
 
   return (
@@ -71,12 +55,10 @@ function ProjectOpen() {
                     <label>Project Images</label>
                     <div className="project-input-image">
                       {project?.images.map((image, index) => (
-                        <img
+                        <Image
                           key={index}
                           src={image}
                           alt={`Selected Image ${index}`}
-                          onClick={() => handleImageClick(image)}
-                          style={{ cursor: "pointer" }}
                           loading="lazy"
                         />
                       ))}
@@ -113,19 +95,6 @@ function ProjectOpen() {
           </div>
         </div>
       </section>
-
-      {/* Modal for displaying the selected image */}
-      <Modal show={showModal} onHide={closeModal}>
-        <Modal.Body>
-          <MdClose className="close-icon" onClick={closeModal} />
-          {/* Close icon */}
-          <img
-            src={selectedImage}
-            alt="Selected Image"
-            style={{ width: "100%" }}
-          />
-        </Modal.Body>
-      </Modal>
     </div>
   );
 }

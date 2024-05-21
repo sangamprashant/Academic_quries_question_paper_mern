@@ -10,6 +10,7 @@ import ProjectHome from "./ReuseComponent/Project/ProjectHome";
 import WhatWeDo from "./ReuseComponent/WhatWeDo";
 import Courses from "./ReuseComponent/Courses";
 import Rating from "./ReuseComponent/Rating";
+import Notes from "./ReuseComponent/Notes";
 function Home() {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -28,12 +29,15 @@ function Home() {
         <Courses />
       </div>
       <div className="MarginTopNegative">
+        <Notes />
+      </div>
+      <div className="MarginTopNegative">
         <ProjectHome />
       </div>
       <div className="MarginTopNegative">
         <AboutUs />
       </div>
-      <Rating />
+      <Rating show={true}/>
       <div className="MarginTopNegative">
         <Team />
       </div>

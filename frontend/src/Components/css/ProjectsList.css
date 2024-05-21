@@ -42,4 +42,11 @@
     .language-container {
       grid-template-columns: 1fr 1fr;
     }
+    .portfolio .portfolio-item {
+      height: auto;
+    }
+    .portfolio .portfolio-item figure img {
+      object-fit: cover;
+      height: auto;
+    }
   }

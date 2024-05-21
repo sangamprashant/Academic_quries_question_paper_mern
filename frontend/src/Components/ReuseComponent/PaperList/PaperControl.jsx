@@ -54,7 +54,6 @@ function PaperControl({ branch }) {
     }
 
     setFilteredData(filteredPdfFiles);
-
   };
 
   return (

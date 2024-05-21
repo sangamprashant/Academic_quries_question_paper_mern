@@ -4,9 +4,12 @@
   border-radius: 70px;
   border: 1px none;
   font-size: 35px;
+  background: #fff8ed;
+  color: #ffd100;
 }
 .rating_text {
   margin-top: 38px;
+
 }
 .stars-outer {
   display: inline-block;
@@ -31,10 +34,10 @@
 
 .stars-inner::before {
   content: "\f005 \f005 \f005 \f005 \f005";
-  color: #000000;
+  color: #ffd100;
 }
 .dark {
-  background-color: #000000;
+  background-color: #ffd100;
 }
 
 .rating-btn {

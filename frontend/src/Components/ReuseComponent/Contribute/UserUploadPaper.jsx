@@ -1,8 +1,8 @@
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { storage } from "../../../firebase";
-import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
+import { AppContext } from "../../../context/AppContext";
+import { storage } from "../../../firebase";
 
 function UserUploadPaper() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -14,9 +14,7 @@ function UserUploadPaper() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [waiting, setWaiting] = useState(false);
-  // Toast functions
-  const notifyA = (msg) => toast.error(msg);
-  const notifyB = (msg) => toast.success(msg);
+  const { handleMode } = React.useContext(AppContext);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -46,8 +44,7 @@ function UserUploadPaper() {
       !name ||
       !email
     ) {
-      notifyA("Please fill all the fields.");
-      return;
+      return handleMode(<p className="text-danger">Please fill all the fields.</p>)
     }
     setWaiting(true);
     const fileRef = ref(storage, `Pdf/${selectedFile.name + uuidv4()}`);
@@ -70,8 +67,7 @@ function UserUploadPaper() {
       !url ||
       !email
     ) {
-      notifyA("Please fill all the fields.");
-      return;
+      return handleMode(<p className="text-danger">Please fill all the fields.</p>)
     }
     const requestBody = {
       path: url,
@@ -93,7 +89,7 @@ function UserUploadPaper() {
       .then((response) => response.json())
       .then((data) => {
         if (data.message) {
-          notifyB(data.message);
+          handleMode(<p className="text-success">{data.message}</p>);
           setSelectedFile(null);
           setPreviewUrl(null);
           setType("");
@@ -104,11 +100,11 @@ function UserUploadPaper() {
           setEmail("");
           setWaiting(false);
         } else {
-          notifyA(data.error);
+          handleMode(<p className="text-danger">{data.error}</p>)
         }
       })
       .catch((error) => {
-        console.error("Failed to upload question paper:", error);
+        handleMode(<p className="text-danger">Failed to upload question paper, please try again later.</p>)
       });
   };
 

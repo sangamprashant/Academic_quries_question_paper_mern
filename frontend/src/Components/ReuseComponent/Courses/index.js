@@ -1,28 +1,32 @@
 import React, { useEffect, useState } from "react";
-import "../../css/Paper.css";
-import { Link } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import { SERVER } from "../../../config/domain";
+import "../../css/Paper.css";
+import Card from "../Reuse/Card";
 
 function Courses() {
-  const [pdfFiles, setPdfFiles] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [pdfFiles, setPdfFiles] = useState(
+    JSON.parse(localStorage.getItem("courseData")) || []
+  );
+  const [loading, setLoading] = React.useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   React.useLayoutEffect(() => {
+    setLoading(true);
     fetch(`${SERVER}/api/get/course`)
       .then((response) => response.json())
       .then((data) => {
+        localStorage.setItem("courseData", JSON.stringify(data));
         setPdfFiles(data);
-        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Failed to fetch PDF files:", error);
-        setIsLoading(false);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -34,39 +38,20 @@ function Courses() {
             <h2>Courses</h2>
           </div>
 
-          {isLoading ? (
+          {!pdfFiles && loading ? (
             <div className="text-center">
               <Spinner animation="border" role="status">
                 <span className="sr-only">Loading...</span>
               </Spinner>
             </div>
           ) : (
-            <div className="row portfolio-container">
+            <div className="language-container">
               {pdfFiles.map((Papers) => (
-                <Link
-                  className="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp"
-                  to={`/course/${Papers.coursePath}/${Papers.courseName}`}
-                >
-                  <div className="portfolio-wrap">
-                    <figure>
-                      <LazyLoadImage
-                        key={`${Papers.courseImage}`}
-                        src={`${Papers.courseImage}`}
-                        placeholderSrc={`${Papers.courseImage}`}
-                        effect="blur"
-                        type="application/pdf"
-                        width="100%"
-                        height="250px"
-                        loading="lazy"
-                      />
-                    </figure>
-                    <div className="portfolio-info">
-                      <h4>
-                        <a href="portfolio-details.html">{Papers.courseName}</a>
-                      </h4>
-                    </div>
-                  </div>
-                </Link>
+                <Card
+                  path={`/course/${Papers.coursePath}/${Papers.courseName}`}
+                  image={Papers.courseImage}
+                  text={Papers.courseName}
+                />
               ))}
             </div>
           )}

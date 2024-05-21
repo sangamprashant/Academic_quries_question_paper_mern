@@ -61,6 +61,7 @@
 }
 .portfolio .portfolio-item figure img {
   object-fit: cover;
+  height: 250px;
 }
 
 .portfolio .portfolio-item figure:hover img {
@@ -79,7 +80,6 @@
   text-align: center;
   width: 36px;
   height: 36px;
-  background: #fff;
   border-radius: 50%;
   transition: all 0.2s linear;
   overflow: hidden;

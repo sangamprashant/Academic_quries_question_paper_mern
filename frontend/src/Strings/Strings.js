@@ -11,10 +11,10 @@ const menuItems = [
   { title: "About", link: "/about" },
   { title: "Services", link: "/services" },
   { title: "Courses", link: "/course" },
+  { title: "Notes", link: "/notes" },
   { title: "Projects", link: "/projects" },
   { title: "Contact", link: "/contact" },
   { title: "Contribute", link: "/contribute" },
-  { title: "Testimonials", link: "/testimonials" },
 ];
 const teamData = {
   teamHeading: "Team",
@@ -83,8 +83,9 @@ const footerString = {
     {
       label: "Useful Links",
       data: [
+        { name: "Contact Us", path: "/contact" },
+        { name: "Contribute", path: "/contribute" },
         { name: "Terms and Conditions", path: "/terms" },
-        { name: "Privacy policy", path: "/privacy-policy" },
       ],
     },
     {
@@ -92,6 +93,7 @@ const footerString = {
       data: [
         { name: "About us", path: "/about" },
         { name: "Services", path: "/services" },
+        { name: "Team", path: "/testimonials" },
       ],
     },
   ],

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { SERVER } from "../../../config/domain";
@@ -8,7 +8,7 @@ function ProjectLeft() {
   const [projects, setProjects] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  React.useLayoutEffect(() => {
     fetchProjects();
   }, []);
 
@@ -19,14 +19,14 @@ function ProjectLeft() {
         setProjects(
           data.map((project) => ({
             ...project,
-            createdAt: new Date(project.createdAt).toLocaleDateString(), // Format the date
+            createdAt: new Date(project.createdAt).toLocaleDateString(),
           }))
         );
         setIsLoading(false);
       })
       .catch((error) => {
         console.error("Failed to fetch PDF files:", error);
-        setIsLoading(false); // Turn off loading state in case of an error
+        setIsLoading(false); 
       });
   };
   return (

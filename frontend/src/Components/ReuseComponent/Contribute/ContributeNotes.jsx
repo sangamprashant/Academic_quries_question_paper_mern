@@ -1,7 +1,7 @@
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import React, { useState } from "react";
-import { toast } from "react-toastify";
+import { AppContext } from "../../../context/AppContext";
 import { storage } from "../../../firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 function ContributeNotes() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -11,9 +11,7 @@ function ContributeNotes() {
   const [s_name, setS_name] = useState("");
   const [s_topic, setS_topic] = useState("");
   const [waiting, setWaiting] = useState(false);
-  // Toast functions
-  const notifyA = (msg) => toast.error(msg);
-  const notifyB = (msg) => toast.success(msg);
+  const { handleModel } = React.useContext(AppContext);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -37,8 +35,9 @@ function ContributeNotes() {
       !s_name.trim() ||
       !s_topic.trim()
     ) {
-      notifyA("Please fill all the fields.");
-      return;
+      return handleModel(
+        <p className="text-danger">Please fill all the fields.</p>
+      );
     }
     setWaiting(true);
     const fileRef = ref(storage, `Notes/${Date.now() + selectedFile.name}`);
@@ -57,8 +56,9 @@ function ContributeNotes() {
       !s_topic.trim() ||
       !url
     ) {
-      notifyA("Please fill all the fields.");
-      return;
+      return handleModel(
+        <p className="text-danger">Please fill all the fields.</p>
+      );
     }
     const requestBody = {
       f_path: url,
@@ -77,7 +77,7 @@ function ContributeNotes() {
       .then((response) => response.json())
       .then((data) => {
         if (data.message) {
-          notifyB(data.message);
+          handleModel(<p className="text-success">{data.message}</p>);
           setSelectedFile(null);
           setPreviewUrl(null);
           setU_name("");
@@ -86,11 +86,15 @@ function ContributeNotes() {
           setS_topic("");
           setWaiting(false);
         } else {
-          notifyA(data.error);
+          return handleModel(<p className="text-danger">{data.error}</p>);
         }
       })
       .catch((error) => {
-        console.error("Failed to upload question paper:", error);
+        handleModel(
+          <p className="text-danger">
+            Failed to upload notes, please try again later
+          </p>
+        );
         setWaiting(false);
       });
   };

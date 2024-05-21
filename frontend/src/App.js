@@ -1,39 +1,36 @@
+import { Modal } from "antd";
 import React from "react";
-import Navbar from "./Components/Navbar";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./Components/Home";
-import PageNotFound from "./Components/PageNotFound";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Contact from "./Components/ReuseComponent/Contact";
-import Footer from "./Components/ReuseComponent/Footer";
+import "./App.css";
+import Home from "./Components/Home";
+import Navbar from "./Components/Navbar";
+import PageNotFound from "./Components/PageNotFound";
 import AboutUs from "./Components/ReuseComponent/AboutUs";
-import WhatWeDo from "./Components/ReuseComponent/WhatWeDo";
-import Team from "./Components/Team";
-import VerifiedEmailPaper from "./Components/ReuseComponent/VerifiedEmailPaper";
-import ProjectsList from "./Components/ReuseComponent/Project/ProjectsList";
+import Contact from "./Components/ReuseComponent/Contact";
+import Contribute from "./Components/ReuseComponent/Contribute";
+import Courses from "./Components/ReuseComponent/Courses";
+import Footer from "./Components/ReuseComponent/Footer";
+import PaperList from "./Components/ReuseComponent/PaperList";
+import PaperOpen from "./Components/ReuseComponent/PaperOpen";
 import ProjectsListSelected from "./Components/ReuseComponent/Project/ProjectListSelected";
 import ProjectOpen from "./Components/ReuseComponent/Project/ProjectOpen";
-import PaperOpen from "./Components/ReuseComponent/PaperOpen";
-import { SERVER } from "./config/domain";
-import Courses from "./Components/ReuseComponent/Courses";
-import { Modal } from "antd";
+import ProjectsList from "./Components/ReuseComponent/Project/ProjectsList";
+import Term from "./Components/ReuseComponent/Term";
+import VerifiedEmailPaper from "./Components/ReuseComponent/VerifiedEmailPaper";
+import WhatWeDo from "./Components/ReuseComponent/WhatWeDo";
+import Team from "./Components/Team";
 import { AppName } from "./Strings/Strings";
 import { AppContext } from "./context/AppContext";
-import PaperList from "./Components/ReuseComponent/PaperList";
-import Term from "./Components/ReuseComponent/Term";
-import Contribute from "./Components/ReuseComponent/Contribute";
+import Notes from "./Components/ReuseComponent/Notes";
+import SubjectOpen from "./Components/ReuseComponent/Notes/SubjectOpen";
+import NoteOpen from "./Components/ReuseComponent/Notes/NoteOpen";
+import Reviews from "./Components/ReuseComponent/Rating/Reviews";
 
 function App() {
-  const [modal2Open, setModal2Open] = React.useState(true);
+  const [modal2Open, setModal2Open] = React.useState(false);
   const [modalContent,setModalContent] = React.useState(null)
-
-  const handleResponse = (data) => {
-    setModal2Open(true);
-    setModalContent(data);
-  };
-
-console.log({SERVER})
 
   return (
     <AppContext.Provider value={{setModal2Open, setModalContent,handleResponse}}>
@@ -51,12 +48,15 @@ console.log({SERVER})
           <Route exact path="contribute" element={<Contribute/>}/>
           <Route exact path="/course/:branch/:course" element={<PaperList />}/>
           <Route exact path="/varified/paper/:paperId" element={<VerifiedEmailPaper />}/>
-
           <Route exact path="/projects" element={<ProjectsList/>}/>
           <Route exact path="/projects/:language" element={<ProjectsListSelected/>}/>
           <Route exact path="/project/:language/:id" element={<ProjectOpen/>}/>
           <Route exact path="/terms" element={<Term/>}/>
-          
+          <Route exact path="/notes" element={<Notes />} />
+          <Route exact path="/notes/:subject" element={<SubjectOpen />} />
+          <Route exact path="/notes/:subject/:id" element={<NoteOpen />} />
+
+          <Route exact path="/reviews" element={<Reviews />} />
           <Route exact path="*" element={<PageNotFound />} />
         </Routes>
         <Footer/>
@@ -73,6 +73,10 @@ console.log({SERVER})
     </BrowserRouter>
     </AppContext.Provider>
   );
+  function handleResponse  (data)  {
+    setModal2Open(true);
+    setModalContent(data);
+  };
 }
 
 export default App;

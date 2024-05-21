@@ -3,7 +3,7 @@ import "./Rating.css";
 import { SERVER } from "../../../config/domain";
 import RatingDisplay from "./RatingDisplay";
 
-const Rating = () => {
+const Rating = ({show}) => {
   const [ratingData, setRatingData] = useState(
     JSON.parse(localStorage.getItem("ratingAvg")) || null
   );
@@ -25,7 +25,7 @@ const Rating = () => {
 
   return (
     <div>
-      <RatingDisplay data={ratingData} />
+      <RatingDisplay data={ratingData} show={show} />
     </div>
   );
 };

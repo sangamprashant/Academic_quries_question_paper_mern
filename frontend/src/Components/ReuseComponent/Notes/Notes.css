@@ -1,0 +1,17 @@
+
+.notes-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+  }
+  
+  @media (max-width: 1040px) {
+    .notes-container {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+  }@media (max-width: 775px) {
+    .notes-container {
+      grid-template-columns: 1fr 1fr;
+    }
+
+  }

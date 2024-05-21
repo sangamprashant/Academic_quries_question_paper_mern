@@ -1,34 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import "../../css/ProjectsList.css";
 import { SERVER } from "../../../config/domain";
+import { Table } from "antd";
 
 function ProjectsListSelected() {
   const { language } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [projects, setProjects] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  useEffect(() => {
+  React.useLayoutEffect(() => {
     fetchProjects();
   }, [language]);
 
-  const fetchProjects = async () => {
-    fetch(`${SERVER}/api/get/project/by/type/${language}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProjects(data.map((project) => ({
-          ...project,
-          createdAt: new Date(project.createdAt).toLocaleDateString(),
-        })));
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Failed to fetch projects:", error);
-        setIsLoading(false);
-      });
-  };
+  const tableContent = [
+    {
+      title: "Topic",
+      dataIndex: "topic",
+      key: "topic",
+    },
+    {
+      title: "Action",
+      dataIndex: "_id",
+      key: "_id",
+      render: (id) => {
+        return (
+          <Link
+            type="button"
+            className="btn btn-primary"
+            to={`/project/Java-SE/${id}`}
+          >
+            View
+          </Link>
+        );
+      },
+    },
+  ];
 
   return (
     <div style={{ marginTop: "70px" }}>
@@ -45,32 +54,31 @@ function ProjectsListSelected() {
           ) : (
             <div className="project-type">
               <h4>Top Projects ({projects.length})</h4>
-              <div className="table-responsive">
-                <table className="table table-striped">
-                  <thead className="head">
-                    <tr>
-                      <th>Sr no.</th>
-                      <th>Topic</th>
-                      <th>Created At</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {projects.map((project, index) => (
-                      <tr key={project._id} onClick={()=>{navigate(`/project/${project.type}/${project._id}`)}}>
-                        <td>{index + 1}</td>
-                        <td>{project.topic}</td>
-                        <td>{project.createdAt}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <Table dataSource={projects} columns={tableContent} />
             </div>
           )}
         </div>
       </section>
     </div>
   );
+
+  async function fetchProjects() {
+    fetch(`${SERVER}/api/get/project/by/type/${language}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setProjects(
+          data.map((project) => ({
+            ...project,
+            createdAt: new Date(project.createdAt).toLocaleDateString(),
+          }))
+        );
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch projects:", error);
+        setIsLoading(false);
+      });
+  }
 }
 
 export default ProjectsListSelected;

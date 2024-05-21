@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const RatingDisplay = ({ data }) => {
+const RatingDisplay = ({ data, show }) => {
   const progressData = data?.starsPercentage;
   const averageStar = data?.averageStars;
 
@@ -45,11 +45,13 @@ const RatingDisplay = ({ data }) => {
                         ></div>
                       </div>
                     </div>
-                    <div className="mt-3">
-                      <Link to="/reviews" className="btn btn-outline-dark">
-                        Reviews
-                      </Link>
-                    </div>
+                    {show && (
+                      <div className="mt-3">
+                        <Link to="/reviews" className="btn btn-outline-dark">
+                          Reviews
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </td>
                 <td className="w-100">
