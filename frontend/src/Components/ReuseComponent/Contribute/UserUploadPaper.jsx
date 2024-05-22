@@ -14,7 +14,7 @@ function UserUploadPaper() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [waiting, setWaiting] = useState(false);
-  const { handleMode } = React.useContext(AppContext);
+  const { handleModel } = React.useContext(AppContext);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -44,7 +44,7 @@ function UserUploadPaper() {
       !name ||
       !email
     ) {
-      return handleMode(<p className="text-danger">Please fill all the fields.</p>)
+      return handleModel(<p className="text-danger">Please fill all the fields.</p>)
     }
     setWaiting(true);
     const fileRef = ref(storage, `Pdf/${selectedFile.name + uuidv4()}`);
@@ -67,7 +67,7 @@ function UserUploadPaper() {
       !url ||
       !email
     ) {
-      return handleMode(<p className="text-danger">Please fill all the fields.</p>)
+      return handleModel(<p className="text-danger">Please fill all the fields.</p>)
     }
     const requestBody = {
       path: url,
@@ -89,7 +89,7 @@ function UserUploadPaper() {
       .then((response) => response.json())
       .then((data) => {
         if (data.message) {
-          handleMode(<p className="text-success">{data.message}</p>);
+          handleModel(<p className="text-success">{data.message}</p>);
           setSelectedFile(null);
           setPreviewUrl(null);
           setType("");
@@ -100,11 +100,11 @@ function UserUploadPaper() {
           setEmail("");
           setWaiting(false);
         } else {
-          handleMode(<p className="text-danger">{data.error}</p>)
+          handleModel(<p className="text-danger">{data.error}</p>)
         }
       })
       .catch((error) => {
-        handleMode(<p className="text-danger">Failed to upload question paper, please try again later.</p>)
+        handleModel(<p className="text-danger">Failed to upload question paper, please try again later.</p>)
       });
   };
 
@@ -197,7 +197,7 @@ function UserUploadPaper() {
               type="file"
               class="form-control"
               name="pdf"
-              id="pdf"
+              accept=".pdf"
               placeholder="Paper in pdf"
               required
               onChange={handleFileChange}

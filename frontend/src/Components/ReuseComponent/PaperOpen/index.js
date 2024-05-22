@@ -1,51 +1,65 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../../css/PaperOpen.css";
 import { useLocation } from "react-router-dom";
 import PageNotFound from "../../PageNotFound";
+import { Browser } from "@capacitor/browser";
 
 function PaperOpen() {
   const location = useLocation();
+  const [paperData, setPaperData] = useState(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const { paperData } = location.state || {};
+  useEffect(() => {
+    const { paperData: data } = location.state || {};
+    setPaperData(data);
+  }, [location.state]);
+
+  const showPDF = async () => {
+    if (!paperData) return;
+
+    const downloadUrl = paperData.pdfPath;
+    await Browser.open({ url: downloadUrl });
+  };
+
+  const renderPaperDetails = () => {
+    if (!paperData) return null;
+
+    return (
+      <section id="portfolio" className="portfolio">
+        <div className="container">
+          <div className="section-title">
+            <h2>Thank you for your visit</h2>
+            <div className="card-body">
+              <h5 className="card-title">Subject: {paperData.subject}</h5>
+              <p className="card-text">Course: {paperData.course}</p>
+              <p className="card-text">Year: {paperData.year}</p>
+              <p className="card-text">
+                Uploaded By: {paperData.name || "Admin"}
+              </p>
+              <p className="card-text">College: {paperData.type}</p>
+              <iframe
+                src={`https://docs.google.com/gview?url=${encodeURIComponent(
+                  paperData.pdfPath
+                )}&embedded=true`}
+                frameborder="0"
+                // height="1030px"
+                height="500px"
+                width="100%"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  };
 
   return (
     <div style={{ marginTop: "70px" }}>
       <div className="">
-        {!paperData ? (
-          <PageNotFound />
-        ) : (
-          <>
-            <section id="portfolio" className="portfolio">
-              <div className="container">
-                <div className="section-title">
-                  <h2>Thank you for your visit</h2>
-                  <div className="card-body">
-                    <h5 className="card-title">Subject: {paperData.subject}</h5>
-                    <p className="card-text">Course: {paperData.course}</p>
-                    <p className="card-text">Year: {paperData.year}</p>
-                    <p className="card-text">Uploaded By: {paperData.name || "Admin"}</p>
-                    <p className="card-text">College: {paperData.type}</p>
-                  </div>
-                </div>
-                <div className="row portfolio-container">
-                  {paperData && paperData.valid && (
-                    <div className="card col-md-12 my-3 px-2">
-                      <iframe
-                        className="card-img-top"
-                        src={`${paperData.pdfPath}`}
-                        alt="Card image cap"
-                        style={{ height: "700px" }}
-                      />
-                    </div>
-                  )}
-                </div>
-              </div>
-            </section>
-          </>
-        )}
+        {!paperData ? <PageNotFound /> : renderPaperDetails()}
       </div>
     </div>
   );

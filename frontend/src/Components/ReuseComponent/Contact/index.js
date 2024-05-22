@@ -5,7 +5,7 @@ import { SERVER } from "../../../config/domain";
 import { AppContext } from "../../../context/AppContext";
 
 function Contact() {
-  const { handleResponse } = React.useContext(AppContext);
+  const { handleModel } = React.useContext(AppContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -18,7 +18,7 @@ function Contact() {
 
   const handleSendEmail = () => {
     if (!name.trim() || !email.trim() || !subject.trim() || !message.trim()) {
-      handleResponse(
+      handleModel(
         <p className="p-0 m-0 text-warning">
           {contactStrings.allFieldsRequired}
         </p>
@@ -43,7 +43,7 @@ function Contact() {
       .then((data) => {
         setLoading(false);
         if (data.message) {
-          handleResponse(
+          handleModel(
             <p className="p-0 m-0 text-success">
               {contactStrings.messageSentSuccess}
             </p>
@@ -53,7 +53,7 @@ function Contact() {
           setSubject("");
           setMessage("");
         } else {
-          handleResponse(
+          handleModel(
             <p className="p-0 m-0 text-danger">
               {contactStrings.messageSendFailed}
             </p>
@@ -62,7 +62,7 @@ function Contact() {
       })
       .catch((error) => {
         setLoading(false);
-        handleResponse(
+        handleModel(
           <p className="p-0 m-0 text-danger">
             {contactStrings.messageSendFailed}
           </p>

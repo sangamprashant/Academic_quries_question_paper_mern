@@ -27,13 +27,14 @@ import Notes from "./Components/ReuseComponent/Notes";
 import SubjectOpen from "./Components/ReuseComponent/Notes/SubjectOpen";
 import NoteOpen from "./Components/ReuseComponent/Notes/NoteOpen";
 import Reviews from "./Components/ReuseComponent/Rating/Reviews";
+import ReviewsWrite from "./Components/ReuseComponent/Rating/ReviewsWrite";
 
 function App() {
   const [modal2Open, setModal2Open] = React.useState(false);
   const [modalContent,setModalContent] = React.useState(null)
 
   return (
-    <AppContext.Provider value={{setModal2Open, setModalContent,handleResponse}}>
+    <AppContext.Provider value={{setModal2Open, setModalContent,handleModel}}>
 
     <BrowserRouter>
         <Navbar  />
@@ -55,8 +56,9 @@ function App() {
           <Route exact path="/notes" element={<Notes />} />
           <Route exact path="/notes/:subject" element={<SubjectOpen />} />
           <Route exact path="/notes/:subject/:id" element={<NoteOpen />} />
-
           <Route exact path="/reviews" element={<Reviews />} />
+          <Route exact path="/reviews-write" element={<ReviewsWrite />} />
+
           <Route exact path="*" element={<PageNotFound />} />
         </Routes>
         <Footer/>
@@ -73,7 +75,7 @@ function App() {
     </BrowserRouter>
     </AppContext.Provider>
   );
-  function handleResponse  (data)  {
+  function handleModel  (data)  {
     setModal2Open(true);
     setModalContent(data);
   };

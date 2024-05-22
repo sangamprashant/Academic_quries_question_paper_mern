@@ -8,7 +8,7 @@ const Card = (props) => {
       className="m-2 rounded portfolio-item filter-app wow fadeInUp"
       to={path}
     >
-      <div className="portfolio-wrap">
+      <div className="portfolio-wrap shadow">
         <figure>
           <img src={image} width="100%" loading="lazy" />
         </figure>

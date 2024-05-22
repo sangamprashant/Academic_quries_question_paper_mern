@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import CreateIcon from "@mui/icons-material/Create";
 
 const RatingDisplay = ({ data, show }) => {
   const progressData = data?.starsPercentage;
@@ -29,7 +30,7 @@ const RatingDisplay = ({ data, show }) => {
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-9">
-          <table className="table">
+          <table className="table table-borderless">
             <tbody>
               <tr>
                 <td>
@@ -45,10 +46,16 @@ const RatingDisplay = ({ data, show }) => {
                         ></div>
                       </div>
                     </div>
-                    {show && (
+                    {show ? (
                       <div className="mt-3">
                         <Link to="/reviews" className="btn btn-outline-dark">
                           Reviews
+                        </Link>
+                      </div>
+                    ) : (
+                      <div className="mt-3">
+                        <Link to="/reviews-write" className="btn btn-outline-warning">
+                          <CreateIcon />
                         </Link>
                       </div>
                     )}

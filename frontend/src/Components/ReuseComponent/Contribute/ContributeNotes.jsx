@@ -168,7 +168,7 @@ function ContributeNotes() {
               type="file"
               className="form-control"
               name="pdf"
-              id="pdf"
+              accept=".pdf"
               placeholder="Paper in pdf"
               required
               onChange={handleFileChange}

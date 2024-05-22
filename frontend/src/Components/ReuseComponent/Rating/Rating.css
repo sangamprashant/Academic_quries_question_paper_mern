@@ -9,7 +9,6 @@
 }
 .rating_text {
   margin-top: 38px;
-
 }
 .stars-outer {
   display: inline-block;
@@ -21,6 +20,7 @@
 
 .stars-outer::before {
   content: "\f006 \f006 \f006 \f006 \f006";
+  color: #e4e4e4;
 }
 
 .stars-inner {
@@ -49,4 +49,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Revie write */
+.curved-stars {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 4px;
 }
