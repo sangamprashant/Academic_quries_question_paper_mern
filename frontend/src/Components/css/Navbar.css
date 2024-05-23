@@ -292,3 +292,11 @@
 .navbar-mobile .dropdown > .dropdown-active {
   display: block;
 }
+
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+  .app-name {
+    font-size: 1.2rem; /* Smaller font size for mobile screens */
+  }
+}

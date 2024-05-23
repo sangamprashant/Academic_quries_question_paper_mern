@@ -17,7 +17,7 @@ function WhatWeDo() {
             <h2>{whatWeDoItems.sectionTitle}</h2>
             <p>{whatWeDoItems.opportunityText}</p>
           </div>
-          <div className="row justify-content-around">
+          <div className="row justify-content-center">
             {whatWeDoItems.items.map((item, index) => (
               <WhatWeDoSub item={item} key={index} />
             ))}

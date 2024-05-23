@@ -13,13 +13,15 @@ function AboutUs() {
     <div style={{ marginTop: "70px" }}>
       <section id="about" className="about">
         <div className="container">
+          <div className="section-title">
+            <h2>{aboutString.title}</h2>
+          </div>
           <div className="row">
             <div className="col-lg-6">
               <LazyLoadImage
-                height="400"
                 width="100%"
                 src={pic}
-                className="img-fluid"
+                className=" rounded-4"
                 alt=""
                 loading="lazy"
                 effect="blur"
@@ -27,7 +29,6 @@ function AboutUs() {
               />
             </div>
             <div className="col-lg-6 pt-4 pt-lg-0">
-              <h3>{aboutString.title}</h3>
               <p dangerouslySetInnerHTML={{ __html: aboutString.content }} />
             </div>
           </div>

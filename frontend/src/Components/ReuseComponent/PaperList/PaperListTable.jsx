@@ -31,7 +31,7 @@ function PaperListTable({ filteredData }) {
           className="btn btn-outline-secondary"
           onClick={() => handleRowClick(record)}
         >
-          <VisibilityIcon /> View Paper
+          View
         </a>
       ),
     },

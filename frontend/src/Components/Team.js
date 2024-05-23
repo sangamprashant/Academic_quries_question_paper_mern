@@ -9,7 +9,7 @@ function Team() {
   }, []);
 
   return (
-    <div style={{ marginTop: "60px" }}>
+    <div style={{ marginTop: "70px" }}>
       <section id="team" className="team">
         <div className="container">
           <div className="section-title">

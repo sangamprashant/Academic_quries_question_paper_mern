@@ -31,7 +31,7 @@ export default function Navbar() {
               <img src={logo} alt="" className="img-fluid" />
             </Link>
             <h1>
-              <Link to="/" onClick={OptionSelection}>
+              <Link to="/" onClick={OptionSelection} className="app-name fw-bold">
                 {" "}
                 {AppName}
               </Link>

@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { SERVER } from "../../../config/domain";
 import "../../css/ProjectsList.css";
 import ProjectLeft from "./ProjectLeft";
+import IFrame from "../Reuse/IFrame";
 
 function ProjectOpen() {
   const { language, id } = useParams();
@@ -69,23 +70,21 @@ function ProjectOpen() {
                     {project?.report && (
                       <div className="col-md-6 form-group">
                         <label>Report</label>
-                        <embed
+                        <IFrame
+                          pdfLink={project?.report}
                           width="100%"
                           height="400px"
-                          src={project?.report}
-                          frameBorder="0"
-                        ></embed>
+                        />
                       </div>
                     )}
                     {project?.ppt && (
                       <div className="col-md-6 form-group">
                         <label>PPT</label>
-                        <embed
+                        <IFrame
+                          pdfLink={project?.ppt}
                           width="100%"
                           height="400px"
-                          src={project?.ppt}
-                          frameBorder="0"
-                        ></embed>
+                        />
                       </div>
                     )}
                   </div>

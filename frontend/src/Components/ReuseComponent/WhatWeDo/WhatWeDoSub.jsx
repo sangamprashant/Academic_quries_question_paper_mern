@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 
 const WhatWeDoSub = ({ item }) => {
   return (
-    <Link to={item.link} className="col-lg-4 col-md-6 d-flex  text-black">
+    <Link
+      to={item.link}
+      className="col-lg-4 col-md-6 d-flex  text-black d-flex justify-content-center"
+    >
       <div className="icon-box">
         <div className="icon">
           <i className={item.icon}></i>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../css/PaperOpen.css";
 import { useLocation } from "react-router-dom";
 import PageNotFound from "../../PageNotFound";
-import { Browser } from "@capacitor/browser";
+import IFrame from "../Reuse/IFrame";
 
 function PaperOpen() {
   const location = useLocation();
@@ -16,13 +16,6 @@ function PaperOpen() {
     const { paperData: data } = location.state || {};
     setPaperData(data);
   }, [location.state]);
-
-  const showPDF = async () => {
-    if (!paperData) return;
-
-    const downloadUrl = paperData.pdfPath;
-    await Browser.open({ url: downloadUrl });
-  };
 
   const renderPaperDetails = () => {
     if (!paperData) return null;
@@ -40,15 +33,7 @@ function PaperOpen() {
                 Uploaded By: {paperData.name || "Admin"}
               </p>
               <p className="card-text">College: {paperData.type}</p>
-              <iframe
-                src={`https://docs.google.com/gview?url=${encodeURIComponent(
-                  paperData.pdfPath
-                )}&embedded=true`}
-                frameborder="0"
-                // height="1030px"
-                height="500px"
-                width="100%"
-              ></iframe>
+              <IFrame pdfLink={paperData.pdfPath} height="450px" width="100%" />
             </div>
           </div>
         </div>

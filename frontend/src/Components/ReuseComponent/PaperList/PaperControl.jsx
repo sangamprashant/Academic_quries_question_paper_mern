@@ -58,67 +58,84 @@ function PaperControl({ branch }) {
 
   return (
     <div>
-      <table className="table">
-        <thead>
-          <tr className="w-100">
-            <td>
-              <input
-                className="form-control"
-                placeholder="Search by subject.."
-                value={searchInput}
-                onChange={(e) => {
-                  setSearchInput(e.target.value);
-                  filterData(e.target.value, searchYear, searchType, paperData);
-                }}
-              />
-            </td>
-            <td>
-              <select
-                className="form-control"
-                value={searchYear}
-                onChange={(e) => {
-                  setSearchYear(e.target.value);
-                  filterData(
-                    searchInput,
-                    e.target.value,
-                    searchType,
-                    paperData
-                  );
-                }}
-              >
-                <option value="">Select a Year</option>
-                {uniqueYears.map((yr) => (
-                  <option value={yr} key={yr}>
-                    {yr}
-                  </option>
-                ))}
-              </select>
-            </td>
-            <td>
-              <select
-                className="form-control"
-                value={searchType}
-                onChange={(e) => {
-                  setSearchType(e.target.value);
-                  filterData(
-                    searchInput,
-                    searchYear,
-                    e.target.value,
-                    paperData
-                  );
-                }}
-              >
-                <option value="">Select a College</option>
-                {uniqueTypes.map((call) => (
-                  <option value={call} key={call}>
-                    {call}
-                  </option>
-                ))}
-              </select>
-            </td>
-          </tr>
-        </thead>
-      </table>
+      <div className="row">
+        <div className="col-md-6">
+          <table className="table table-borderless p-0 m-0">
+            <thead className="p-0 m-0">
+              <tr className="w-100">
+                <td>
+                  <input
+                    className="form-control w-100"
+                    placeholder="Search by subject.."
+                    value={searchInput}
+                    onChange={(e) => {
+                      setSearchInput(e.target.value);
+                      filterData(
+                        e.target.value,
+                        searchYear,
+                        searchType,
+                        paperData
+                      );
+                    }}
+                  />
+                </td>
+                <td>
+                  <select
+                    className="form-control w-100"
+                    value={searchYear}
+                    onChange={(e) => {
+                      setSearchYear(e.target.value);
+                      filterData(
+                        searchInput,
+                        e.target.value,
+                        searchType,
+                        paperData
+                      );
+                    }}
+                  >
+                    <option value="">Select a Year</option>
+                    {uniqueYears.map((yr) => (
+                      <option value={yr} key={yr}>
+                        {yr}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div className="col-md-6 ">
+          <table className="table table-borderless p-0 m-0">
+            <thead className="p-0 m-0">
+              <tr className="w-100">
+                <td>
+                  <select
+                    className="form-control"
+                    value={searchType}
+                    onChange={(e) => {
+                      setSearchType(e.target.value);
+                      filterData(
+                        searchInput,
+                        searchYear,
+                        e.target.value,
+                        paperData
+                      );
+                    }}
+                  >
+                    <option value="">Select a College</option>
+                    {uniqueTypes.map((call) => (
+                      <option value={call} key={call}>
+                        {call}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
 
       <div className="shadow-lg">
         <h4 className="mt-5 pt-3 px-3">

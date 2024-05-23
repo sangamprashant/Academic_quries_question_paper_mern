@@ -5,21 +5,6 @@ const config: CapacitorConfig = {
   appName: 'Academic Queries',
   webDir: 'build',
   bundledWebRuntime: false,
-  plugins: {
-    SplashScreen: {
-      launchShowDuration: 3000,
-      launchAutoHide: true,
-      backgroundColor: '#ffffff',
-      androidSplashResourceName: 'splash',
-      androidScaleType: 'CENTER_CROP',
-      androidSpinnerStyle: 'large',
-      showSpinner: true,
-      spinnerColor: '#ffffff',
-      spinnerBackgroundColor: '#000000',
-      iosSpinnerStyle: 'small',
-      iosSpinnerColor: 'dark'
-    }
-  },
 };
 
 export default config;

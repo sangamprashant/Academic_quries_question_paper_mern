@@ -11,6 +11,8 @@ import WhatWeDo from "./ReuseComponent/WhatWeDo";
 import Courses from "./ReuseComponent/Courses";
 import Rating from "./ReuseComponent/Rating";
 import Notes from "./ReuseComponent/Notes";
+import { Capacitor } from "@capacitor/core";
+import DownloadApp from "./ReuseComponent/DownloadApp";
 function Home() {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -37,7 +39,8 @@ function Home() {
       <div className="MarginTopNegative">
         <AboutUs />
       </div>
-      <Rating show={true}/>
+      <Rating show={true} />
+      {!Capacitor.isNativePlatform() && <DownloadApp />}
       <div className="MarginTopNegative">
         <Team />
       </div>

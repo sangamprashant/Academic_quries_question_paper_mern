@@ -4,6 +4,7 @@ import { Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { SERVER } from "../../../config/domain";
 import { Result } from "antd";
+import IFrame from "../Reuse/IFrame";
 
 const NoteOpen = () => {
   const { id } = useParams();
@@ -35,12 +36,7 @@ const NoteOpen = () => {
             </div>
           ) : data ? (
             <React.Fragment>
-              <iframe
-                src={data.f_path}
-                frameborder="0"
-                width="100%"
-                height={600}
-              ></iframe>
+              <IFrame pdfLink={data.f_path} width="100%" height={600} />
             </React.Fragment>
           ) : (
             <Result

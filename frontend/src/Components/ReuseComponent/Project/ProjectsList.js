@@ -15,7 +15,7 @@ function ProjectsList() {
       <section id="portfolio" className="portfolio">
         <div className="container">
           <div className="section-title">
-            <h2>Projects List</h2>
+            <h2>Projects</h2>
           </div>
           <div className="row">
             <div className="project-list-left">

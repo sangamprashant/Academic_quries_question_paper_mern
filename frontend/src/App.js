@@ -29,7 +29,10 @@ import NoteOpen from "./Components/ReuseComponent/Notes/NoteOpen";
 import Reviews from "./Components/ReuseComponent/Rating/Reviews";
 import ReviewsWrite from "./Components/ReuseComponent/Rating/ReviewsWrite";
 
+import { handleBackButton } from "./Components/IonicFunction";
+
 function App() {
+  handleBackButton()
   const [modal2Open, setModal2Open] = React.useState(false);
   const [modalContent,setModalContent] = React.useState(null)
 
