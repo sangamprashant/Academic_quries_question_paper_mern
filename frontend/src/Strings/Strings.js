@@ -17,7 +17,7 @@ const menuItems = [
   { title: "Contribute", link: "/contribute" },
 ];
 const teamData = {
-  teamHeading: "Team",
+  teamHeading: "Our Team",
   teamMembers: [
     {
       name: "Avantika Shrivastava",
@@ -47,28 +47,44 @@ const contactStrings = {
   loadingText: "Loading",
 };
 const whatWeDoItems = {
-  sectionTitle: "What We Do",
-  opportunityText: `"Kindly grant us the opportunity to elucidate our endeavors."`,
+  sectionTitle: "Services",
+  opportunityText: "Kindly grant us the opportunity to elucidate our endeavors.",
   items: [
     {
       icon: "fa fa-clock",
       title: "24/7 Available",
       link: "",
-      description:
-        "Around-the-clock availability for all your needs. With our 24/7 support, you can count on us day or night, ensuring prompt assistance and reliable service at any hour.",
+      description: "Around-the-clock availability for all your needs. With our 24/7 support, you can count on us day or night, ensuring prompt assistance and reliable service at any hour.",
     },
     {
-      icon: "fa fa-file",
+      icon: "fa fa-file-text",
       title: "Question Paper",
-      link: "",
-      description: "Embrace the Questions, Always Open, Always Here for You",
+      link: "/question-papers",
+      description: "Embrace the Questions, Always Open, Always Here for You.",
     },
     {
       icon: "fa fa-upload",
       title: "Contribute Here",
-      link: "/CONTRIBUTE",
-      description:
-        "Your contributions fuel our success. Join us and be part of a community that values your input.",
+      link: "/contribute",
+      description: "Your contributions fuel our success. Join us and be part of a community that values your input.",
+    },
+    {
+      icon: "fa fa-file-pdf",
+      title: "Project Reports",
+      link: "/project-reports",
+      description: "Access comprehensive project reports in PDF format for your reference and study.",
+    },
+    {
+      icon: "fa fa-file-powerpoint",
+      title: "Presentations",
+      link: "/presentations",
+      description: "Download our detailed presentations in PDF format, designed to provide clear and concise information.",
+    },
+    {
+      icon: "fa fa-file-text-o",
+      title: "Notes",
+      link: "/notes",
+      description: "Get detailed notes in PDF format to aid your learning and understanding.",
     },
   ],
 };
@@ -85,6 +101,7 @@ const footerString = {
       data: [
         { name: "Contact Us", path: "/contact" },
         { name: "Contribute", path: "/contribute" },
+        { name: "Privacy Policy", path: "/privacy-policy" },
         { name: "Terms and Conditions", path: "/terms" },
       ],
     },
@@ -93,7 +110,7 @@ const footerString = {
       data: [
         { name: "About us", path: "/about" },
         { name: "Services", path: "/services" },
-        { name: "Team", path: "/testimonials" },
+        { name: "Our Team", path: "/testimonials" },
       ],
     },
   ],

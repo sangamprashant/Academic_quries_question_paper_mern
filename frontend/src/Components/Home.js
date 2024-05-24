@@ -4,7 +4,6 @@ import Contact from "./ReuseComponent/Contact";
 import "./css/Home.css";
 import AboutUs from "./ReuseComponent/AboutUs";
 import Count from "./ReuseComponent/Count/Count";
-import Footer from "./ReuseComponent/Footer";
 import Team from "./Team";
 import ProjectHome from "./ReuseComponent/Project/ProjectHome";
 import WhatWeDo from "./ReuseComponent/WhatWeDo";
@@ -13,6 +12,7 @@ import Rating from "./ReuseComponent/Rating";
 import Notes from "./ReuseComponent/Notes";
 import { Capacitor } from "@capacitor/core";
 import DownloadApp from "./ReuseComponent/DownloadApp";
+import Footer from "./ReuseComponent/Footer";
 function Home() {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -23,10 +23,12 @@ function Home() {
       <div>
         <Hero />
       </div>
-      <div className="MarginTopNegative">
-        <WhatWeDo />
-        <Count />
-      </div>
+      {!Capacitor.isNativePlatform() && (
+        <div className="MarginTopNegative">
+          <WhatWeDo />
+        </div>
+      )}
+      <Count />
       <div className="MarginTopNegative">
         <Courses />
       </div>
@@ -40,13 +42,16 @@ function Home() {
         <AboutUs />
       </div>
       <Rating show={true} />
-      {!Capacitor.isNativePlatform() && <DownloadApp />}
+      {/* onle in web */}
+      {/* {!Capacitor.isNativePlatform() && <DownloadApp />} */}
       <div className="MarginTopNegative">
         <Team />
       </div>
       <div className="MarginTopNegative">
         <Contact />
       </div>
+      {/* not in web */}
+      {Capacitor.isNativePlatform() && <Footer />}
     </div>
   );
 }

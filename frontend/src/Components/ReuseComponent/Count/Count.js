@@ -40,7 +40,7 @@ function Count() {
   }, []);
 
   return (
-    <div>
+    <div style={{ marginTop: "50px" }}>
       <section id="counts" className="counts">
         <div className="container">
           <div className="row">
