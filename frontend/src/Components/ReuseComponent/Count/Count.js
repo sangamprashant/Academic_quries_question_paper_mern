@@ -32,7 +32,7 @@ function Count() {
   useEffect(() => {
     setTimeout(() => {
       localStorage.removeItem("postRequestSent");
-    }, 10000);
+    }, 60000);
   }, []);
 
   React.useLayoutEffect(() => {

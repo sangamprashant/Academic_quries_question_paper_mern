@@ -2,6 +2,7 @@ import React from "react";
 import "../../css/Footer.css";
 import { Link } from "react-router-dom";
 import { AppName, footerString } from "../../../Strings/Strings";
+import { Capacitor } from "@capacitor/core";
 function Footer() {
   return (
     <div>
@@ -10,15 +11,25 @@ function Footer() {
           <div class="container">
             <div class="row">
               <div class="col-lg-6 col-md-6 footer-contact">
-                <h3>{footerString.AppName}</h3>
-                {footerString.contact.map((data, index) => {
-                  return (
-                    <p key={index}>
-                      <strong>{data.label}:</strong> {data.value}
-                      <br />
-                    </p>
-                  );
-                })}
+                <div className="d-flex">
+                  <div className="text-center">
+                    {/* only on web */}
+                    {!Capacitor.isNativePlatform() && (
+                      <img src="logo512.png" alt="" width={100} />
+                    )}
+                    <div className="text-start">
+                      <h3>{footerString.AppName}</h3>
+                      {footerString.contact.map((data, index) => {
+                        return (
+                          <p key={index}>
+                            <strong>{data.label}:</strong> {data.value}
+                            <br />
+                          </p>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {footerString.links.map((L, index) => {

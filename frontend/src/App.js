@@ -1,20 +1,27 @@
+import { Capacitor } from "@capacitor/core";
 import { Modal } from "antd";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import {
+  handleBackButton,
+  handleFontToDefault,
+  logCurrentNetworkStatus,
+} from "./Components/IonicFunction";
+import Main from "./Components/Main";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/ReuseComponent/Footer";
-import Main from "./Components/Main";
 import { AppName } from "./Strings/Strings";
 import { AppContext } from "./context/AppContext";
 
-import { Capacitor } from "@capacitor/core";
-import { handleBackButton } from "./Components/IonicFunction";
-
 function App() {
-  handleBackButton();
+  React.useEffect(() => {
+    logCurrentNetworkStatus();
+    handleBackButton();
+    handleFontToDefault(0.8);
+  }, []);
   const [modal2Open, setModal2Open] = React.useState(false);
   const [modalContent, setModalContent] = React.useState(null);
 

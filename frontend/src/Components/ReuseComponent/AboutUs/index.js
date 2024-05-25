@@ -11,7 +11,7 @@ function AboutUs() {
 
   return (
     <div style={{ marginTop: "70px" }}>
-      <section id="about" className="about">
+      <section id="portfolio" className="portfolio">
         <div className="container">
           <div className="section-title">
             <h2>{aboutString.title}</h2>

@@ -1,3 +1,10 @@
+import InfoIcon from "@mui/icons-material/Info";
+import HandshakeIcon from "@mui/icons-material/Handshake";
+import SchoolIcon from "@mui/icons-material/School";
+import NoteIcon from "@mui/icons-material/Note";
+import SourceIcon from "@mui/icons-material/Source";
+import ContactMailIcon from "@mui/icons-material/ContactMail";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
 // na bar
 const AppName = "ACADEMIC QUERIES";
 const emailAddress = "queriesacademic@gmail.com";
@@ -8,13 +15,13 @@ const heroStrings = {
   subTitle: "EMPOWERING EDUCATION, ACADEMIC ASSISTANCE",
 };
 const menuItems = [
-  { title: "About", link: "/about" },
-  { title: "Services", link: "/services" },
-  { title: "Courses", link: "/course" },
-  { title: "Notes", link: "/notes" },
-  { title: "Projects", link: "/projects" },
-  { title: "Contact", link: "/contact" },
-  { title: "Contribute", link: "/contribute" },
+  { title: "About", link: "/about", icon: <InfoIcon /> },
+  { title: "Services", link: "/services", icon: <HandshakeIcon /> },
+  { title: "Courses", link: "/course", icon: <SchoolIcon /> },
+  { title: "Notes", link: "/notes", icon: <NoteIcon /> },
+  { title: "Projects", link: "/projects", icon: <SourceIcon /> },
+  { title: "Contact", link: "/contact", icon: <ContactMailIcon /> },
+  { title: "Contribute", link: "/contribute", icon: <UploadFileIcon /> },
 ];
 const teamData = {
   teamHeading: "Our Team",
@@ -48,13 +55,15 @@ const contactStrings = {
 };
 const whatWeDoItems = {
   sectionTitle: "Services",
-  opportunityText: "Kindly grant us the opportunity to elucidate our endeavors.",
+  opportunityText:
+    "Kindly grant us the opportunity to elucidate our endeavors.",
   items: [
     {
       icon: "fa fa-clock",
       title: "24/7 Available",
       link: "",
-      description: "Around-the-clock availability for all your needs. With our 24/7 support, you can count on us day or night, ensuring prompt assistance and reliable service at any hour.",
+      description:
+        "Around-the-clock availability for all your needs. With our 24/7 support, you can count on us day or night, ensuring prompt assistance and reliable service at any hour.",
     },
     {
       icon: "fa fa-file-text",
@@ -66,25 +75,29 @@ const whatWeDoItems = {
       icon: "fa fa-upload",
       title: "Contribute Here",
       link: "/contribute",
-      description: "Your contributions fuel our success. Join us and be part of a community that values your input.",
+      description:
+        "Your contributions fuel our success. Join us and be part of a community that values your input.",
     },
     {
       icon: "fa fa-file-pdf",
       title: "Project Reports",
       link: "/project-reports",
-      description: "Access comprehensive project reports in PDF format for your reference and study.",
+      description:
+        "Access comprehensive project reports in PDF format for your reference and study.",
     },
     {
       icon: "fa fa-file-powerpoint",
       title: "Presentations",
       link: "/presentations",
-      description: "Download our detailed presentations in PDF format, designed to provide clear and concise information.",
+      description:
+        "Download our detailed presentations in PDF format, designed to provide clear and concise information.",
     },
     {
-      icon: "fa fa-file-text-o",
+      icon: "fa fa-file-text",
       title: "Notes",
       link: "/notes",
-      description: "Get detailed notes in PDF format to aid your learning and understanding.",
+      description:
+        "Get detailed notes in PDF format to aid your learning and understanding.",
     },
   ],
 };

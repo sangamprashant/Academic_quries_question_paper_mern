@@ -200,6 +200,10 @@
   color: rgb(27, 27, 27);
 }
 
+.fa-close::before {
+  color: aliceblue;
+}
+
 @media (max-width: 991px) {
   .mobile-nav-toggle {
     display: block;
