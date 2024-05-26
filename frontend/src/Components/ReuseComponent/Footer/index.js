@@ -7,10 +7,10 @@ function Footer() {
   return (
     <div>
       <footer id="footer">
-        <div class="footer-top">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-6 col-md-6 footer-contact">
+        <div className="footer-top">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-6 col-md-6 footer-contact">
                 <div className="d-flex">
                   <div className="text-center">
                     {/* only on web */}
@@ -34,13 +34,13 @@ function Footer() {
 
               {footerString.links.map((L, index) => {
                 return (
-                  <div class="col-lg-3 col-md-6 footer-links" key={index}>
+                  <div className="col-lg-3 col-md-6 footer-links" key={index}>
                     <h4>{L.label}</h4>
                     <ul>
                       {L.data.map((D, i) => {
                         return (
                           <li key={i}>
-                            <i class="fa fa-chevron-right"></i>{" "}
+                            <i className="fa fa-chevron-right"></i>{" "}
                             <Link to={D.path}>{D.name}</Link>
                           </li>
                         );
@@ -53,9 +53,9 @@ function Footer() {
           </div>
         </div>
 
-        <div class="container text-gray d-md-flex py-4">
-          <div class="me-md-auto text-center text-md-start">
-            <div class="copyright">
+        <div className="container text-gray d-md-flex py-4">
+          <div className="me-md-auto text-center text-md-start">
+            <div className="copyright">
               &copy; Copyright{" "}
               <strong>
                 <span>
@@ -67,7 +67,7 @@ function Footer() {
               </strong>
               All Rights Reserved
             </div>
-            <div class="credits text-gray">
+            <div className="credits text-gray">
               Designed by{" "}
               <a
                 href="https://github.com/sangamprashant"
@@ -79,12 +79,12 @@ function Footer() {
               </a>
             </div>
           </div>
-          <div class="social-links text-center text-md-right pt-3 pt-md-0">
+          <div className="social-links text-center text-md-right pt-3 pt-md-0">
             <a href="https://instagram.com/sangam_prashant">
-              <i class="bi bi-instagram"></i>
+              <i className="bi bi-instagram"></i>
             </a>
             <a href="https://www.linkedin.com/in/sangamprashantsrivastav">
-              <i class="bi bi-linkedin"></i>
+              <i className="bi bi-linkedin"></i>
             </a>
           </div>
         </div>

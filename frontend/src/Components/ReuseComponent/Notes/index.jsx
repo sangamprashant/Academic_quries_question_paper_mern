@@ -29,8 +29,9 @@ const Notes = () => {
                 <p>Loading...</p>
               </div>
             ) : (
-              notes.map((note) => (
+              notes.map((note, index) => (
                 <Card
+                  key={index}
                   path={`/notes/${note.subjectPath}`}
                   text={note.subjectName}
                   image={note.subjectImage}

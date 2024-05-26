@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { whatWeDoItems } from "../../../Strings/Strings";
 import "./WhatWeDo.css";
 import WhatWeDoSub from "./WhatWeDoSub";

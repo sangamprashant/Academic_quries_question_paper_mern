@@ -124,6 +124,7 @@ const footerString = {
         { name: "About us", path: "/about" },
         { name: "Services", path: "/services" },
         { name: "Our Team", path: "/testimonials" },
+        { name: "Download Our App", path: "/download-app" },
       ],
     },
   ],

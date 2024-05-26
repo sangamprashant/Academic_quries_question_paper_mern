@@ -76,7 +76,9 @@ function Count() {
       setVisitors(visitorsData);
     } catch (error) {
       console.error("Failed to fetch data:", error);
-    }
+      setCount(0);
+      setVisitors(0);
+    } 
   }
 }
 

@@ -54,7 +54,10 @@ const RatingDisplay = ({ data, show }) => {
                       </div>
                     ) : (
                       <div className="mt-3">
-                        <Link to="/reviews-write" className="btn btn-outline-warning">
+                        <Link
+                          to="/reviews-write"
+                          className="btn btn-outline-warning"
+                        >
                           <CreateIcon />
                         </Link>
                       </div>

@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
   "dependencies": {
     "@capacitor/android": "^6.0.0",
@@ -8,6 +8,7 @@
     "@capacitor/browser": "^6.0.0",
     "@capacitor/ios": "^6.0.0",
     "@capacitor/network": "^6.0.0",
+    "@capacitor/splash-screen": "^6.0.0",
     "@capacitor/text-zoom": "^6.0.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",

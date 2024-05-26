@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">Academic Queries</string>
     <string name="title_activity_main">Academic Queries</string>
-    <string name="package_name">com.sangamprasahnt.academicqueriescapacitor</string>
-    <string name="custom_url_scheme">com.sangamprasahnt.academicqueriescapacitor</string>
+    <string name="package_name">com.sangamprashant.academicqueriesapp</string>
+    <string name="custom_url_scheme">com.sangamprashant.academicqueriesapp</string>
 </resources>

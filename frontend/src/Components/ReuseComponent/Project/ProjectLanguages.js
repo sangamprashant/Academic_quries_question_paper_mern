@@ -34,8 +34,9 @@ function ProjectLanguages() {
           <p>Loading...</p>
         </div>
       ) : (
-        pdfFiles.map((Projects) => (
+        pdfFiles.map((Projects, index) => (
           <Card
+            key={index}
             path={`/projects/${Projects.ProjectName}`}
             image={`${Projects.ProjectImage}`}
             text={Projects.ProjectName}

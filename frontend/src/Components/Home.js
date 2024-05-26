@@ -41,9 +41,16 @@ function Home() {
       <div className="MarginTopNegative">
         <AboutUs />
       </div>
-      <Rating show={true} />
+      <div className="section-title">
+        <h2>Ratings</h2>
+        <Rating show={true} />
+      </div>
       {/* onle in web */}
-      {/* {!Capacitor.isNativePlatform() && <DownloadApp />} */}
+      {!Capacitor.isNativePlatform() && (
+        <div className="MarginTopNegative">
+          <DownloadApp />
+        </div>
+      )}
       <div className="MarginTopNegative">
         <Team />
       </div>

@@ -21,6 +21,7 @@ import Reviews from "./ReuseComponent/Rating/Reviews";
 import ReviewsWrite from "./ReuseComponent/Rating/ReviewsWrite";
 import Policy from "./ReuseComponent/Policy";
 import PageNotFound from "./PageNotFound";
+import DownloadApp from "./ReuseComponent/DownloadApp";
 
 const Main = () => {
   return (
@@ -53,6 +54,7 @@ const Main = () => {
       <Route exact path="/reviews" element={<Reviews />} />
       <Route exact path="/reviews-write" element={<ReviewsWrite />} />
       <Route exact path="/privacy-policy" element={<Policy />} />
+      <Route exact path="/download-app" element={<DownloadApp />} />
 
       <Route exact path="*" element={<PageNotFound />} />
     </Routes>
