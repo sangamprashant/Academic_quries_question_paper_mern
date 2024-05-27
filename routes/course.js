@@ -15,4 +15,5 @@ router.get("/api/get/course", (req, res) => {
       res.status(500).json({ error: "Failed to fetch courses" });
     });
 });
+
 module.exports = router;

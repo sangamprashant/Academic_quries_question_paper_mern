@@ -6,7 +6,9 @@ import axios from "axios";
 import { SERVER } from "../../../config/domain";
 
 const DownloadApp = () => {
-  const [links, setLinks] = React.useState([]);
+  const [links, setLinks] = React.useState(
+    JSON.parse(localStorage.getItem("downloadLinks")) || []
+  );
   React.useLayoutEffect(() => {
     window.scrollTo(0, 0);
     fetchAppLinks();
@@ -52,6 +54,7 @@ const DownloadApp = () => {
     try {
       const response = await axios.get(`${SERVER}/api/app-links/get`);
       if (response.status === 200) {
+        localStorage.setItem("downloadLinks", JSON.stringify(response.data));
         setLinks(response.data);
       }
     } catch (error) {

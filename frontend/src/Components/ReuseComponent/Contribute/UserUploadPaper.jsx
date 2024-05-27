@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AppContext } from "../../../context/AppContext";
 import { storage } from "../../../firebase";
+import { SERVER } from "../../../config/domain";
 
 function UserUploadPaper() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -79,7 +80,7 @@ function UserUploadPaper() {
       email: email,
       valid: false,
     };
-    fetch("/api/upload", {
+    fetch(`${SERVER}/api/upload/paper`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

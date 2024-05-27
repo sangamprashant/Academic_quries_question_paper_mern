@@ -17,9 +17,8 @@ router.get("/api/count/visitors", async (req, res) => {
     res.status(500).json({ error: "Failed to get visitor count" });
   }
 });
-
 // Route to increment the visitor count by one and save
-router.post("/api/increment/visitors", async (req, res) => {
+router.get("/api/increment/visitors", async (req, res) => {
   try {
     const visitor = await Visitor.findOne({});
     if (visitor) {

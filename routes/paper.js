@@ -5,7 +5,7 @@ const nodemailer = require("nodemailer");
 const QuestionPaper = mongoose.model("ACADEMICQUERIESQUESTIONPAPER");
 
 // Handle file upload endpoint by user
-router.post("/api/upload", (req, res) => {
+router.post("/api/upload/paper", (req, res) => {
   const { type, subject, year, course, name, path, email } = req.body;
   const questionPaper = new QuestionPaper({
     type: type,
@@ -113,23 +113,10 @@ router.post("/api/upload", (req, res) => {
 <body>
   <div class="container">
     <div class="header">
-      <h2>Question Paper Uploaded</h2>
+      <h2>Academic Queries</h2>
     </div>
 
     <div class="body">
-      <div class="app-title">
-        <img
-          src="https://raw.githubusercontent.com/sangamprashant/Academic_quries_question_paper_Next_JS/main/public/logo.png"
-          alt="logo"
-          style="width: 50px; height: 50px; object-fit: cover"
-        />
-        <h1>Academic Queries</h1>
-      </div>
-      <hr/>
-      <img
-        src="https://raw.githubusercontent.com/sangamprashant/Academic_quries_question_paper_Next_JS/main/public/logo%20aq.png"
-        alt="Company Logo"
-      />
       <p>
   Thank you, ${name}, for uploading the previous year's question paper. Your
   contribution plays a vital role in helping students prepare for exams
@@ -141,31 +128,6 @@ router.post("/api/upload", (req, res) => {
         appreciated.
       </p>
       <p>Best regards,<br />Academic Queries</p>
-      <p>
-      ${process.env.DOMAIN
-        ? `<a href="${process.env.DOMAIN}" target="_blank"
-            ><button>Visit Our Website</button></a>`
-        : ""}
-      ${process.env.AMAZON_LINK
-        ? `<a href="${process.env.AMAZON_LINK}" target="_blank"
-            ><button style="background-color: #28a745">
-              Download from Amazon Appstore
-            </button></a>`
-        : ""}
-      ${process.env.DRIVE_LINK
-        ? `<a href="${process.env.DRIVE_LINK}" target="_blank"
-            ><button style="background-color: #ff9800">
-              Download from Google Drive
-            </button></a>`
-        : ""}
-      </p>
-      <div class="thank-you-content">
-        <p>
-          Once again, thank you for your valuable contribution to Academic Queries.
-          Your support enhances the learning experience for students across the
-          community.
-        </p>
-      </div>
     </div>
     <div class="footer">
       <p>&copy; 2024 Academic Queries. All rights reserved.</p>

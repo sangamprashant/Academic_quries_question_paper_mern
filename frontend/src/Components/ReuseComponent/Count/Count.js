@@ -13,7 +13,7 @@ function Count() {
     const postRequestSent = localStorage.getItem("postRequestSent");
     if (!postRequestSent) {
       fetch(`${SERVER}/api/increment/visitors`, {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },

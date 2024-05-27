@@ -10,6 +10,7 @@ const Path = ({ image, link }) => {
           src={image}
           width={"100%"}
           alt="image"
+          loading="lazy"
         />
       </div>
     </Link>

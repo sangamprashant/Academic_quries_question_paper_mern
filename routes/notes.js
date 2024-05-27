@@ -116,23 +116,9 @@ router.post("/api/upload/notes", async (req, res) => {
       <body>
         <div class="container">
           <div class="header">
-            <h2>Notes Uploaded</h2>
+            <h2>Academic Queries</h2>
           </div>
-      
           <div class="body">
-            <div class="app-title">
-              <img
-                src="https://raw.githubusercontent.com/sangamprashant/Academic_quries_question_paper_Next_JS/main/public/logo.png"
-                alt="logo"
-                style="width: 50px; height: 50px; object-fit: cover"
-              />
-              <h1>Academic Queries</h1>
-            </div>
-            <hr/>
-            <img
-              src="https://raw.githubusercontent.com/sangamprashant/Academic_quries_question_paper_Next_JS/main/public/logo%20aq.png"
-              alt="Company Logo"
-            />
             <p>
               Thank you, ${u_name}, for contributing subject notes. Your effort is valuable in
               enhancing the learning experience for our community.
@@ -143,24 +129,6 @@ router.post("/api/upload/notes", async (req, res) => {
               sharing.
             </p>
             <p>Best regards,<br />Academic Queries</p>
-            <p>
-              ${process.env.DOMAIN
-                ? `<a href="${process.env.DOMAIN}" target="_blank"
-                    ><button>Visit Our Website</button></a>`
-                : ""}
-              ${process.env.AMAZON_LINK
-                ? `<a href="${process.env.AMAZON_LINK}" target="_blank"
-                    ><button style="background-color: #28a745">
-                      Download from Amazon Appstore
-                    </button></a>`
-                : ""}
-              ${process.env.DRIVE_LINK
-                ? `<a href="${process.env.DRIVE_LINK}" target="_blank"
-                    ><button style="background-color: #ff9800">
-                      Download from Google Drive
-                    </button></a>`
-                : ""}
-            </p>
             <div class="thank-you-content">
               <p>
                 Once again, thank you for your contribution to Academic Queries.
@@ -194,7 +162,6 @@ router.post("/api/upload/notes", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 // Route to get subject notes by s_name where valid is true
 router.get("/api/subject-notes/:s_name", async (req, res) => {
   try {

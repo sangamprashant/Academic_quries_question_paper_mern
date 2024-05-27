@@ -2,6 +2,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import React, { useState } from "react";
 import { AppContext } from "../../../context/AppContext";
 import { storage } from "../../../firebase";
+import { SERVER } from "../../../config/domain";
 
 function ContributeNotes() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -67,7 +68,7 @@ function ContributeNotes() {
       s_name: s_name.trim(),
       s_topic: s_topic.trim(),
     };
-    fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/upload/notes`, {
+    fetch(`${SERVER}/api/upload/notes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
