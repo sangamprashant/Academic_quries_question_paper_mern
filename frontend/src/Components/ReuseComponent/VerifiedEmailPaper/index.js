@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SERVER } from "../../../config/domain";
+import IFrame from "../Reuse/IFrame";
 
 function VerifiedEmailPaper() {
   const { paperId } = useParams();
@@ -32,9 +33,9 @@ function VerifiedEmailPaper() {
           <div className="row portfolio-container">
             {pdfFile && pdfFile.valid && (
               <div className="card col-md-12 my-3 px-2">
-                <iframe
+                <IFrame
                   className="card-img-top"
-                  src={`${pdfFile.pdfPath}`}
+                  pdfLink={pdfFile.pdfPath}
                   alt="Card image cap"
                   style={{ height: "700px" }}
                 />
