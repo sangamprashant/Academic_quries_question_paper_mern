@@ -1,9 +1,9 @@
 import axios from "axios";
 import React from "react";
 import { SERVER } from "../../../config/domain";
+import LoadingComponent from "../../Loading";
 import Card from "../Reuse/Card";
 import "./Notes.css";
-import { Spinner } from "react-bootstrap";
 
 const Notes = () => {
   const [notes, setNotes] = React.useState(
@@ -22,23 +22,20 @@ const Notes = () => {
           <div className="section-title">
             <h2>Notes</h2>
           </div>
-          <div className="language-container">
-            {!notes && isLoading ? (
-              <div className="text-center">
-                <Spinner animation="border" variant="primary" />
-                <p>Loading...</p>
-              </div>
-            ) : (
-              notes.map((note, index) => (
+          {notes.length === 0 && isLoading ? (
+            <LoadingComponent />
+          ) : (
+            <div className="language-container">
+              {notes.map((note, index) => (
                 <Card
                   key={index}
                   path={`/notes/${note.subjectPath}`}
                   text={note.subjectName}
                   image={note.subjectImage}
                 />
-              ))
-            )}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Spinner } from "react-bootstrap";
 import { SERVER } from "../../../config/domain";
+import LoadingComponent from "../../Loading";
 import "../../css/Paper.css";
 import Card from "../Reuse/Card";
 
@@ -38,21 +38,19 @@ function Courses() {
             <h2>Courses</h2>
           </div>
 
-          {!pdfFiles && loading ? (
-            <div className="text-center">
-              <Spinner animation="border" role="status">
-                <span className="sr-only">Loading...</span>
-              </Spinner>
-            </div>
+          {pdfFiles.length === 0 && loading ? (
+            <LoadingComponent />
           ) : (
             <div className="language-container">
-              {pdfFiles.map((Papers) => (
-                <Card
-                  path={`/course/${Papers.coursePath}/${Papers.courseName}`}
-                  image={Papers.courseImage}
-                  text={Papers.courseName}
-                />
-              ))}
+              {pdfFiles &&
+                pdfFiles?.map((Papers, index) => (
+                  <Card
+                    key={index}
+                    path={`/course/${Papers.coursePath}/${Papers.courseName}`}
+                    image={Papers.courseImage}
+                    text={Papers.courseName}
+                  />
+                ))}
             </div>
           )}
         </div>

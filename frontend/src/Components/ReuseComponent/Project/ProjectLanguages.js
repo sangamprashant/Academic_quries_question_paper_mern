@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Spinner } from "react-bootstrap";
 import { SERVER } from "../../../config/domain";
+import LoadingComponent from "../../Loading";
 import "../../css/Paper.css";
 import "../../css/ProjectsList.css";
 import Card from "../Reuse/Card";
@@ -27,23 +27,22 @@ function ProjectLanguages() {
   }, []);
 
   return (
-    <div className="language-container">
-      {!pdfFiles && isLoading ? (
-        <div className="text-center">
-          <Spinner animation="border" variant="primary" />
-          <p>Loading...</p>
-        </div>
+    <React.Fragment>
+      {pdfFiles.length === 0 && isLoading ? (
+        <LoadingComponent />
       ) : (
-        pdfFiles.map((Projects, index) => (
-          <Card
-            key={index}
-            path={`/projects/${Projects.ProjectName}`}
-            image={`${Projects.ProjectImage}`}
-            text={Projects.ProjectName}
-          />
-        ))
+        <div className="language-container">
+          {pdfFiles?.map((Projects, index) => (
+            <Card
+              key={index}
+              path={`/projects/${Projects.ProjectName}`}
+              image={`${Projects.ProjectImage}`}
+              text={Projects.ProjectName}
+            />
+          ))}
+        </div>
       )}
-    </div>
+    </React.Fragment>
   );
 }
 

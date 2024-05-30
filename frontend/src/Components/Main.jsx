@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import PaperOpen from "./ReuseComponent/PaperOpen";
 import Contact from "./ReuseComponent/Contact";
@@ -20,8 +20,20 @@ import NoteOpen from "./ReuseComponent/Notes/NoteOpen";
 import Reviews from "./ReuseComponent/Rating/Reviews";
 import ReviewsWrite from "./ReuseComponent/Rating/ReviewsWrite";
 import Policy from "./ReuseComponent/Policy";
-import PageNotFound from "./PageNotFound";
 import DownloadApp from "./ReuseComponent/DownloadApp";
+import ResultPage from "./ReuseComponent/Result";
+
+const pageNotFound = {
+  status: "404",
+  title: "404",
+  subTitle: "Sorry, the page you visited does not exist.",
+  extra: (
+    <Link className="btn btn-primary go-to-home" to="/">
+      Go to Home
+    </Link>
+  ),
+};
+
 
 const Main = () => {
   return (
@@ -56,7 +68,7 @@ const Main = () => {
       <Route exact path="/privacy-policy" element={<Policy />} />
       <Route exact path="/download-app" element={<DownloadApp />} />
 
-      <Route exact path="*" element={<PageNotFound />} />
+      <Route exact path="*" element={<ResultPage {...pageNotFound} />} />
     </Routes>
   );
 };

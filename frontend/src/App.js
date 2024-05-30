@@ -1,7 +1,7 @@
 import { Capacitor } from "@capacitor/core";
 import { Modal } from "antd";
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -15,11 +15,28 @@ import Navbar from "./Components/Navbar";
 import Footer from "./Components/ReuseComponent/Footer";
 import { AppName } from "./Strings/Strings";
 import { AppContext } from "./context/AppContext";
+import ResultPage from "./Components/ReuseComponent/Result";
+
+const noInternet = {
+    status: "500",
+  title: "No Internet Connection",
+  subTitle: "Sorry, it looks like you are not connected to the internet.",
+  extra: (
+    <button
+      className="btn btn-primary"
+      onClick={() => window.location.reload()}
+    >
+      Reload
+    </button>
+  ),
+};
 
 function App() {
+  const [mobileNavOpen, setMobileNavOpen] = React.useState(false);
+  const [isInNetwork, setIsInNetwork] = React.useState(false);
   React.useEffect(() => {
-    logCurrentNetworkStatus();
-    handleBackButton();
+    logCurrentNetworkStatus(setIsInNetwork);
+    handleBackButton(mobileNavOpen, setMobileNavOpen);
     handleFontToDefault(0.8);
   }, []);
   const [modal2Open, setModal2Open] = React.useState(false);
@@ -27,13 +44,26 @@ function App() {
 
   return (
     <AppContext.Provider
-      value={{ setModal2Open, setModalContent, handleModel }}
+      value={{
+        setModal2Open,
+        setModalContent,
+        handleModel,
+        setMobileNavOpen,
+        mobileNavOpen,
+        isInNetwork,
+      }}
     >
       <BrowserRouter>
         <Navbar />
-        <Main />
-        {/* only in web */}
-        {!Capacitor.isNativePlatform() && <Footer />}
+        {isInNetwork ? (
+          <>
+            <Main />
+            {/* only in web */}
+            {!Capacitor.isNativePlatform() && <Footer />}
+          </>
+        ) : (
+          <ResultPage {...noInternet} />
+        )}
         <ToastContainer theme="dark" />
         <Modal
           title={`${AppName}' says`}

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[842],{7842:(s,n,e)=>{e.r(n),e.d(n,{Browser:()=>l,BrowserWeb:()=>t});var o=e(5403);class t extends o.E_{constructor(){super(),this._lastWindow=null}async open(s){this._lastWindow=window.open(s.url,s.windowName||"_blank")}async close(){return new Promise(((s,n)=>{null!=this._lastWindow?(this._lastWindow.close(),this._lastWindow=null,s()):n("No active window to close!")}))}}const l=new t}}]);
+//# sourceMappingURL=842.62c3bb77.chunk.js.map

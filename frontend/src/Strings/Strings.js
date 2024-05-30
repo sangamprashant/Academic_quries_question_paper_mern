@@ -68,7 +68,7 @@ const whatWeDoItems = {
     {
       icon: "fa fa-file-text",
       title: "Question Paper",
-      link: "/question-papers",
+      link: "",
       description: "Embrace the Questions, Always Open, Always Here for You.",
     },
     {
@@ -81,21 +81,21 @@ const whatWeDoItems = {
     {
       icon: "fa fa-file-pdf",
       title: "Project Reports",
-      link: "/project-reports",
+      link: "",
       description:
         "Access comprehensive project reports in PDF format for your reference and study.",
     },
     {
       icon: "fa fa-file-powerpoint",
       title: "Presentations",
-      link: "/presentations",
+      link: "",
       description:
         "Download our detailed presentations in PDF format, designed to provide clear and concise information.",
     },
     {
       icon: "fa fa-file-text",
       title: "Notes",
-      link: "/notes",
+      link: "",
       description:
         "Get detailed notes in PDF format to aid your learning and understanding.",
     },
