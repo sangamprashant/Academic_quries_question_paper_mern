@@ -8,7 +8,9 @@ const handleBackButton = (mobileNavOpen, setMobileNavOpen) => {
   CAPApp.addListener("backButton", ({ canGoBack }) => {
     if (mobileNavOpen) {
       setMobileNavOpen(false);
-    } else if (canGoBack) {
+      return;
+    }
+    if (canGoBack) {
       window.history.back();
     } else {
       const exitConfirmation = window.confirm(

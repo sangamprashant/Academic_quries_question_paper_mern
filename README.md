@@ -79,7 +79,9 @@ To use the Academic Queries website, simply visit [Academic Queries](https://aca
 
 You can also scan the QR code below to visit the website:
 
-![QR Code](./assets/qr.png)
+<center>
+<img src="./assets/qr.png" width="200px" />
+</center>
 
 <!-- -----------------------------------------
                  Improvements
@@ -139,7 +141,9 @@ You can also scan the QR code below to visit the website:
 ----------------------------------------- -->
 
 ## Version History
+
 #### `v3.0.2` (June 2024)
+
 - **Bug Fixes:**
   - Improved network status detection to provide real-time feedback on connectivity issues.
   - Enhanced UI responsiveness to display network status changes immediately.

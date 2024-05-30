@@ -75,7 +75,7 @@ button {
   gap: 20px;
   flex-wrap: wrap;
 }
-</style>`
+</style>`;
 
 router.post("/api/public/sendemail", async (req, res) => {
   try {
@@ -144,6 +144,12 @@ router.post("/api/public/sendemail", async (req, res) => {
 router.post("/api/send-app-link", async (req, res) => {
   try {
     const { email } = req.body;
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailPattern.test(email.trim())) {
+      return res.status(400).json({ error: "Invalid email format" });
+    }
 
     const newDownload = new Downloads({ email });
 

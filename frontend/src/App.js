@@ -1,7 +1,8 @@
+import { App as CAPApp } from "@capacitor/app";
 import { Capacitor } from "@capacitor/core";
 import { Modal } from "antd";
 import React from "react";
-import { BrowserRouter, Link } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -13,12 +14,12 @@ import {
 import Main from "./Components/Main";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/ReuseComponent/Footer";
+import ResultPage from "./Components/ReuseComponent/Result";
 import { AppName } from "./Strings/Strings";
 import { AppContext } from "./context/AppContext";
-import ResultPage from "./Components/ReuseComponent/Result";
 
 const noInternet = {
-    status: "500",
+  status: "500",
   title: "No Internet Connection",
   subTitle: "Sorry, it looks like you are not connected to the internet.",
   extra: (
@@ -33,12 +34,17 @@ const noInternet = {
 
 function App() {
   const [mobileNavOpen, setMobileNavOpen] = React.useState(false);
-  const [isInNetwork, setIsInNetwork] = React.useState(false);
-  React.useEffect(() => {
+  const [isInNetwork, setIsInNetwork] = React.useState(
+    !Capacitor.isNativePlatform()
+  );
+  React.useLayoutEffect(() => {
     logCurrentNetworkStatus(setIsInNetwork);
     handleBackButton(mobileNavOpen, setMobileNavOpen);
     handleFontToDefault(0.8);
-  }, []);
+    return () => {
+      CAPApp.removeAllListeners(); // Clean up the listener on component unmount
+    };
+  }, [mobileNavOpen]);
   const [modal2Open, setModal2Open] = React.useState(false);
   const [modalContent, setModalContent] = React.useState(null);
 
@@ -51,6 +57,7 @@ function App() {
         setMobileNavOpen,
         mobileNavOpen,
         isInNetwork,
+        setIsInNetwork,
       }}
     >
       <BrowserRouter>

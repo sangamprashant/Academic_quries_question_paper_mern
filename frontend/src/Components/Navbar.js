@@ -15,9 +15,9 @@ export default function Navbar() {
     setMobileNavOpen(!mobileNavOpen);
   };
 
-  React.useEffect(()=>{
-    OptionSelection()
-  },[isInNetwork])
+  React.useEffect(() => {
+    OptionSelection();
+  }, [isInNetwork]);
 
   const OptionSelection = () => {
     setMobileNavOpen(false);
