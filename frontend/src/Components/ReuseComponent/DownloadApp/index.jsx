@@ -1,4 +1,6 @@
 import React from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import AppLinkForm from "./AppLinkForm";
 import Mobile from "./Mobile";
 import Path from "./Path";
@@ -9,27 +11,51 @@ const DownloadApp = () => {
   const [links, setLinks] = React.useState(
     JSON.parse(localStorage.getItem("downloadLinks")) || []
   );
+
   React.useLayoutEffect(() => {
     window.scrollTo(0, 0);
     fetchAppLinks();
   }, []);
 
+  const { ref: sectionRef, inView: sectionInView } = useInView({
+    triggerOnce: false,
+    threshold: 0.1,
+  });
+
   return (
     <div style={{ paddingTop: "70px" }}>
       <section id="portfolio" className="portfolio">
         <div className="container">
-          <div className="section-title">
+          <motion.div
+            className="section-title"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: sectionInView ? 1 : 0, y: sectionInView ? 0 : -50 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            ref={sectionRef}
+          >
             <h2>Download Our App</h2>
-          </div>
+          </motion.div>
           <div className="row align-items-center">
             <div className="col-md-6">
-              <div className="text-muted">
+              <motion.div
+                className="text-muted"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: sectionInView ? 1 : 0, y: sectionInView ? 0 : 50 }}
+                transition={{ duration: 1, delay: 0.5 }}
+                ref={sectionRef}
+              >
                 <h5>Access question papers anytime, anywhere</h5>
                 <div className="col-md-12">
                   <AppLinkForm />
                 </div>
-              </div>
-              <div className="row d-flex justify-content-center gap-3 mt-4 text-muted">
+              </motion.div>
+              <motion.div
+                className="row d-flex justify-content-center gap-3 mt-4 text-muted"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: sectionInView ? 1 : 0, y: sectionInView ? 0 : 50 }}
+                transition={{ duration: 1, delay: 0.7 }}
+                ref={sectionRef}
+              >
                 <span className="w-100 text-center">
                   {<Mobile height={20} />}Try the Academic Queries mobile app
                 </span>
@@ -39,11 +65,17 @@ const DownloadApp = () => {
                       <Path key={index} link={data.Path} image={data.Image} />
                     ))}
                 </div>
-              </div>
+              </motion.div>
             </div>
-            <div className="col-md-6 d-flex justify-content-center mt-3">
+            <motion.div
+              className="col-md-6 d-flex justify-content-center mt-3"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: sectionInView ? 1 : 0, scale: sectionInView ? 1 : 0.8 }}
+              transition={{ duration: 1, delay: 0.9 }}
+              ref={sectionRef}
+            >
               <img src="download.png" width="90%" alt="Download" />
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

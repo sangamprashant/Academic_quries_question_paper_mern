@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import "../../css/Count.css";
 import { SERVER } from "../../../config/domain";
 import SubCountBox from "./SubCountBox";
@@ -43,20 +44,63 @@ function Count() {
     <div style={{ marginTop: "50px" }}>
       <section id="counts" className="counts">
         <div className="container">
-          <div className="row">
-            <SubCountBox
-              value={visitors}
-              name="Number of visitors"
-              icon="eye"
-            />
-            <SubCountBox value={count} name="Papers" icon="file-text" />
-            <SubCountBox value="24/7" name="Hours Of Support" icon="headset" />
-            <SubCountBox value="02" name="Developers" icon="user" />
-          </div>
+          <motion.div
+            className="row"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            viewport={{ once: false }}
+          >
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              viewport={{ once: false }}
+              className="col-lg-3 col-6 mt-5 mt-lg-0"
+            >
+              <SubCountBox
+                value={visitors}
+                name="Number of visitors"
+                icon="eye"
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.7 }}
+              className="col-lg-3 col-6 mt-5 mt-lg-0"
+              viewport={{ once: false }}
+            >
+              <SubCountBox value={count} name="Papers" icon="file-text" />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.9 }}
+              viewport={{ once: false }}
+              className="col-lg-3 col-6 mt-5 mt-lg-0"
+            >
+              <SubCountBox
+                value="24/7"
+                name="Hours Of Support"
+                icon="headset"
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 1.1 }}
+              viewport={{ once: false }}
+              className="col-lg-3 col-6 mt-5 mt-lg-0"
+            >
+              <SubCountBox value="02" name="Developers" icon="user" />
+            </motion.div>
+          </motion.div>
         </div>
       </section>
     </div>
   );
+
   async function fetchData() {
     try {
       const [countResponse, visitorsResponse] = await Promise.all([
@@ -78,7 +122,7 @@ function Count() {
       console.error("Failed to fetch data:", error);
       setCount(0);
       setVisitors(0);
-    } 
+    }
   }
 }
 

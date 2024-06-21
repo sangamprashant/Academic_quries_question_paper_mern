@@ -5,7 +5,7 @@ const WhatWeDoSub = ({ item }) => {
   return (
     <Link
       to={item.link}
-      className="col-lg-4 col-md-6 d-flex  text-black d-flex justify-content-center"
+      className="col-lg-4 col-md-6 d-flex  text-black d-flex justify-content-center w-100"
     >
       <div className="icon-box">
         <div className="icon">
